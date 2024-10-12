@@ -9,7 +9,7 @@ const StaffList = ({ onSelectStaff }) => {
   useEffect(() => {
     const fetchStaff = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/all-staffs');
+        const response = await axios.get('http://localhost:3000/staff/all-staffs');
         setStaff(response.data);
       } catch (err) {
         console.error('Error fetching staff:', err);

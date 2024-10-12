@@ -8,7 +8,7 @@ const ManageStaffs = () => {
   const [error, setError] = useState(null); // New error state
 
   useEffect(() => {
-    fetch("http://localhost:3000/all-staffs") // API endpoint to get all staff members
+    fetch("http://localhost:3000/staff/all-staffs") // API endpoint to get all staff members
       .then(res => res.json())
       .then(data => {
         setAllStaffs(data);

@@ -30,7 +30,7 @@ const TaskForm = ({ addTask }) => {
     const fetchStaffMembers = async () => {
       setLoading(true); // Show loading spinner
       try {
-        const response = await fetch('http://localhost:3000/all-staffs');
+        const response = await fetch('http://localhost:3000/staff/all-staffs');
         if (!response.ok) throw new Error('Failed to fetch staff members.');
         const data = await response.json();
         setStaffMembers(data);
@@ -76,7 +76,7 @@ const handleSubmit = async (e) => {
         // **Debugging Logs**
       console.log('Sending Task Data:', newTask); // Log task data being sent
 
-      const response = await fetch('http://localhost:3000/upload-task', {
+      const response = await fetch('http://localhost:3000/tasks/upload-task', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

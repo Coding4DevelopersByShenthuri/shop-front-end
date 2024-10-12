@@ -13,7 +13,7 @@ const UploadStaff = () => {
 
   // Fetch all staff on component load
   useEffect(() => {
-    fetch("http://localhost:3000/all-staffs") // Ensure this route is correct
+    fetch("http://localhost:3000/staff/all-staffs") // Ensure this route is correct
       .then(res => res.json())
       .then(data => setStaffData(data))
       .catch(err => console.error("Error fetching staff:", err));
