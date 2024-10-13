@@ -95,7 +95,7 @@ function EditProducts() {
     };
 
     // Update product data
-    fetch(`http://localhost:3000/product/${id}`, {
+    fetch(`http://localhost:3000/product/product/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"

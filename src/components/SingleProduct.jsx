@@ -8,7 +8,7 @@ const SingleProduct = () => {
 
   useEffect(() => {
     // Fetch product details based on the ID
-    fetch(`http://localhost:3000/product/${id}`)
+    fetch(`http://localhost:3000/product/product/${id}`)
       .then(res => {
         if (!res.ok) {
           throw new Error("Product not found");
