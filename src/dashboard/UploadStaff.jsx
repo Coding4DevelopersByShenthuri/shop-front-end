@@ -63,7 +63,7 @@ const UploadStaff = () => {
     formDataToSend.append('staffId', selectedStaffId);
     formDataToSend.append('image', staffImage);
 
-    fetch('http://localhost:3000/upload-staff-image', { // Ensure this route is correct
+    fetch('http://localhost:3000/staff/upload-staff-image', { // Ensure this route is correct
       method: 'POST',
       body: formDataToSend
     })
