@@ -67,7 +67,7 @@ function AddNewStaff() {
     console.log(staffObj);
 
     // Send staff data to db
-    fetch("http://localhost:3000/add-staff", {
+    fetch("http://localhost:3000/staff/add-staff", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
