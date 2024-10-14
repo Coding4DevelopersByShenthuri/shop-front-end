@@ -26,7 +26,7 @@ const ManageStaffs = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this staff member?');
     if (!confirmDelete) return;
 
-    fetch(`http://localhost:3000/staff/${id}`, {
+    fetch(`http://localhost:3000/staff/staff/${id}`, {
       method: "DELETE",
     })
       .then(res => res.json())

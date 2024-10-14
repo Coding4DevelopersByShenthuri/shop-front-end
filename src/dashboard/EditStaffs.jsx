@@ -50,7 +50,7 @@ function EditStaffs() {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/staff/${id}`, {
+      const response = await fetch(`http://localhost:3000/staff/staff/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"

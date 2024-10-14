@@ -160,7 +160,7 @@ const router = createBrowserRouter([
       {
         path: "edit-staffs/:id",
         element: <EditStaffs />,
-        loader: ({ params }) => fetch(`http://localhost:3000/staff/${params.id}`),
+        loader: ({ params }) => fetch(`http://localhost:3000/staff/staff/${params.id}`),
       },
       {
         path: "*", // Catch-all for undefined admin routes
