@@ -94,8 +94,7 @@ function UploadProduct() {
 
       // Insert the new product document into the database
       const productResponse = await axios.post('http://localhost:3000/product/upload-product', newProduct);
-      const productId = productResponse.data.insertedId;
-
+      const productId = productResponse.data._id;
       // If a file is selected, upload the file and update the product document with the image URL
       if (imageFile && productId) {
         const formData = new FormData();
