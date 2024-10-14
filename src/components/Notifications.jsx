@@ -12,7 +12,7 @@ const Notifications = () => {
     useEffect(() => {
         const fetchProductQuantities = async () => {
             try {
-                const response = await fetch('http://localhost:3000/stock_quantity');
+                const response = await fetch('http://localhost:3000/stock/stock_quantity');
                 if (!response.ok) {
                     throw new Error('Failed to fetch product quantities');
                 }
