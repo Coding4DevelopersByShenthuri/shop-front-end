@@ -11,6 +11,8 @@ function AddNewStaff() {
     "Security",
     "Cleaner",
     "Accountant",
+    "Customer service",
+    "Warehouse Staff",
     "HR"
   ];
 

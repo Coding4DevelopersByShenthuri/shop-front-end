@@ -6,28 +6,38 @@ function EditStaffs() {
   const staffRoles = [
     "Select Role",
     "Manager",
+    "Cashier",
     "Sales Associate",
     "Stock Clerk",
-    "Cashier",
-    "Customer Service",
-    "Warehouse Staff"
+    "Security",
+    "Cleaner",
+    "Accountant",
+    "Customer service",
+    "Warehouse Staff",
+    "HR"
   ];
 
   const { id } = useParams(); // Get the staff ID from the URL
   const staffData = useLoaderData(); // Use loader data to get staff details
 
   // State variables to control form inputs
+  const [staffID, setStaffID] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [location, setLocation] = useState('');
+  const [department, setDepartment] = useState('');
   const [selectedStaffRole, setSelectedStaffRole] = useState(staffRoles[0]);
 
   // Pre-populate the form with staff data from loader
   useEffect(() => {
     if (staffData) {
+      setStaffID(staffData.staffID || '');
       setName(staffData.name || '');
       setEmail(staffData.email || '');
       setPhone(staffData.phone || '');
+      setLocation(staffData.location || '');
+      setDepartment(staffData.department || '');
       setSelectedStaffRole(staffData.role || staffRoles[0]);
     }
   }, [staffData]);
@@ -43,9 +53,12 @@ function EditStaffs() {
     }
 
     const updateStaffObj = {
+      staffID,
       name,
       email,
       phone,
+      location,
+      department,
       role: selectedStaffRole
     };
 
@@ -77,6 +90,22 @@ function EditStaffs() {
       <h2 className='mb-8 text-3xl font-bold'>Update Staff Information</h2>
 
       <form onSubmit={handleUpdate} className="flex lg:w-[1180px] flex-col flex-wrap gap-4">
+        {/* Staff ID */}
+        <div className='lg:w-1/2'>
+          <div className="mb-2 block">
+            <Label htmlFor="staffID" value="Staff ID" />
+          </div>
+          <TextInput
+            id="staffID"
+            name="staffID"
+            value={staffID}  // Controlled component
+            onChange={(e) => setStaffID(e.target.value)}
+            placeholder="Staff ID"
+            required
+            type="text"
+          />
+        </div>
+
         {/* Staff Name */}
         <div className='lg:w-1/2'>
           <div className="mb-2 block">
@@ -122,6 +151,38 @@ function EditStaffs() {
             placeholder="Staff phone number"
             required
             type="tel"
+          />
+        </div>
+
+        {/* Location */}
+        <div className='lg:w-1/2'>
+          <div className="mb-2 block">
+            <Label htmlFor="location" value="Location" />
+          </div>
+          <TextInput
+            id="location"
+            name="location"
+            value={location}  // Controlled component
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Staff location"
+            required
+            type="text"
+          />
+        </div>
+
+        {/* Department */}
+        <div className='lg:w-1/2'>
+          <div className="mb-2 block">
+            <Label htmlFor="department" value="Department" />
+          </div>
+          <TextInput
+            id="department"
+            name="department"
+            value={department}  // Controlled component
+            onChange={(e) => setDepartment(e.target.value)}
+            placeholder="Staff department"
+            required
+            type="text"
           />
         </div>
 

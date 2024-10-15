@@ -56,6 +56,7 @@ function EditProducts() {
   const [selectedProductUnit, setSelectedProductUnit] = useState(productUnits[0]);
   const [selectedProductOrigin, setSelectedProductOrigin] = useState(productOrigins[0]);
   const [price, setPrice] = useState(''); // State for price
+  const [productID, setProductID] = useState(''); // State for product ID
 
   // Pre-populate the form with product data from loader
   useEffect(() => {
@@ -64,6 +65,7 @@ function EditProducts() {
       setSelectedProductUnit(productData.unit);
       setSelectedProductOrigin(productData.origin);
       setPrice(productData.price); // Set initial price value
+      setProductID(productData.productID); // Set initial product ID value
     }
   }, [productData]);
 
@@ -79,8 +81,8 @@ function EditProducts() {
     const category = selectedProductCategory;
     const origin = selectedProductOrigin;
 
-    if (category === "Select Category" || unit === "Select Unit" || origin === "Select Origin" || !price) {
-      alert("Please select valid options for Category, Unit, Origin, and provide a price.");
+    if (category === "Select Category" || unit === "Select Unit" || origin === "Select Origin" || !price || !productID) {
+      alert("Please select valid options for Category, Unit, Origin, provide a price, and Product ID.");
       return;
     }
 
@@ -91,7 +93,8 @@ function EditProducts() {
       unit,
       category,
       origin,
-      price // Include price in the update object
+      price, // Include price in the update object
+      productID // Include product ID in the update object
     };
 
     // Update product data
@@ -122,6 +125,22 @@ function EditProducts() {
       <h2 className='mb-8 text-3xl font-bold'>Update the Product Data</h2>
 
       <form onSubmit={handleUpdate} className="flex lg:w-[1180px] flex-col flex-wrap gap-4">
+        {/* Product ID */}
+        <div className='lg:w-1/2'>
+          <div className="mb-2 block">
+            <Label htmlFor="productID" value="Product ID" />
+          </div>
+          <TextInput
+            id="productID"
+            name="productID"
+            value={productID} // Controlled input for product ID
+            onChange={(e) => setProductID(e.target.value)} // Update product ID on change
+            placeholder="Product ID"
+            required
+            type="text"
+          />
+        </div>
+
         {/* Product Name */}
         <div className='lg:w-1/2'>
           <div className="mb-2 block">
