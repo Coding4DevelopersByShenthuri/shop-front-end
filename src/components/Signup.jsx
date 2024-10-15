@@ -8,6 +8,7 @@ const Signup = () => {
     const [error, setError] = useState(""); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [birthday, setBirthday] = useState(''); // State for birthday
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -16,9 +17,9 @@ const Signup = () => {
     const handleSignUp = (event) => {
         event.preventDefault();
         
-        // Basic validation for email and password
-        if (email === "" || password === "") {
-            setError("Email and password are required.");
+        // Basic validation for email, password, and birthday
+        if (email === "" || password === "" || birthday === "") {
+            setError("Email, password, and birthday are required.");
             return;
         }
         
@@ -78,6 +79,17 @@ const Signup = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                         className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
                                         placeholder="Password"
+                                    />
+                                </div>
+                                <div className="relative">
+                                    <input
+                                        id="birthday"
+                                        name="birthday"
+                                        type="date" // Use date input type for birthday
+                                        value={birthday}
+                                        onChange={(e) => setBirthday(e.target.value)}
+                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                                        placeholder="Birthday"
                                     />
                                 </div>
                                 {error && ( 
