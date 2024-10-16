@@ -2,7 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
-} from "react-router-dom"; 
+} from "react-router-dom";
 import App from "../App";
 import Home from "../home/Home";
 import Shop from "../shop/Shop";
@@ -19,7 +19,7 @@ import SingleProduct from "../shop/SingleProduct";
 import Signup from "../components/Signup";
 import Overview from "../pages/OverviewPage";
 import Login from "../components/Login";
-import PrivateRoute from "../PrivateRoute/PrivateRoute"; 
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Logout from "../components/Logout";
 import AnalyticsPage from "../pages/AnalyticsPage";
 import OrdersPage from "../pages/OrdersPage";
@@ -27,11 +27,12 @@ import ProductsPage from "../pages/ProductsPage";
 import SalesPage from "../pages/SalesPage";
 import SettingsPage from "../pages/SettingsPage";
 import UsersPage from "../pages/UsersPage";
-import ErrorBoundary from "../components/ErrorBoundary"; 
-import NotFound from "../components/NotFound"; 
+import ErrorBoundary from "../components/ErrorBoundary";
+import NotFound from "../components/NotFound";
 import UploadStaff from "../dashboard/UploadStaff";
 import Notifications from "../components/Notifications";
 import TaskManager from "../pages/TaskManager";
+import StaffAttendance from "../pages/StaffAttendance"; 
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -62,7 +63,8 @@ const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <SingleProduct />,
-        loader: ({ params }) => fetch(`http://localhost:3000/product/product/${params.id}`),
+        loader: async ({ params }) =>
+          fetch(`http://localhost:3000/product/product/${params.id}`),
       },
       {
         path: "/sign-up",
@@ -90,11 +92,11 @@ const router = createBrowserRouter([
           <DashboardLayout />
         </ErrorBoundary>
       </PrivateRoute>
-    ), 
+    ),
     children: [
       {
-        index: true,  // This will match the root /admin/dashboard
-        element: <Navigate to="overview" />,  // Redirect to overview page
+        index: true, // Default route for /admin/dashboard
+        element: <Navigate to="overview" />, // Redirect to overview page
       },
       {
         path: "overview",
@@ -137,7 +139,7 @@ const router = createBrowserRouter([
         element: <ManageProducts />,
       },
       {
-        path: "newstaffs",  
+        path: "newstaffs",
         element: <AddNewStaffs />,
       },
       {
@@ -146,21 +148,27 @@ const router = createBrowserRouter([
       },
       {
         path: "uploadstaff",
-        element: <UploadStaff />
+        element: <UploadStaff />,
       },
       {
-        path:"/admin/dashboard/notifications",
-        element: <Notifications />
+        path: "notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "attendance",
+        element: <StaffAttendance />,
       },
       {
         path: "edit-products/:id",
         element: <EditProducts />,
-        loader: ({ params }) => fetch(`http://localhost:3000/product/product/${params.id}`),
+        loader: async ({ params }) =>
+          fetch(`http://localhost:3000/product/product/${params.id}`),
       },
       {
         path: "edit-staffs/:id",
         element: <EditStaffs />,
-        loader: ({ params }) => fetch(`http://localhost:3000/staff/staff/${params.id}`),
+        loader: async ({ params }) =>
+          fetch(`http://localhost:3000/staff/staff/${params.id}`),
       },
       {
         path: "*", // Catch-all for undefined admin routes

@@ -10,6 +10,7 @@ import {
   HiOutlineUserCircle,
   HiBell,
   HiPhotograph,
+  HiCalendarCheck,
 } from "react-icons/hi";
 import {
   BarChart2,
@@ -25,7 +26,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
-// Simulate product data (replace this with API call if necessary)
+// Simulate product data (replace with API call if needed)
 const productQuantities = {
   category1: 950,
   category2: 1200,
@@ -34,13 +35,7 @@ const productQuantities = {
 
 // Function to check for low stock
 const checkLowStock = () => {
-  let alertCount = 0;
-  Object.keys(productQuantities).forEach((category) => {
-    if (productQuantities[category] < 1000) {
-      alertCount++;
-    }
-  });
-  return alertCount;
+  return Object.values(productQuantities).filter(qty => qty < 1000).length;
 };
 
 // Sidebar items including Task Manager
@@ -54,20 +49,15 @@ const SIDEBAR_ITEMS = [
   { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/admin/dashboard/settings" },
   { name: "Upload Products", icon: HiOutlineCloudUpload, color: "#F59E0B", href: "/admin/dashboard/upload" },
   { name: "Manage Products", icon: HiInbox, color: "#8B5CF6", href: "/admin/dashboard/manage" },
-  { name: "Task Manager", icon: ClipboardCheck, color: "#FF5733", href: "/admin/dashboard/taskmanager" }, 
+  { name: "Task Manager", icon: ClipboardCheck, color: "#FF5733", href: "/admin/dashboard/taskmanager" },
   { name: "Add New Staffs", icon: HiUserAdd, color: "#10B981", href: "/admin/dashboard/newstaffs" },
   { name: "Manage Staffs", icon: HiOutlineUserCircle, color: "#EC4899", href: "/admin/dashboard/managestaffs" },
+  { name: "Staff Attendance", icon: HiCalendarCheck, color: "#6EE7B7", href: "/admin/dashboard/staffattendance" },
   { name: "Upload Staff Image", icon: HiPhotograph, color: "#6366f1", href: "/admin/dashboard/uploadstaff" },
   { name: "Sign In", icon: HiArrowSmRight, color: "#10B981", href: "/login" },
   { name: "Log Out", icon: HiTable, color: "#EC4899", href: "/logout" },
   { name: "Help", icon: BiBuoy, color: "#8B5CF6", href: "#" },
-  { 
-    name: "Notifications", 
-    icon: HiBell, 
-    color: "#F59E0B", 
-    href: "/admin/dashboard/notifications",
-    hasAlert: checkLowStock() > 0 // Add this to handle alerts
-  },
+  { name: "Notifications", icon: HiBell, color: "#F59E0B", href: "/admin/dashboard/notifications", hasAlert: checkLowStock() > 0 },
 ];
 
 const SideBar = () => {
@@ -80,7 +70,8 @@ const SideBar = () => {
         className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${isSidebarOpen ? "w-64" : "w-20"}`}
         animate={{ width: isSidebarOpen ? 256 : 80 }}
       >
-        <div className="h-xl bg-gray-700 bg-opacity-80 backdrop-blur-md p-4 flex flex-col border-r border-gray-600 shadow-lg">
+        <div className="h-full bg-gray-700 bg-opacity-80 backdrop-blur-md p-4 flex flex-col border-r border-gray-600 shadow-lg">
+          {/* User Profile */}
           <div className="flex items-center p-2">
             <img
               className="w-10 h-10 rounded-full"
@@ -102,6 +93,7 @@ const SideBar = () => {
             </AnimatePresence>
           </div>
 
+          {/* Toggle Button */}
           <motion.button
             aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
             whileHover={{ scale: 1.1 }}
@@ -112,6 +104,7 @@ const SideBar = () => {
             <Menu size={24} />
           </motion.button>
 
+          {/* Sidebar Items */}
           <nav className="mt-8 flex-grow">
             {SIDEBAR_ITEMS.map((item) => (
               <Link key={item.name} to={item.href}>
