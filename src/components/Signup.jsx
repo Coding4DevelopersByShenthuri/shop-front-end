@@ -24,16 +24,43 @@ const Signup = () => {
         }
         
         createUser(email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log('User signed up:', user);
-                alert("Sign up Successfully!");
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log('User signed up:', user);
+            alert("Sign up Successfully!");
+    
+            // Call the API to create the user on the server
+            const uid = user.uid; // Assuming user object contains uid
+            const userData = { email, birthday }; // Adjust as necessary
+    
+            fetch(`http://localhost:3000/user/createuser/${uid}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to create user on server');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('User created on server:', data);
+                // Navigate to the desired location
                 navigate(from, { replace: true });
             })
             .catch((error) => {
+                console.error('Error calling API:', error);
                 setError(error.message);
-                console.error(`Error: ${error.message}`);
             });
+        })
+        .catch((error) => {
+            setError(error.message);
+            console.error(`Error: ${error.message}`);
+        });
+    
     };
 
     // Signup using Google account

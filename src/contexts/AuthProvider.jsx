@@ -61,14 +61,27 @@ const AuthProvider = ({ children }) => {
 
   // Effect hook to listen to authentication state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        try {
+          const response = await fetch(`http://localhost:3000/user/userdetail/${currentUser.uid}`);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const userData = await response.json();
+          // Merge user data with current user
+          const mergedData = { ...currentUser, ...userData };
+          setUser(mergedData);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
       setLoading(false);
-      console.log('Auth state changed: ', currentUser);
     });
-
+  
     return () => unsubscribe(); // Clean up subscription on unmount
   }, []);
+  
 
   // Context value to provide the authentication information
   const authInfo = {

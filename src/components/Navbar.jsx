@@ -8,9 +8,8 @@ import { AuthContext } from '../contexts/AuthProvider';
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSticky, setSticky] = useState(false);
-
     const { user } = useContext(AuthContext);
-    console.log(user);
+
     
     // Toggle menu
     const toggleMenu = () => {
@@ -78,7 +77,7 @@ const Navbar = () => {
                             <FaBarsStaggered className='w-5 hover:text-blue-700' />
                         </button>
                     </div>
-
+                    
                     {/* Menu button for mobile devices */}
                     <div className='md:hidden'>
                         <button 
@@ -105,6 +104,7 @@ const Navbar = () => {
                         className='block text-base text-white uppercase cursor-pointer bg-blue-600 px-4 py-2 rounded'>
                         Sign Up
                     </Link>
+                    
                 </div>
             </nav>
         </header>
