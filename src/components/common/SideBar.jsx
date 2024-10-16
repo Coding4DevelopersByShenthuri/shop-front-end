@@ -10,7 +10,7 @@ import {
   HiOutlineUserCircle,
   HiBell,
   HiPhotograph,
-  HiCalendarCheck,
+  HiUserGroup,
 } from "react-icons/hi";
 import {
   BarChart2,
@@ -52,7 +52,7 @@ const SIDEBAR_ITEMS = [
   { name: "Task Manager", icon: ClipboardCheck, color: "#FF5733", href: "/admin/dashboard/taskmanager" },
   { name: "Add New Staffs", icon: HiUserAdd, color: "#10B981", href: "/admin/dashboard/newstaffs" },
   { name: "Manage Staffs", icon: HiOutlineUserCircle, color: "#EC4899", href: "/admin/dashboard/managestaffs" },
-  { name: "Staff Attendance", icon: HiCalendarCheck, color: "#6EE7B7", href: "/admin/dashboard/staffattendance" },
+  { name: "Staff Attendance", icon: HiUserGroup, color: "#6EE7B7", href: "/admin/dashboard/attendance" },
   { name: "Upload Staff Image", icon: HiPhotograph, color: "#6366f1", href: "/admin/dashboard/uploadstaff" },
   { name: "Sign In", icon: HiArrowSmRight, color: "#10B981", href: "/login" },
   { name: "Log Out", icon: HiTable, color: "#EC4899", href: "/logout" },
