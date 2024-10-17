@@ -8,9 +8,12 @@ const StaffAttendance = () => {
     // Fetch staff data from the API
     const fetchStaffData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/staff"); // Adjust the URL according to your API
+        const response = await fetch("http://localhost:3000/staff/all-staffs");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
         const data = await response.json();
-        setStaffList(data);
+        setStaffList(data); // Assuming data is an array of staff objects
       } catch (error) {
         console.error("Error fetching staff data:", error);
       }
@@ -30,12 +33,17 @@ const StaffAttendance = () => {
     e.preventDefault();
     // Process the attendance data and send it to the backend
     try {
+      const attendanceEntries = Object.entries(attendanceData).map(([staffId, present]) => ({
+        staffId,
+        present,
+      }));
+
       await fetch("http://localhost:3000/attendance", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(attendanceData),
+        body: JSON.stringify(attendanceEntries), // Send structured data
       });
       alert("Attendance updated successfully!");
     } catch (error) {
@@ -44,32 +52,34 @@ const StaffAttendance = () => {
   };
 
   return (
-    <div className="staff-attendance">
-      <h2>Staff Attendance</h2>
+    <div className="staff-attendance p-5">
+      <h2 className="text-xl font-bold mb-4">Staff Attendance</h2>
       <form onSubmit={handleSubmit}>
-        <table>
+        <table className="min-w-full bg-white border border-gray-300">
           <thead>
-            <tr>
-              <th>Name</th>
-              <th>Attendance</th>
+            <tr className="bg-gray-200 text-gray-600">
+              <th className="py-2 px-4 border-b">Name</th>
+              <th className="py-2 px-4 border-b">Attendance</th>
             </tr>
           </thead>
           <tbody>
             {staffList.map((staff) => (
-              <tr key={staff.id}>
-                <td>{staff.name}</td>
-                <td>
+              <tr key={staff._id} className="hover:bg-gray-100">
+                <td className="py-2 px-4 border-b">{staff.name}</td>
+                <td className="py-2 px-4 border-b">
                   <input
                     type="checkbox"
-                    checked={attendanceData[staff.id] || false}
-                    onChange={() => handleAttendanceChange(staff.id)}
+                    checked={attendanceData[staff._id] || false} // Use _id as the key
+                    onChange={() => handleAttendanceChange(staff._id)} // Use _id as the key
                   />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <button type="submit">Submit Attendance</button>
+        <button type="submit" className="mt-6 w-full bg-blue-700 text-white hover:bg-blue-600 py-3 text-md rounded-md">
+          Submit Attendance
+        </button>
       </form>
     </div>
   );
