@@ -1,13 +1,13 @@
 const TaskList = ({ tasks, updateTaskStatus }) => {
   return (
-    <div>
+    <div className="w-[100%]">
       {tasks.length === 0 ? (
         <p className="text-gray-600">No tasks available.</p>
       ) : (
         tasks.map((task) => (
           <div
             key={task._id || task.id}
-            className={`border p-4 mb-4 rounded shadow 
+            className={`border p-4 mb-4 rounded shadow mr-6
               ${task.status === 'Completed' ? 'bg-green-100' 
               : task.status === 'In Progress' ? 'bg-yellow-100' 
               : 'bg-red-100'}`}

@@ -46,13 +46,13 @@ const TaskManager = () => {
     });
   };
 
-  const updateTaskStatus = (taskId, status) => {
-    const updatedTasks = tasks.map((task) =>
-      task._id === taskId ? { ...task, status: status } : task // Update using taskId
-    );
-    setTasks(updatedTasks);
-    console.log("Updated tasks: ", updatedTasks);
-  };
+  // const updateTaskStatus = (taskId, status) => {
+  //   const updatedTasks = tasks.map((task) =>
+  //     task._id === taskId ? { ...task, status: status } : task // Update using taskId
+  //   );
+  //   setTasks(updatedTasks);
+  //   console.log("Updated tasks: ", updatedTasks);
+  // };
 
   return (
     <div className="task-manager-container p-4">
@@ -73,11 +73,6 @@ const TaskManager = () => {
 
       {/* Show error message if there was an issue fetching tasks */}
       {error && <p className="text-red-500">{error}</p>}
-
-      {/* Task List for displaying tasks */}
-      <div className="task-list">
-        <TaskList tasks={tasks} updateTaskStatus={updateTaskStatus} />
-      </div>
     </div>
   );
 };

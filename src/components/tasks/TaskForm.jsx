@@ -30,7 +30,7 @@ const TaskForm = ({ addTask }) => {
     const fetchStaffMembers = async () => {
       setLoading(true); // Show loading spinner
       try {
-        const response = await fetch('http://localhost:3000/staff/all-staffs');
+        const response = await fetch('http://localhost:3000/staff/all-staff-with-task');
         if (!response.ok) throw new Error('Failed to fetch staff members.');
         const data = await response.json();
         setStaffMembers(data);
