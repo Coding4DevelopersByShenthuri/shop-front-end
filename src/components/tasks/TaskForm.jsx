@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const TaskForm = ({ addTask }) => {
+const TaskForm = () => {
   const [taskData, setTaskData] = useState({
     description: '',
     priority: 'Medium',
@@ -8,11 +8,11 @@ const TaskForm = ({ addTask }) => {
     status: 'Pending',
   });
 
-  const [staffMembers, setStaffMembers] = useState([]); // Fetch staff members
-  const [assignments, setAssignments] = useState({}); // Track which staff is assigned to each task
-  const [error, setError] = useState(''); // Error messages
-  const [confirmationMessage, setConfirmationMessage] = useState(''); // Success messages
-  const [loading, setLoading] = useState(false); // Loading state for async tasks
+  const [staffMembers, setStaffMembers] = useState([]);
+  const [assignments, setAssignments] = useState({});
+  const [error, setError] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const predefinedTasks = [
     'Restock Shelves',
@@ -28,7 +28,7 @@ const TaskForm = ({ addTask }) => {
   // Fetch staff members from the server
   useEffect(() => {
     const fetchStaffMembers = async () => {
-      setLoading(true); // Show loading spinner
+      setLoading(true);
       try {
         const response = await fetch('http://localhost:3000/staff/all-staff-with-task');
         if (!response.ok) throw new Error('Failed to fetch staff members.');
@@ -38,54 +38,56 @@ const TaskForm = ({ addTask }) => {
         console.error('Error fetching staff members:', error);
         setError('Failed to fetch staff members. Please try again later.');
       } finally {
-        setLoading(false); // Hide loading spinner
+        setLoading(false);
       }
     };
     fetchStaffMembers();
   }, []);
 
   // Handle form submission
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
-  setConfirmationMessage('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setConfirmationMessage('');
 
-  const tasksToAssign = predefinedTasks.map((task) => ({
-    title: task,
-    assignedTo: assignments[task] || '', // Get assigned staff for each task
-  }));
+    const tasksToAssign = predefinedTasks.map((task) => ({
+      title: task,
+      assignedTo: assignments[task] || '',
+    }));
 
     // Validate if all staff members are selected
-  const unassignedTasks = tasksToAssign.filter(task => !task.assignedTo);
-  if (unassignedTasks.length) {
-    setError('Please assign staff to all tasks.');
-    return;
-  }
+    const unassignedTasks = tasksToAssign.filter((task) => !task.assignedTo);
+    if (unassignedTasks.length) {
+      setError('Please assign staff to all tasks.');
+      return;
+    }
 
-  try {
-    setLoading(true); // Set loading state before API calls
+    // Validate task description and due date
+    if (!taskData.description) {
+      setError('Task description is required.');
+      return;
+    }
+    if (!taskData.dueDate) {
+      setError('Due date is required.');
+      return;
+    }
 
-    // Create an array to hold the responses for all tasks
-    const responses = await Promise.all(tasksToAssign.map(async (task) => {
-      const newTask = {
-        ...taskData,
-        title: task.title,
-        staffId: task.assignedTo, // Use the assigned staff ID
-      };
+    try {
+      setLoading(true);
+      const responses = await Promise.all(tasksToAssign.map(async (task) => {
+        const newTask = {
+          ...taskData,
+          title: task.title,
+          staffId: task.assignedTo,
+        };
 
-        // **Debugging Logs**
-      console.log('Sending Task Data:', newTask); // Log task data being sent
-
-      const response = await fetch('http://localhost:3000/tasks/upload-task', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newTask),
-      });
-
-        console.log('Response status:', response.status); // Log status
-        
+        const response = await fetch('http://localhost:3000/tasks/upload-task', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newTask),
+        });
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -93,27 +95,21 @@ const handleSubmit = async (e) => {
           throw new Error(`Error ${response.status}: ${errorData.message || 'Task could not be saved.'}`);
         }
 
-        const responseData = await response.json();
-      console.log('Response data:', responseData); // Log full response
-      return responseData; // Return the successful response
-    }));
-
-    // Add all tasks to the parent component
-    responses.forEach((response) => addTask(response));
+        return await response.json();
+      }));
 
       setConfirmationMessage('Tasks assigned successfully!');
-      setAssignments({}); // Reset assignments
-      setTaskData({ description: '', priority: 'Medium', dueDate: '', status: 'Pending' }); // Reset form fields
+      setAssignments({});
+      setTaskData({ description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
 
-      // Hide the confirmation message after 3 seconds
-    setTimeout(() => setConfirmationMessage(''), 3000);
-  } catch (error) {
-    console.error('Error saving tasks:', error);
-    setError('Failed to save tasks. Please try again later.');
-  } finally {
-    setLoading(false); // End loading state
-  }
-};
+      setTimeout(() => setConfirmationMessage(''), 3000);
+    } catch (error) {
+      console.error('Error saving tasks:', error);
+      setError('Failed to save tasks. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="task-form max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg">

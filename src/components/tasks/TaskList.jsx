@@ -1,4 +1,10 @@
-const TaskList = ({ tasks, updateTaskStatus }) => {
+import axios from 'axios';
+
+const TaskList = ({ tasks,updateTaskStatus }) => {
+
+
+
+
   return (
     <div className="w-[100%]">
       {tasks.length === 0 ? (
@@ -7,7 +13,7 @@ const TaskList = ({ tasks, updateTaskStatus }) => {
         tasks.map((task) => (
           <div
             key={task._id || task.id}
-            className={`border p-4 mb-4 rounded shadow mr-6
+            className={`border p-4 mb-4 rounded shadow mr-7
               ${task.status === 'Completed' ? 'bg-green-100' 
               : task.status === 'In Progress' ? 'bg-yellow-100' 
               : 'bg-red-100'}`}
