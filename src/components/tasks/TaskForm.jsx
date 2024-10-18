@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 
 const TaskForm = () => {
   const [taskData, setTaskData] = useState({
-    description: '',
-    priority: 'Medium',
-    dueDate: '',
+    staffId: '', 
+    title: '', // Add title field to taskData
+    description: '', 
+    priority: 'Medium', 
+    dueDate: '', 
     status: 'Pending',
   });
 
@@ -50,18 +52,6 @@ const TaskForm = () => {
     setError('');
     setConfirmationMessage('');
 
-    const tasksToAssign = predefinedTasks.map((task) => ({
-      title: task,
-      assignedTo: assignments[task] || '',
-    }));
-
-    // Validate if all staff members are selected
-    const unassignedTasks = tasksToAssign.filter((task) => !task.assignedTo);
-    if (unassignedTasks.length) {
-      setError('Please assign staff to all tasks.');
-      return;
-    }
-
     // Validate task description and due date
     if (!taskData.description) {
       setError('Task description is required.');
@@ -74,38 +64,35 @@ const TaskForm = () => {
 
     try {
       setLoading(true);
-      const responses = await Promise.all(tasksToAssign.map(async (task) => {
-        const newTask = {
-          ...taskData,
-          title: task.title,
-          staffId: task.assignedTo,
-        };
 
-        const response = await fetch('http://localhost:3000/tasks/upload-task', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newTask),
-        });
+      // Assign task to the backend
+      const newTask = {
+        ...taskData,
+        title: taskData.title, // Ensure task title is included in the request
+      };
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('Backend Error:', errorData);
-          throw new Error(`Error ${response.status}: ${errorData.message || 'Task could not be saved.'}`);
-        }
+      const response = await fetch('http://localhost:3000/tasks/upload-task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTask), // Send new task with title and other details
+      });
 
-        return await response.json();
-      }));
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Backend Error:', errorData);
+        throw new Error(`Error ${response.status}: ${errorData.message || 'Task could not be saved.'}`);
+      }
 
-      setConfirmationMessage('Tasks assigned successfully!');
+      setConfirmationMessage('Task assigned successfully!');
       setAssignments({});
-      setTaskData({ description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
+      setTaskData({ staffId: '', title: '', description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
 
       setTimeout(() => setConfirmationMessage(''), 3000);
     } catch (error) {
-      console.error('Error saving tasks:', error);
-      setError('Failed to save tasks. Please try again later.');
+      console.error('Error saving task:', error);
+      setError('Failed to save task. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -119,27 +106,45 @@ const TaskForm = () => {
       {error && <p className="text-red-500 mb-2">{error}</p>}
       {confirmationMessage && <p className="text-green-500 mb-2">{confirmationMessage}</p>}
 
-      {/* Task Selection for each staff member */}
-      {predefinedTasks.map((task, index) => (
-        <div key={index} className="mb-4">
-          <label className="block mb-1">
-            {task}:
-            <select
-              value={assignments[task] || ''}
-              onChange={(e) => setAssignments({ ...assignments, [task]: e.target.value })}
-              required
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
-              <option value="">Select Staff Member</option>
-              {staffMembers.map((staff) => (
-                <option key={staff._id} value={staff._id}>
-                  {staff.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      ))}
+      {/* Dropdown for Staff Members */}
+      <div className="mb-4">
+        <label className="block mb-1">
+          Select Staff Member:
+          <select
+            value={taskData.staffId}
+            onChange={(e) => setTaskData({ ...taskData, staffId: e.target.value })}
+            required
+            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="">Select Staff Member</option>
+            {staffMembers.map((staff) => (
+              <option key={staff._id} value={staff._id}>
+                {staff.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      {/* Dropdown for Predefined Tasks */}
+      <div className="mb-4">
+        <label className="block mb-1">
+          Select Task:
+          <select
+            value={taskData.title} // Bind title to the selected task
+            onChange={(e) => setTaskData({ ...taskData, title: e.target.value })}
+            required
+            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="">Select Task</option>
+            {predefinedTasks.map((task, index) => (
+              <option key={index} value={task}>
+                {task}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
       {/* Task Description */}
       <div className="mb-4">
@@ -191,7 +196,7 @@ const TaskForm = () => {
         className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         disabled={loading}
       >
-        {loading ? 'Saving Tasks...' : 'Add Tasks'}
+        {loading ? 'Saving Task...' : 'Add Task'}
       </button>
     </form>
   );
