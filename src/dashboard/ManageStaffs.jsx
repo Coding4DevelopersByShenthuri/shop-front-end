@@ -7,7 +7,7 @@ const ManageStaffs = () => {
   const [allStaffs, setAllStaffs] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // New error state
-  const qrCodeRef = useRef();
+  const qrCodeRef = useRef(null); // Remove the initialization here
 
   const downloadQrCode = (staff) => {
     const qrCodeElement = qrCodeRef.current;
@@ -126,7 +126,7 @@ const ManageStaffs = () => {
                   </button>
                 </Table.Cell>
                 <Table.Cell>
-                  <div ref={qrCodeRef} style={{ cursor: 'pointer' }} onClick={downloadQrCode(staff)} className='w-11'>
+                  <div ref={qrCodeRef} style={{ cursor: 'pointer' }} onClick={() => downloadQrCode(staff)} className='w-11'>
                     <QRCode value={staff._id} className='w-11 h-10' />
                   </div>
                 </Table.Cell>
