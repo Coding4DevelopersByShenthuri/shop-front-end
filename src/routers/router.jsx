@@ -33,6 +33,7 @@ import UploadStaff from "../dashboard/UploadStaff";
 import Notifications from "../components/Notifications";
 import TaskManager from "../pages/TaskManager";
 import StaffAttendance from "../pages/StaffAttendance"; 
+import QRCodePage from "../pages/QRCodePage";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -157,6 +158,10 @@ const router = createBrowserRouter([
       {
         path: "attendance",
         element: <StaffAttendance />,
+      },
+      {
+        path: "qrcode",
+        element: <QRCodePage />
       },
       {
         path: "edit-products/:id",

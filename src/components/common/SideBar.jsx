@@ -11,6 +11,7 @@ import {
   HiBell,
   HiPhotograph,
   HiUserGroup,
+  HiCheckCircle,
 } from "react-icons/hi";
 import {
   BarChart2,
@@ -24,7 +25,7 @@ import {
 import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, color, motion } from "framer-motion";
 
 // Simulate product data (replace with API call if needed)
 const productQuantities = {
@@ -54,6 +55,7 @@ const SIDEBAR_ITEMS = [
   { name: "Manage Staffs", icon: HiOutlineUserCircle, color: "#EC4899", href: "/admin/dashboard/managestaffs" },
   { name: "Staff Attendance", icon: HiUserGroup, color: "#6EE7B7", href: "/admin/dashboard/attendance" },
   { name: "Upload Staff Image", icon: HiPhotograph, color: "#6366f1", href: "/admin/dashboard/uploadstaff" },
+  { name: "QR Attendance", icon: HiCheckCircle, color: "#F59E0B", href: "/admin/dashboard/qrcode"},
   { name: "Sign In", icon: HiArrowSmRight, color: "#10B981", href: "/login" },
   { name: "Log Out", icon: HiTable, color: "#EC4899", href: "/logout" },
   { name: "Help", icon: BiBuoy, color: "#8B5CF6", href: "#" },
