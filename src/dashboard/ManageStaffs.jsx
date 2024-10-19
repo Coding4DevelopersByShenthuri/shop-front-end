@@ -1,11 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Table } from "flowbite-react";
 import { Link } from 'react-router-dom';
+import QRCode from "react-qr-code";
 
 const ManageStaffs = () => {
   const [allStaffs, setAllStaffs] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // New error state
+  const qrRef = useRef(null);
+
+  const downloadQrCode = () => {
+    const canvas = qrRef.current.querySelector('canvas');
+    if (canvas) {
+      const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'qrcode.png';
+      link.click();
+    }
+  };
 
   useEffect(() => {
     fetch("http://localhost:3000/staff/all-staffs") // API endpoint to get all staff members
@@ -87,6 +100,12 @@ const ManageStaffs = () => {
                     className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-red-700 ml-2'>
                     Delete
                   </button>
+                  <div>
+                  <div ref={qrRef}>
+                    <QRCode value={staff._id} className='w-20'/>
+                  </div>
+                  <button onClick={downloadQrCode}>Download QR Code</button>
+                  </div>
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
