@@ -4,6 +4,7 @@ const StaffAttendance = () => {
   const [staffList, setStaffList] = useState([]);
   const [attendanceData, setAttendanceData] = useState({});
   const [selectedDate, setSelectedDate] = useState(""); // State to hold the selected date
+  const reportDate = new Date().toLocaleDateString(); // Default report generation date
 
   // Fetch staff data on component mount
   useEffect(() => {
@@ -56,7 +57,7 @@ const StaffAttendance = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ attendanceEntries, selectedDate }), // Send both attendance data and selected date
+        body: JSON.stringify({ attendanceEntries, selectedDate, reportDate }), // Send both attendance data and selected date
       });
 
       if (response.ok) {
@@ -76,7 +77,7 @@ const StaffAttendance = () => {
         {/* Date Selector */}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="attendance-date">
-            Select Date:
+            Select Attendance Date:
           </label>
           <input
             type="date"

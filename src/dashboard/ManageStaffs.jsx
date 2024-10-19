@@ -62,6 +62,7 @@ const ManageStaffs = () => {
             <Table.HeadCell>Email</Table.HeadCell>
             <Table.HeadCell>Phone</Table.HeadCell>
             <Table.HeadCell>Actions</Table.HeadCell>
+            <Table.HeadCell>Download QR</Table.HeadCell>
           </Table.Head>
           {allStaffs.map((staff, index) => (
             <Table.Body className='divide-y' key={staff._id}>
