@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password)
       .catch(error => {
-        console.error("Error creating user:", error);
+        return error.message
       })
       .finally(() => setLoading(false));
   };
@@ -55,13 +55,14 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+    window.location.reload();
     return signOut(auth)
     .finally(() => setLoading(false));
   };
 
-  // Effect hook to listen to authentication state changes
-  useEffect(() => {
+  const setUserDetails = () => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setLoading(true); // Ensure loading starts when auth state changes
       if (currentUser) {
         try {
           const response = await fetch(`http://localhost:3000/user/userdetail/${currentUser.uid}`);
@@ -75,11 +76,19 @@ const AuthProvider = ({ children }) => {
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
+      } else {
+        // Handle case when currentUser is null (user not logged in)
+        setUser(null);
       }
-      setLoading(false);
+      setLoading(false); // Ensure loading ends after fetching or if no user
     });
+    console.log('cc')
+  };
   
-    return () => unsubscribe(); // Clean up subscription on unmount
+
+  // Effect hook to listen to authentication state changes
+  useEffect(() => {
+    setUserDetails()
   }, []);
   
 
@@ -91,6 +100,7 @@ const AuthProvider = ({ children }) => {
     user,
     login,
     logOut,
+    setUserDetails,
     loading
   };
 

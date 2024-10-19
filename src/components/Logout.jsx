@@ -7,7 +7,7 @@ const Logout = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const from = location.state?.from?.pathname || "/";
+    const from = "/";
     
     const handleLogout = () => {
         logOut().then(() => {

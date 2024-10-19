@@ -19,7 +19,7 @@ import SingleProduct from "../shop/SingleProduct";
 import Signup from "../components/Signup";
 import Overview from "../pages/OverviewPage";
 import Login from "../components/Login";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import AdminRoute from "../PrivateRoute/AdminRoute";
 import Logout from "../components/Logout";
 import AnalyticsPage from "../pages/AnalyticsPage";
 import OrdersPage from "../pages/OrdersPage";
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/logout",
-        element: <Logout />,
+        element: <Logout/>,
       },
       {
         path: "*", // Catch-all for undefined routes
@@ -89,11 +89,11 @@ const router = createBrowserRouter([
   {
     path: "/admin/dashboard",
     element: (
-      <PrivateRoute>
+      <AdminRoute>
         <ErrorBoundary>
           <DashboardLayout />
         </ErrorBoundary>
-      </PrivateRoute>
+      </AdminRoute>
     ),
     children: [
       {

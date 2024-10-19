@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import googleLogo from "../assets/google-logo.svg"; // Ensure the path is correct
 
 const Signup = () => {
-    const { createUser, loginwithGoogle } = useContext(AuthContext);
+    const { createUser, loginWithGoogle,setUserDetails } = useContext(AuthContext);
     const [error, setError] = useState(""); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,10 +25,17 @@ const Signup = () => {
         
         createUser(email, password)
         .then((userCredential) => {
+            if (typeof userCredential !== 'object' && userCredential.includes('Firebase')) {
+                if (userCredential.includes('Firebase: Error (auth/email-already-in-use)')) {
+                    setError('User already exists in the system.');
+                } else {
+                    setError(userCredential);
+                }
+                return;
+            }
             const user = userCredential.user;
+            if(!user) return
             console.log('User signed up:', user);
-            alert("Sign up Successfully!");
-    
             // Call the API to create the user on the server
             const uid = user.uid; // Assuming user object contains uid
             const userData = { email, birthday }; // Adjust as necessary
@@ -48,6 +55,7 @@ const Signup = () => {
             })
             .then((data) => {
                 console.log('User created on server:', data);
+                setUserDetails()
                 // Navigate to the desired location
                 navigate(from, { replace: true });
             })
@@ -57,6 +65,7 @@ const Signup = () => {
             });
         })
         .catch((error) => {
+            console.log(error)
             setError(error.message);
             console.error(`Error: ${error.message}`);
         });
@@ -65,11 +74,33 @@ const Signup = () => {
 
     // Signup using Google account
     const handleRegister = () => {
-        loginwithGoogle()
+        loginWithGoogle()
             .then((result) => {
                 const user = result.user;
-                alert("Sign up Successfully!");
-                navigate(from, { replace: true });
+                const userData = { email:user.email , birthday:'' };
+                fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData),
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to create user on server');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('User created on server:', data);
+                    setUserDetails()
+                    // Navigate to the desired location
+                    navigate(from, { replace: true });
+                })
+                .catch((error) => {
+                    console.error('Error calling API:', error);
+                    setError(error.message);
+                });
             })
             .catch((error) => {
                 setError(error.message);

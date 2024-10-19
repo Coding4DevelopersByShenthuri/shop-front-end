@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import googleLogo from "../assets/google-logo.svg";
 
 const Login = () => {
-    const { login, loginWithGoogle } = useContext(AuthContext); // Renamed 'loginwithGoogle' to 'loginWithGoogle' for consistency
+    const { login, loginWithGoogle,setUserDetails } = useContext(AuthContext); // Renamed 'loginwithGoogle' to 'loginWithGoogle' for consistency
     const [error, setError] = useState(""); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,7 +29,12 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .catch((error) => {
-                setError(error.message); 
+                if (error.message.includes('Firebase: Error (auth/invalid-credential).')) {
+                    setError('Invalid credential');
+                } else {
+                    setError(userCredential);
+                }
+                return;
             });
     };
 
@@ -38,8 +43,30 @@ const Login = () => {
         loginWithGoogle()
             .then((result) => {
                 const user = result.user;
-                alert("Sign up Successful!");
-                navigate(from, { replace: true });
+                const userData = { email:user.email , birthday:'' };
+                fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData),
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to create user on server');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('User created on server:', data);
+                    setUserDetails()
+                    // Navigate to the desired location
+                    navigate(from, { replace: true });
+                })
+                .catch((error) => {
+                    console.error('Error calling API:', error);
+                    setError(error.message);
+                });
             })
             .catch((error) => {
                 setError(error.message);

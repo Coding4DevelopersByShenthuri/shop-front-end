@@ -8,7 +8,7 @@ import { AuthContext } from '../contexts/AuthProvider';
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSticky, setSticky] = useState(false);
-    const { user } = useContext(AuthContext);
+    const { user,logOut } = useContext(AuthContext);
 
     
     // Toggle menu
@@ -67,17 +67,53 @@ const Navbar = () => {
                     </ul>
 
                     {/* Sign Up button for large devices */}
-                    <div className='space-x-12 hidden lg:flex items-center'>
+                    {!user && <div className='hidden lg:flex items-center'>
                         <Link 
-                            to='/signup' 
+                            to='/sign-up' 
                             className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition'>
-                            Sign Up
+                            Signup
+                        </Link>
+                        <Link 
+                            to='/login' 
+                            className='px-4 py-2 text-white bg-green-600 rounded hover:bg-blue-700 transition ml-4 mr-4'>
+                            Login
                         </Link>
                         <button aria-label="Toggle menu" onClick={toggleMenu}>
                             <FaBarsStaggered className='w-5 hover:text-blue-700' />
                         </button>
-                    </div>
-                    
+                    </div>}
+                    {user && user.userDetails && user?.userDetails[0]?.role === 'user' && <div className='hidden lg:flex items-center'>
+                        <Link 
+                            to='/user/dashboard/overview' 
+                            className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition'>
+                            User Dashboard
+                        </Link>
+                        <button 
+                            onClick={logOut} 
+                            className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4' 
+                        >
+                            Logout
+                        </button>
+                        <button aria-label="Toggle menu" onClick={toggleMenu}>
+                            <FaBarsStaggered className='w-5 hover:text-blue-700' />
+                        </button>
+                    </div>}
+                    {user && user.userDetails && user?.userDetails[0]?.role === 'admin' && <div className='hidden lg:flex items-center'>
+                        <Link 
+                            to='/admin/dashboard/overview' 
+                            className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition'>
+                            Admin Dashboard
+                        </Link>
+                        <button 
+                            onClick={logOut} 
+                            className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4' 
+                        >
+                            Logout
+                        </button>
+                        <button aria-label="Toggle menu" onClick={toggleMenu}>
+                            <FaBarsStaggered className='w-5 hover:text-blue-700' />
+                        </button>
+                    </div>}
                     {/* Menu button for mobile devices */}
                     <div className='md:hidden'>
                         <button 
@@ -100,7 +136,7 @@ const Navbar = () => {
 
                     {/* Sign Up button for mobile devices */}
                     <Link 
-                        to='/signup' 
+                        to='/sign-up' 
                         className='block text-base text-white uppercase cursor-pointer bg-blue-600 px-4 py-2 rounded'>
                         Sign Up
                     </Link>
