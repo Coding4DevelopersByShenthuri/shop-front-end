@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import App from "../App";
 import Home from "../home/Home";
+import UserHome from "../userHome/userHome";
 import Shop from "../shop/Shop";
 import About from "../components/About";
 import Blog from "../components/Blog";
@@ -20,6 +21,7 @@ import Signup from "../components/Signup";
 import Overview from "../pages/OverviewPage";
 import Login from "../components/Login";
 import AdminRoute from "../PrivateRoute/AdminRoute";
+import UserRoute from "../PrivateRoute/UserRoute";
 import AnalyticsPage from "../pages/AnalyticsPage";
 import OrdersPage from "../pages/OrdersPage";
 import ProductsPage from "../pages/ProductsPage";
@@ -179,6 +181,26 @@ const router = createBrowserRouter([
         path: "*", // Catch-all for undefined admin routes
         element: <NotFound />,
       },
+    ],
+  },
+  {
+    path: "/user/dashboard",
+    element: (
+      <UserRoute>
+        <ErrorBoundary>
+        <App />
+        </ErrorBoundary>
+      </UserRoute>
+    ),
+    children: [
+      {
+        index: true, // Default route for /admin/dashboard
+        element: <Navigate to="overview" />, // Redirect to overview page
+      },
+      {
+        path: "overview",
+        element: <UserHome />,
+      }
     ],
   },
 ]);
