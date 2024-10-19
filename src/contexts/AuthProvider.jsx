@@ -55,9 +55,12 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+
     window.location.reload();
     return signOut(auth)
-    .finally(() => setLoading(false));
+    .finally(() => {
+      window.location.href = '/';
+      setLoading(false)});
   };
 
   const setUserDetails = () => {

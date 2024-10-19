@@ -20,7 +20,6 @@ import Signup from "../components/Signup";
 import Overview from "../pages/OverviewPage";
 import Login from "../components/Login";
 import AdminRoute from "../PrivateRoute/AdminRoute";
-import Logout from "../components/Logout";
 import AnalyticsPage from "../pages/AnalyticsPage";
 import OrdersPage from "../pages/OrdersPage";
 import ProductsPage from "../pages/ProductsPage";
@@ -75,10 +74,6 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
-      },
-      {
-        path: "/logout",
-        element: <Logout/>,
       },
       {
         path: "*", // Catch-all for undefined routes

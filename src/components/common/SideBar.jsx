@@ -56,16 +56,16 @@ const SIDEBAR_ITEMS = [
   { name: "Manage Staffs", icon: HiOutlineUserCircle, color: "#EC4899", href: "/admin/dashboard/managestaffs" },
   { name: "Staff Attendance", icon: HiUserGroup, color: "#6EE7B7", href: "/admin/dashboard/attendance" },
   { name: "Upload Staff Image", icon: HiPhotograph, color: "#6366f1", href: "/admin/dashboard/uploadstaff" },
-  { name: "QR Attendance", icon: HiCheckCircle, color: "#F59E0B", href: "/admin/dashboard/qrcode"},
-  { name: "Birthday Reminder", icon: HiOutlineCake, color: "#10B981", href: "/admin/dashboard/birthday-reminders"},
+  { name: "QR Attendance", icon: HiCheckCircle, color: "#F59E0B", href: "/admin/dashboard/qrcode" },
+  { name: "Birthday Reminder", icon: HiOutlineCake, color: "#10B981", href: "/admin/dashboard/birthday-reminders" },
   { name: "Sign In", icon: HiArrowSmRight, color: "#10B981", href: "/login" },
-  { name: "Log Out", icon: HiTable, color: "#EC4899", href: "/logout" },
+  { name: "Log Out", icon: HiTable, color: "#EC4899" },
   { name: "Help", icon: BiBuoy, color: "#8B5CF6", href: "#" },
   { name: "Notifications", icon: HiBell, color: "#F59E0B", href: "/admin/dashboard/notifications", hasAlert: checkLowStock() > 0 },
 ];
 
 const SideBar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
@@ -111,8 +111,12 @@ const SideBar = () => {
           {/* Sidebar Items */}
           <nav className="mt-8 flex-grow">
             {SIDEBAR_ITEMS.map((item) => (
-              <Link key={item.name} to={item.href}>
-                <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors mb-2">
+              item.name === "Log Out" ? (
+                <div
+                  key={item.name}
+                  onClick={logOut}
+                  className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors mb-2 cursor-pointer"
+                >
                   <item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
                   <AnimatePresence>
                     {isSidebarOpen && (
@@ -124,15 +128,33 @@ const SideBar = () => {
                         transition={{ duration: 0.2, delay: 0.3 }}
                       >
                         {item.name}
-                        {/* Show alert badge next to the bell icon */}
-                        {item.name === "Notifications" && item.hasAlert && (
-                          <span className="ml-2 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1">!</span>
-                        )}
                       </motion.span>
                     )}
                   </AnimatePresence>
-                </motion.div>
-              </Link>
+                </div>
+              ) : (
+                <Link key={item.name} to={item.href}>
+                  <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors mb-2">
+                    <item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
+                    <AnimatePresence>
+                      {isSidebarOpen && (
+                        <motion.span
+                          className="ml-4 whitespace-nowrap"
+                          initial={{ opacity: 0, width: 0 }}
+                          animate={{ opacity: 1, width: "auto" }}
+                          exit={{ opacity: 0, width: 0 }}
+                          transition={{ duration: 0.2, delay: 0.3 }}
+                        >
+                          {item.name}
+                          {item.name === "Notifications" && item.hasAlert && (
+                            <span className="ml-2 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1">!</span>
+                          )}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </Link>
+              )
             ))}
           </nav>
         </div>
