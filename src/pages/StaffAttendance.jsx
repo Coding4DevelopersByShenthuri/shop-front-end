@@ -33,9 +33,10 @@ const StaffAttendance = () => {
     e.preventDefault();
     // Process the attendance data and send it to the backend
     try {
-      const attendanceEntries = Object.entries(attendanceData).map(([staffId, present]) => ({
-        staffId,
-        present,
+      const attendanceEntries = staffList.map((staff) => ({
+        staffId: staff._id,
+        name: staff.name,
+        present: !!attendanceData[staff._id], // true if checked, false if not
       }));
 
       await fetch("http://localhost:3000/attendance", {
@@ -45,6 +46,7 @@ const StaffAttendance = () => {
         },
         body: JSON.stringify(attendanceEntries), // Send structured data
       });
+
       alert("Attendance updated successfully!");
     } catch (error) {
       console.error("Error updating attendance:", error);
