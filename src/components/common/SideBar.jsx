@@ -12,6 +12,7 @@ import {
   HiPhotograph,
   HiUserGroup,
   HiCheckCircle,
+  HiOutlineCake,
 } from "react-icons/hi";
 import {
   BarChart2,
@@ -56,6 +57,7 @@ const SIDEBAR_ITEMS = [
   { name: "Staff Attendance", icon: HiUserGroup, color: "#6EE7B7", href: "/admin/dashboard/attendance" },
   { name: "Upload Staff Image", icon: HiPhotograph, color: "#6366f1", href: "/admin/dashboard/uploadstaff" },
   { name: "QR Attendance", icon: HiCheckCircle, color: "#F59E0B", href: "/admin/dashboard/qrcode"},
+  { name: "Birthday Reminder", icon: HiOutlineCake, color: "#10B981", href: "/admin/dashboard/birthday-reminders"},
   { name: "Sign In", icon: HiArrowSmRight, color: "#10B981", href: "/login" },
   { name: "Log Out", icon: HiTable, color: "#EC4899", href: "/logout" },
   { name: "Help", icon: BiBuoy, color: "#8B5CF6", href: "#" },

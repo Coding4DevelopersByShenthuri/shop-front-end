@@ -34,6 +34,7 @@ import Notifications from "../components/Notifications";
 import TaskManager from "../pages/TaskManager";
 import StaffAttendance from "../pages/StaffAttendance"; 
 import QRCodePage from "../pages/QRCodePage";
+import BirthdayReminders from "../pages/BirthdayReminders";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -162,6 +163,10 @@ const router = createBrowserRouter([
       {
         path: "qrcode",
         element: <QRCodePage />
+      },
+      {
+        path: "birthday-reminders",
+        element: <BirthdayReminders />
       },
       {
         path: "edit-products/:id",
