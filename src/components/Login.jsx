@@ -25,7 +25,6 @@ const Login = () => {
         login(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                alert("Login Successful!");
                 navigate(from, { replace: true });
             })
             .catch((error) => {
