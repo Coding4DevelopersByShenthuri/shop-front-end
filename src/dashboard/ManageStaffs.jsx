@@ -7,16 +7,40 @@ const ManageStaffs = () => {
   const [allStaffs, setAllStaffs] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // New error state
-  const qrRef = useRef(null);
+  const qrCodeRef = useRef();
 
-  const downloadQrCode = () => {
-    const canvas = qrRef.current.querySelector('canvas');
-    if (canvas) {
-      const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-      const link = document.createElement('a');
-      link.href = image;
-      link.download = 'qrcode.png';
-      link.click();
+  const downloadQrCode = (staff) => {
+    const qrCodeElement = qrCodeRef.current;
+
+    // Check if it's rendered as SVG
+    const svg = qrCodeElement?.querySelector('svg');
+    if (svg) {
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Create an image element to convert the SVG
+      const img = new Image();
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+      
+      img.onload = () => {
+        // Set canvas size to match QR code size
+        canvas.width = svg.clientWidth;
+        canvas.height = svg.clientHeight;
+        ctx.drawImage(img, 0, 0);
+        
+        // Create a PNG URL and trigger download
+        const pngUrl = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = `${staff._id}-qrcode.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(url); // Clean up the URL
+      };
+      img.src = url; // Start loading the image
     }
   };
 
@@ -100,11 +124,10 @@ const ManageStaffs = () => {
                     className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-red-700 ml-2'>
                     Delete
                   </button>
-                  <div>
-                  <div ref={qrRef}>
-                    <QRCode value={staff._id} className='w-20'/>
-                  </div>
-                  <button onClick={downloadQrCode}>Download QR Code</button>
+                </Table.Cell>
+                <Table.Cell>
+                  <div ref={qrCodeRef} style={{ cursor: 'pointer' }} onClick={downloadQrCode(staff)} className='w-11'>
+                    <QRCode value={staff._id} className='w-11 h-10' />
                   </div>
                 </Table.Cell>
               </Table.Row>
