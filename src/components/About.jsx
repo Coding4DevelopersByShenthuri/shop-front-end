@@ -2,20 +2,24 @@ import React from 'react';
 import Supermarket3 from '../assets/Supermarket3.jpg';
 import Supermarket2 from '../assets/Bg.jpg'; 
 import Supermarket1 from '../assets/Supermarket1.jpg'; 
+import Slider from 'react-slick'; // Import Slider from react-slick
 import './About.css'; // Import the CSS file for styles
+import "slick-carousel/slick/slick.css"; // Slick-carousel base styles
+import "slick-carousel/slick/slick-theme.css"; // Slick-carousel theme styles
 
 const About = () => {
   const images = [Supermarket3, Supermarket2, Supermarket1];
 
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-    }
-    return array;
+  const settings = {
+    dots: true, // Enable navigation dots
+    infinite: true, // Loop through images infinitely
+    speed: 500, // Transition speed
+    slidesToShow: 1, // Show one image at a time
+    slidesToScroll: 1, // Scroll one image at a time
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 3000, // Change images every 3 seconds
+    pauseOnHover: true, // Pause the slider when hovered
   };
-
-  const shuffledImages = shuffleArray([...images]);
 
   return (
     <div className="about-background">
@@ -31,22 +35,34 @@ const About = () => {
           fontWeight: 'bold', 
           fontFamily: 'Georgia, serif', 
           fontSize: '42px', 
-          marginBottom: '40px' 
+          marginBottom: '40px',
+          paddingTop: '20px' // Add some padding at the top
         }}>
           About Us
         </h1>
-        
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
-          {shuffledImages.map((image, index) => (
-            <img 
-              key={index} 
-              src={image} 
-              alt={`Supermarket ${index + 1}`} 
-              style={{ width: '300px', height: '300px', borderRadius: '5%', marginRight: index < shuffledImages.length - 1 ? '20px' : '0' }} // Increased size
-            />
-          ))}
+
+        {/* Slider Component */}
+        <div style={{ marginBottom: '40px' }}>
+          <Slider {...settings}>
+            {images.map((image, index) => (
+              <div key={index}>
+                <img 
+                  src={image} 
+                  alt={`Supermarket ${index + 0.5}`} 
+                  style={{ 
+                    width: '50%', // Adjusted width to 80%
+                    height: '400px', // Adjusted height to 400px
+                    objectFit: 'cover', 
+                    borderRadius: '10px', 
+                    margin: '0 auto' // Center the image
+                  }} 
+                />
+              </div>
+            ))}
+          </Slider>
         </div>
 
+        {/* About Content */}
         <div className="about-content">
           <p style={{ fontSize: '18px', marginBottom: '20px' }}>
             Welcome to our store, where quality meets convenience! We take pride in being more than just a supermarket — we are your trusted partner in daily essentials, offering a curated selection of products that cater to your every need. Our journey started with a simple mission: to bring the freshest, highest-quality products to our customers, all while providing an exceptional shopping experience. Whether you’re searching for fresh produce, pantry staples, or specialty items, we’ve got you covered.
@@ -58,7 +74,7 @@ const About = () => {
             Thank you for choosing us as your go-to destination for all your shopping needs. We are continuously evolving, innovating, and expanding to serve you better. We look forward to being part of your daily life and helping you live healthier, happier, and more fulfilled.
           </p>
 
-          {/* Additional content */}
+          {/* Additional sections */}
           <h2 style={{ fontSize: '32px', marginBottom: '20px' }}>Our Mission</h2>
           <p style={{ fontSize: '18px', marginBottom: '20px' }}>
             Our mission is to provide high-quality products at affordable prices while promoting sustainability and supporting local communities. We strive to make every shopping experience pleasant and enjoyable, ensuring that our customers leave satisfied every time.
