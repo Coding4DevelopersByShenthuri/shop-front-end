@@ -127,7 +127,7 @@ const ManageStaffs = () => {
                 </Table.Cell>
                 <Table.Cell>
                   <div ref={qrCodeRef} style={{ cursor: 'pointer' }} onClick={() => downloadQrCode(staff)} className='w-11'>
-                    <QRCode value={staff._id} className='w-11 h-10' />
+                    <QRCode value={staff._id}  />
                   </div>
                 </Table.Cell>
               </Table.Row>

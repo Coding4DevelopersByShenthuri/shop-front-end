@@ -1,42 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import QrScanner from "react-qr-scanner"; // Import the QR scanner
 import axios from "axios";
 
-const QRCodePage = ({ staffId }) => {
-  const [qrCodeData, setQrCodeData] = useState("");
-  const [dailyToken, setDailyToken] = useState("");
+const QRCodePage = ({ onScanSuccess }) => {
+  const [error, setError] = useState(null);
+  const [scanResult, setScanResult] = useState("");
 
-  useEffect(() => {
-    const fetchQRCode = async () => {
-      try {
-        // Fetch the daily token from your backend (adjust the URL as needed)
-        const tokenResponse = await axios.get("http://localhost:3000/get-daily-token");
-        console.log("Token Response:", tokenResponse.data); // Debugging line
-        setDailyToken(tokenResponse.data.token); // Assuming your backend returns { token: "..." }
-
-        // Create the URL for the QR code
-        const qrCodeUrl = `http://localhost:3000/mark-attendance?staffId=${staffId}&token=${tokenResponse.data.token}`;
-        
-        // Generate the QR code with the new URL
-        const qrCodeResponse = await axios.get(`http://localhost:3000/generate-qr`, {
-          params: { url: qrCodeUrl },
-        });
-        console.log("QR Code Response:", qrCodeResponse.data); // Debugging line
-        setQrCodeData(qrCodeResponse.data.qrCodeData);
-      } catch (error) {
-        console.error("Error fetching QR code:", error);
+  const handleScan = async (data) => {
+    if (data) {
+      setScanResult(data);
+      console.log("Scanned data:", data);
+      
+      // Process the scanned data
+      await handleScannedData(data);
+      
+      // Call the success callback if provided
+      if (onScanSuccess) {
+        onScanSuccess(data);
       }
-    };
+    }
+  };
 
-    fetchQRCode();
-  }, [staffId]);
+  const handleError = (err) => {
+    console.error("Scanning error:", err);
+    setError(err);
+  };
+
+  const handleScannedData = async (data) => {
+    try {
+      // Check if data contains a valid URL with parameters
+      const urlParams = new URLSearchParams(data.split("?")[1]);
+      const staffId = urlParams.get("staffId");
+      const token = urlParams.get("token");
+
+      if (staffId && token) {
+        // Call your backend endpoint to mark attendance
+        const response = await axios.post("http://localhost:3000/mark-attendance", {
+          staffId,
+          token,
+        });
+
+        // Check for response success
+        if (response.status === 200) {
+          alert("Attendance marked successfully for staff ID: " + staffId);
+        } else {
+          alert("Failed to mark attendance. Please try again.");
+        }
+      } else {
+        alert("Invalid QR code data. Please scan a valid code.");
+      }
+    } catch (error) {
+      console.error("Error processing scanned data:", error);
+      alert("Failed to process scanned data. Please try again.");
+    }
+  };
 
   return (
-    <div>
-      <h2>Scan this QR code to mark your attendance</h2>
-      {qrCodeData ? (
-        <img src={qrCodeData} alt="QR Code" />
-      ) : (
-        <p>Loading QR code...</p>
+    <div className="flex flex-col items-center">
+      <h2 className="text-xl font-semibold mb-4">Scan QR Code to Mark Attendance</h2>
+      {error && <p className="text-red-500">Error: {error.message}</p>}
+      <QrScanner
+        delay={300}
+        onError={handleError}
+        onScan={handleScan}
+        style={{ width: "100%", maxWidth: "600px", border: "1px solid #ccc", borderRadius: "8px" }}
+      />
+      {scanResult && (
+        <div className="mt-4">
+          <p>Scanned Result: {scanResult}</p>
+        </div>
       )}
     </div>
   );
