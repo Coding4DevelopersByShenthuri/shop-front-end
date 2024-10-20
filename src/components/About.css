@@ -1,0 +1,34 @@
+/* About.css */
+
+.about-background {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full height of the viewport */
+    background-image: url('../assets/BackG.jpg'); /* Update this with your image path */
+    background-size: cover; /* Ensure the background image covers the entire area */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-attachment: fixed; /* Make the background image fixed */
+}
+
+/* Existing .about-content styles */
+.about-content {
+    flex: 1; /* This allows the content to take the available space */
+    overflow-y: auto; /* Adds a scroll if content overflows */
+    padding: 30px; /* Padding for the glass effect container */
+    border-radius: 15px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white background */
+    backdrop-filter: blur(20px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Light border for glass effect */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    margin: 0 auto; /* Center the content */
+    max-width: 1500px; /* Maximum width for the content */
+}
+
+/* Footer styles */
+footer {
+    margin-top: auto; /* This pushes the footer to the bottom */
+    padding: 20px; /* Adjust as needed */
+    background-color: #f8f8f8; /* Light background for the footer */
+    text-align: center; /* Center align footer text */
+}

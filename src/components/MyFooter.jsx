@@ -43,7 +43,7 @@ function MyFooter() {
           </div>
         </div>
       <div className="w-full bg-gray-700 px-4 py-6 sm:flex sm:items-center sm:justify-between">
-      <Footer.Copyright href="#" by="Shenthu MART" year={2024} />
+      <Footer.Copyright href="#" by="Shenthu MART. All Rights Reserved" year={2024} />
       <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
         <Footer.Icon href="https://www.facebook.com/profile.php?id=100085593338393&mibextid=ZbWKwL" icon={BsFacebook} />
         <Footer.Icon href="https://www.instagram.com/shenthuri_maran?igsh=aTJmdXlpbHV0cWN5" icon={BsInstagram} />
