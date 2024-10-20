@@ -2,22 +2,19 @@ import React, { useState } from "react";
 import QrScanner from "react-qr-scanner"; // Import the QR scanner
 import axios from "axios";
 
-const QRCodePage = ({ onScanSuccess }) => {
+const QRCodePage = () => {
   const [error, setError] = useState(null);
   const [scanResult, setScanResult] = useState("");
+  const [staffData, setStaffData] = useState(null); // To store staff details
+  const [isPresent, setIsPresent] = useState(false); // To track attendance
 
   const handleScan = async (data) => {
     if (data) {
       setScanResult(data);
       console.log("Scanned data:", data);
-      
+
       // Process the scanned data
       await handleScannedData(data);
-      
-      // Call the success callback if provided
-      if (onScanSuccess) {
-        onScanSuccess(data);
-      }
     }
   };
 
@@ -34,15 +31,17 @@ const QRCodePage = ({ onScanSuccess }) => {
       const token = urlParams.get("token");
 
       if (staffId && token) {
-        // Call your backend endpoint to mark attendance
+        // Fetch staff details based on scanned QR code
         const response = await axios.post("http://localhost:3000/mark-attendance", {
           staffId,
           token,
         });
 
-        // Check for response success
-        if (response.status === 200) {
-          alert("Attendance marked successfully for staff ID: " + staffId);
+        if (response.status === 200 && response.data) {
+          const staff = response.data.staff;
+          setStaffData(staff); // Set staff details to display (name, role)
+          setIsPresent(true); // Mark them as present (green tick)
+          alert("Attendance marked successfully for: " + staff.name);
         } else {
           alert("Failed to mark attendance. Please try again.");
         }
@@ -68,6 +67,19 @@ const QRCodePage = ({ onScanSuccess }) => {
       {scanResult && (
         <div className="mt-4">
           <p>Scanned Result: {scanResult}</p>
+        </div>
+      )}
+      {staffData && (
+        <div className="mt-4 p-4 border border-gray-300 rounded">
+          <p>Name: <span className="font-semibold">{staffData.name}</span></p>
+          <p>Role: <span className="font-semibold">{staffData.role}</span></p>
+          <p>Status: 
+            {isPresent ? (
+              <span className="text-green-500 font-bold">✔ Present</span>
+            ) : (
+              <span className="text-red-500 font-bold">✘ Absent</span>
+            )}
+          </p>
         </div>
       )}
     </div>

@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from "flowbite-react";
 import { Link } from 'react-router-dom';
-import QRCode from "react-qr-code"; // Import QRCode component
+import QRCode from "qrcode"; // Import the QRCode generation library
+import { FiDownload } from 'react-icons/fi'; // Import a download icon from react-icons
 
 const ManageProducts = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const qrCodeRef = useRef(null); // Ref for QR code
 
   useEffect(() => {
     fetch("http://localhost:3000/product/all-products")
@@ -21,40 +21,21 @@ const ManageProducts = () => {
       });
   }, []);
 
-  // Function to download the QR code as an image
-  const downloadQrCode = (product) => {
-    const qrCodeElement = qrCodeRef.current;
-
-    // Check if it's rendered as SVG
-    const svg = qrCodeElement?.querySelector('svg');
-    if (svg) {
-      const svgData = new XMLSerializer().serializeToString(svg);
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      // Create an image element to convert the SVG
-      const img = new Image();
-      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(svgBlob);
-
-      img.onload = () => {
-        // Set canvas size to match QR code size
-        canvas.width = svg.clientWidth;
-        canvas.height = svg.clientHeight;
-        ctx.drawImage(img, 0, 0);
-
-        // Create a PNG URL and trigger download
-        const pngUrl = canvas.toDataURL('image/png');
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pngUrl;
-        downloadLink.download = `${product._id}-qrcode.png`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        URL.revokeObjectURL(url); // Clean up the URL
-      };
-      img.src = url; // Start loading the image
-    }
+  // Function to generate and download the QR code as an image
+  const downloadQrCode = (productId) => {
+    QRCode.toDataURL(productId, { width: 300, margin: 2 }, (err, url) => {
+      if (err) {
+        console.error("Error generating QR Code:", err);
+        return;
+      }
+      // Create a download link and trigger the download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = `${productId}-qrcode.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
   };
 
   // Delete a product with confirmation
@@ -68,7 +49,6 @@ const ManageProducts = () => {
         .then(res => res.json())
         .then(data => {
           alert("Product deleted successfully!");
-          // Remove the deleted product from the state
           setAllProducts(prevProducts => prevProducts.filter(product => product._id !== id));
         })
         .catch(err => {
@@ -97,7 +77,7 @@ const ManageProducts = () => {
             <Table.HeadCell>Unit</Table.HeadCell>
             <Table.HeadCell>Price</Table.HeadCell>
             <Table.HeadCell>Actions</Table.HeadCell>
-            <Table.HeadCell>Download QR</Table.HeadCell>
+            <Table.HeadCell>QR Code</Table.HeadCell>
           </Table.Head>
           {allProducts.map((product, index) => (
             <Table.Body className='divide-y' key={product._id}>
@@ -125,9 +105,13 @@ const ManageProducts = () => {
                   </button>
                 </Table.Cell>
                 <Table.Cell>
-                  <div ref={qrCodeRef} style={{ cursor: 'pointer' }} onClick={() => downloadQrCode(product)}>
-                    <QRCode value={product._id} />
-                  </div>
+                  {/* Merged button with text and icon */}
+                  <button
+                    onClick={() => downloadQrCode(product._id)}
+                    className="flex items-center bg-blue-500 text-white px-3 py-1 rounded-sm hover:bg-blue-700">
+                    Get QR
+                    <FiDownload className='ml-2' />
+                  </button>
                 </Table.Cell>
               </Table.Row>
             </Table.Body>

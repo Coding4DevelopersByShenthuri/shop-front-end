@@ -1,64 +1,46 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from "flowbite-react";
 import { Link } from 'react-router-dom';
-import QRCode from "react-qr-code";
+import QRCode from "qrcode"; // Use QRCode for generating codes
+import { FiDownload } from 'react-icons/fi'; // Download icon from react-icons
 
 const ManageStaffs = () => {
   const [allStaffs, setAllStaffs] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // New error state
-  const qrCodeRef = useRef(null); // Remove the initialization here
-
-  const downloadQrCode = (staff) => {
-    const qrCodeElement = qrCodeRef.current;
-
-    // Check if it's rendered as SVG
-    const svg = qrCodeElement?.querySelector('svg');
-    if (svg) {
-      const svgData = new XMLSerializer().serializeToString(svg);
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      
-      // Create an image element to convert the SVG
-      const img = new Image();
-      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(svgBlob);
-      
-      img.onload = () => {
-        // Set canvas size to match QR code size
-        canvas.width = svg.clientWidth;
-        canvas.height = svg.clientHeight;
-        ctx.drawImage(img, 0, 0);
-        
-        // Create a PNG URL and trigger download
-        const pngUrl = canvas.toDataURL('image/png');
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pngUrl;
-        downloadLink.download = `${staff._id}-qrcode.png`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        URL.revokeObjectURL(url); // Clean up the URL
-      };
-      img.src = url; // Start loading the image
-    }
-  };
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
-    fetch("http://localhost:3000/staff/all-staffs") // API endpoint to get all staff members
+    fetch("http://localhost:3000/staff/all-staffs") // API endpoint for fetching staff members
       .then(res => res.json())
       .then(data => {
         setAllStaffs(data);
-        setLoading(false); // Stop loading when data is fetched
+        setLoading(false);
       })
       .catch(err => {
         console.error('Error fetching staff data:', err);
         setError('Failed to fetch staff data. Please try again later.');
-        setLoading(false); // Stop loading in case of error
+        setLoading(false);
       });
   }, []);
 
-  // Delete a staff member
+  // Function to generate and download the QR code as an image
+  const downloadQrCode = (staffId) => {
+    QRCode.toDataURL(staffId, { width: 300, margin: 2 }, (err, url) => {
+      if (err) {
+        console.error("Error generating QR Code:", err);
+        return;
+      }
+      // Create a download link and trigger the download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = `${staffId}-qrcode.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  };
+
+  // Delete a staff member with confirmation
   const handleDelete = (id) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this staff member?');
     if (!confirmDelete) return;
@@ -82,7 +64,7 @@ const ManageStaffs = () => {
   }
 
   if (error) {
-    return <p>{error}</p>; // Display error if there's an issue fetching data
+    return <p>{error}</p>; // Display error message
   }
 
   return (
@@ -99,7 +81,7 @@ const ManageStaffs = () => {
             <Table.HeadCell>Email</Table.HeadCell>
             <Table.HeadCell>Phone</Table.HeadCell>
             <Table.HeadCell>Actions</Table.HeadCell>
-            <Table.HeadCell>Download QR</Table.HeadCell>
+            <Table.HeadCell>QR Code</Table.HeadCell>
           </Table.Head>
           {allStaffs.map((staff, index) => (
             <Table.Body className='divide-y' key={staff._id}>
@@ -126,9 +108,13 @@ const ManageStaffs = () => {
                   </button>
                 </Table.Cell>
                 <Table.Cell>
-                  <div ref={qrCodeRef} style={{ cursor: 'pointer' }} onClick={() => downloadQrCode(staff)} className='w-11'>
-                    <QRCode value={staff._id}  />
-                  </div>
+                  {/* Merged button with text and icon */}
+                  <button
+                    onClick={() => downloadQrCode(staff._id)}
+                    className="flex items-center bg-blue-500 text-white px-3 py-1 rounded-sm hover:bg-blue-700">
+                    Get QR
+                    <FiDownload className='ml-2' />
+                  </button>
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
