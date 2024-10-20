@@ -42,7 +42,8 @@ const Navbar = () => {
         { link: 'Home', path: '/' },
         { link: 'About', path: '/about' },
         { link: 'Shop', path: '/shop' },
-        { link: 'Admin', path: '/admin/dashboard' },
+    //  { link: 'Admin', path: '/admin/dashboard' },
+        { link: 'Contact Us', path: '/contact'},
         { link: 'Blog', path: '/blog' },
     ];
 

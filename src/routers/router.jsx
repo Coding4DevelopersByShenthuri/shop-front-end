@@ -36,6 +36,7 @@ import TaskManager from "../pages/TaskManager";
 import StaffAttendance from "../pages/StaffAttendance"; 
 import QRCodePage from "../pages/QRCodePage";
 import BirthdayReminders from "../pages/BirthdayReminders";
+import ContactUs from "../components/ContactUs";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
       },
       {
         path: "/about",
