@@ -7,14 +7,16 @@ const QRCodePage = () => {
   const [scanResult, setScanResult] = useState("");
   const [staffData, setStaffData] = useState(null); // To store staff details
   const [isPresent, setIsPresent] = useState(false); // To track attendance
+  const [isScanned, setIsScanned] = useState(false); // To track if QR has been scanned
 
   const handleScan = async (data) => {
-    if (data) {
+    if (data && !isScanned) {
       setScanResult(data);
       console.log("Scanned data:", data);
 
       // Process the scanned data
       await handleScannedData(data);
+      setIsScanned(true); // Mark as scanned to prevent double processing
     }
   };
 
@@ -32,7 +34,7 @@ const QRCodePage = () => {
 
       if (staffId && token) {
         // Fetch staff details based on scanned QR code
-        const response = await axios.post("http://localhost:3000/mark-attendance", {
+        const response = await axios.post("http://localhost:3000/attendance/mark-attendance", {
           staffId,
           token,
         });
