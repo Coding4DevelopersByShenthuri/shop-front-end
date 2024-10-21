@@ -176,3 +176,29 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
+/* BirthdayCard.css */
+.birthday-card {
+  border: 2px solid #ffcc00; /* Yellow border for the card */
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff3cd; /* Light yellow background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.birthday-card-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.birthday-card-date {
+  font-size: 1.2rem;
+  color: #856404; /* Darker text color */
+}
+
+.birthday-card-message {
+  font-size: 1.1rem;
+  color: #721c24; /* Dark red text color */
+  margin-top: 10px;
+}

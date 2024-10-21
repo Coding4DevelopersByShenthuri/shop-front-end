@@ -12,7 +12,7 @@ const BirthdayReminders = () => {
     const fetchBirthdays = async () => {
       try {
         const response = await axios.get('http://localhost:3000/birthday/upcoming-birthdays');
-        setBirthdays(response.data);
+        setBirthdays(response.data); // Assuming response.data contains an array of birthday customers
         setLoading(false);
       } catch (error) {
         setError('Failed to load birthdays');
@@ -36,19 +36,27 @@ const BirthdayReminders = () => {
         <div className="balloon balloon5"></div>
         <div className="balloon balloon6"></div>
         <div className="balloon balloon7"></div>
+        <div className="balloon balloon8"></div>
+        <div className="balloon balloon9"></div>
+        <div className="balloon balloon10"></div>
       </div>
       <h2 className="birthday-heading">
         <FaBirthdayCake className="birthday-icon" /> Upcoming Birthdays
       </h2>
       {birthdays.length > 0 ? (
-        <ul className="birthday-list">
+        <div className="birthday-list">
           {birthdays.map((user) => (
-            <li key={user._id} className="birthday-item">
-              <span className="birthday-name">{user.name}</span> -{' '}
-              <span className="birthday-date">{new Date(user.birthday).toLocaleDateString()}</span>
-            </li>
+            <div key={user._id} className="birthday-card">
+              <div className="birthday-card-name">{user.name}</div>
+              <div className="birthday-card-date">
+                {new Date(user.birthday).toLocaleDateString()} {/* Formatting date */}
+              </div>
+              <div className="birthday-card-message">
+                🎉 Happy Birthday! 🎂
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <div className="no-birthdays">No upcoming birthdays</div>
       )}
