@@ -26,14 +26,18 @@ import {
 import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
-import { AnimatePresence, color, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { FaBell } from 'react-icons/fa'; // Import bell icon for birthday reminders
 
-// Simulate product data (replace with API call if needed)
+// Simulate product and birthday data (replace with API calls if needed)
 const productQuantities = {
   category1: 950,
   category2: 1200,
   category3: 800,
 };
+
+// Simulate birthday data
+const upcomingBirthdays = true; // Replace with actual logic to check birthdays
 
 // Function to check for low stock
 const checkLowStock = () => {
@@ -57,7 +61,13 @@ const SIDEBAR_ITEMS = [
   { name: "Staff Attendance", icon: HiUserGroup, color: "#6EE7B7", href: "/admin/dashboard/attendance" },
   { name: "Upload Staff Image", icon: HiPhotograph, color: "#6366f1", href: "/admin/dashboard/uploadstaff" },
   { name: "QR Attendance", icon: HiCheckCircle, color: "#F59E0B", href: "/admin/dashboard/qrcode" },
-  { name: "Birthday Reminder", icon: HiOutlineCake, color: "#10B981", href: "/admin/dashboard/birthday-reminders" },
+  {
+    name: "Birthday Reminders",
+    icon: HiOutlineCake,
+    color: "#10B981",
+    href: "/admin/dashboard/birthday-reminders",
+    hasBirthdayAlert: upcomingBirthdays // Add the birthday alert condition
+  },
   { name: "Sign In", icon: HiArrowSmRight, color: "#10B981", href: "/login" },
   { name: "Log Out", icon: HiTable, color: "#EC4899" },
   { name: "Help", icon: BiBuoy, color: "#8B5CF6", href: "#" },
@@ -146,8 +156,13 @@ const SideBar = () => {
                           transition={{ duration: 0.2, delay: 0.3 }}
                         >
                           {item.name}
+                          {/* Show notification alert */}
                           {item.name === "Notifications" && item.hasAlert && (
                             <span className="ml-2 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1">!</span>
+                          )}
+                          {/* Show birthday alert */}
+                          {item.name === "Birthday Reminders" && item.hasBirthdayAlert && (
+                            <FaBell className="ml-2 text-red-500" />
                           )}
                         </motion.span>
                       )}

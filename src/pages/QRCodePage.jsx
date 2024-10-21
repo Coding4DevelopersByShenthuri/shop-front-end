@@ -81,7 +81,8 @@ const QRCodePage = () => {
               {staffData && (
                 <div>
                   <p>Name: {staffData.name}</p>
-                  <p>Role: {staffData.staffId}</p>
+                  <p>Staff ID: {staffData.staffId}</p>
+                  <p>Date: {staffData.date}</p>
                   {/* Add any other staff details you want to display */}
                 </div>
               )}
