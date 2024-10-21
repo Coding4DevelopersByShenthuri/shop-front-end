@@ -1,0 +1,178 @@
+/* Main container */
+.birthday-reminders-container {
+  background-color: #fce4ec; /* Light pink background */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  z-index: 1; /* Ensure content is above balloons */
+}
+
+/* Balloon floating effect for the entire page */
+.balloon-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1; /* Place balloons behind the main content */
+}
+
+.balloon {
+  width: 50px;
+  height: 70px;
+  background-color: #ff4081; /* Pink balloon */
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Balloon shape */
+  position: absolute;
+  bottom: -80px;
+  animation: float 10s ease-in infinite;
+  opacity: 0.9;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add shadow for realism */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Text color */
+  font-weight: bold; /* Text weight */
+  font-size: 0.8rem; /* Text size */
+  text-align: center; /* Center text */
+}
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  width: 2px; /* Thinner tail */
+  height: 80px; /* Increased height for a longer tail */
+  background-color: #ff4081; /* Tail color */
+  top: 70px; /* Adjusted position for the tail */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1; /* Ensure the tail stays behind the balloon */
+  border-radius: 1px; /* Slightly rounded tail */
+  animation: wave 1s ease-in-out infinite; /* Waving tail animation */
+}
+
+.balloon1 {
+  left: 10%;
+  animation-duration: 9s;
+}
+
+.balloon2 {
+  left: 30%;
+  background-color: #ffeb3b; /* Yellow balloon */
+  animation-duration: 11s;
+}
+
+.balloon3 {
+  left: 50%;
+  background-color: #42a5f5; /* Blue balloon */
+  animation-duration: 8s;
+}
+
+.balloon4 {
+  left: 70%;
+  background-color: #66bb6a; /* Green balloon */
+  animation-duration: 13s;
+}
+
+.balloon5 {
+  left: 90%;
+  background-color: #ff5722; /* Orange balloon */
+  animation-duration: 10s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-300px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1000px) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-50%) rotate(3deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(5deg);
+  }
+  75% {
+    transform: translateX(-50%) rotate(3deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+}
+
+/* Styling the heading */
+.birthday-heading {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  color: #d81b60;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.birthday-icon {
+  margin-right: 10px;
+  color: #ff6f61;
+  font-size: 1.5rem;
+}
+
+/* Birthday list styling */
+.birthday-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.birthday-item {
+  background-color: #ffebee;
+  border: 2px solid #f48fb1;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.birthday-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #880e4f;
+}
+
+.birthday-date {
+  color: #ad1457;
+}
+
+/* No birthdays message */
+.no-birthdays {
+  font-size: 1.2rem;
+  color: #880e4f;
+  margin-top: 20px;
+}
+
+/* Loading and error messages */
+.birthday-loading,
+.birthday-error {
+  color: #ad1457;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
