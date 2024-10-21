@@ -9,7 +9,7 @@ const BirthdayReminders = () => {
   useEffect(() => {
     const fetchBirthdays = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/upcoming-birthdays');
+        const response = await axios.get('http://localhost:3000/birthday/upcoming-birthdays');
         setBirthdays(response.data);
         setLoading(false);
       } catch (error) {
