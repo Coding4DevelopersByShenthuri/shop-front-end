@@ -45,6 +45,7 @@ const Navbar = () => {
     //  { link: 'Admin', path: '/admin/dashboard' },
         { link: 'Contact Us', path: '/contact'},
         { link: 'Blog', path: '/blog' },
+        { link: 'Help', path: '/help'},
     ];
 
     return (

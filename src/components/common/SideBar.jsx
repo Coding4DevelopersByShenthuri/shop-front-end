@@ -70,7 +70,6 @@ const SIDEBAR_ITEMS = [
   },
   { name: "Sign In", icon: HiArrowSmRight, color: "#10B981", href: "/login" },
   { name: "Log Out", icon: HiTable, color: "#EC4899" },
-  { name: "Help", icon: BiBuoy, color: "#8B5CF6", href: "/admin/dashboard/help" },
   { name: "Notifications", icon: HiBell, color: "#F59E0B", href: "/admin/dashboard/notifications", hasAlert: checkLowStock() > 0 },
 ];
 
