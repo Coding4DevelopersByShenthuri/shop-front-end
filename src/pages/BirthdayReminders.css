@@ -27,7 +27,7 @@
   width: 50px;
   height: 70px;
   background-color: #ff4081; /* Pink balloon */
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Balloon shape */
+  border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; /* Balloon shape */
   position: absolute;
   bottom: -80px;
   animation: float 10s ease-in infinite;
@@ -58,6 +58,7 @@
 
 .balloon1 {
   left: 10%;
+  background-color: #ea1a47; /* Maroon balloon */
   animation-duration: 9s;
 }
 
@@ -82,6 +83,36 @@
 .balloon5 {
   left: 90%;
   background-color: #ff5722; /* Orange balloon */
+  animation-duration: 10s;
+}
+
+.balloon6 {
+  left: 110%;
+  background-color: #1dd8a3; /* Teal balloon */
+  animation-duration: 10s;
+}
+
+.balloon7 {
+  left: 130%;
+  background-color: #f11b1b; /* Red balloon */
+  animation-duration: 10s;
+}
+
+.balloon8 {
+  left: 150%;
+  background-color: #f6f622; /* Yellow balloon */
+  animation-duration: 10s;
+}
+
+.balloon9 {
+  left: 170%;
+  background-color: #181312; /* Black balloon */
+  animation-duration: 10s;
+}
+
+.balloon10 {
+  left: 190%;
+  background-color: #f0139b; /* violet balloon */
   animation-duration: 10s;
 }
 
