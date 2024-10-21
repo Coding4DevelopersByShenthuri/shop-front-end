@@ -28,21 +28,17 @@ const QRCodePage = ({ onScanSuccess }) => {
 
   const handleScannedData = async (data) => {
     try {
-      // Check if data contains a valid URL with parameters
-      const urlParams = new URLSearchParams(data.split("?")[1]);
-      const staffId = urlParams.get("staffId");
-      const token = urlParams.get("token");
-
-      if (staffId && token) {
-        // Call your backend endpoint to mark attendance
-        const response = await axios.post("http://localhost:3000/mark-attendance", {
-          staffId,
-          token,
+      if (data?.text) {
+        // Fetch staff details based on scanned QR code
+        const response = await axios.post("http://localhost:3000/attendance/mark-attendance", {
+          staffId: data.text
         });
 
-        // Check for response success
-        if (response.status === 200) {
-          alert("Attendance marked successfully for staff ID: " + staffId);
+        if (response.status === 201 && response.data) {
+          // const staff = response.data.staff;
+          // setStaffData(staff); // Set staff details to display (name, role)
+          // setIsPresent(true); // Mark them as present (green tick)
+          // alert("Attendance marked successfully for: " + staff.name);
         } else {
           alert("Failed to mark attendance. Please try again.");
         }
@@ -50,10 +46,11 @@ const QRCodePage = ({ onScanSuccess }) => {
         alert("Invalid QR code data. Please scan a valid code.");
       }
     } catch (error) {
-      console.error("Error processing scanned data:", error);
-      alert("Failed to process scanned data. Please try again.");
+      console.log(error)
     }
   };
+
+
 
   return (
     <div className="flex flex-col items-center">
