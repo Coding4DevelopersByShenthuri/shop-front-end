@@ -37,6 +37,7 @@ import StaffAttendance from "../pages/StaffAttendance";
 import QRCodePage from "../pages/QRCodePage";
 import BirthdayReminders from "../pages/BirthdayReminders";
 import ContactUs from "../components/ContactUs";
+import HelpPage from "../pages/HelpPage";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "/sign-up",
         element: <Signup />,
+      },
+      {
+        path: "/help",
+        element: <HelpPage />,
       },
       {
         path: "/login",
