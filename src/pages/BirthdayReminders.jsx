@@ -12,7 +12,7 @@ const BirthdayReminders = () => {
     const fetchBirthdays = async () => {
       try {
         const response = await axios.get('http://localhost:3000/birthday/upcoming-birthdays');
-        setBirthdays(response.data); // Assuming response.data contains an array of birthday customers
+        setBirthdays(response.data); // Assuming response.data contains an array of birthday customers including email
         setLoading(false);
       } catch (error) {
         setError('Failed to load birthdays');
@@ -48,6 +48,7 @@ const BirthdayReminders = () => {
           {birthdays.map((user) => (
             <div key={user._id} className="birthday-card">
               <div className="birthday-card-name">{user.name}</div>
+              <div className="birthday-card-email">{user.email}</div> {/* Displaying the email */}
               <div className="birthday-card-date">
                 {new Date(user.birthday).toLocaleDateString()} {/* Formatting date */}
               </div>
