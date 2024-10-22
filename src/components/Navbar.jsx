@@ -67,7 +67,6 @@ const Navbar = () => {
                             </li>
                         ))}
                     </ul>
-
                     {/* Sign Up button for large devices */}
                     {!user && <div className='hidden lg:flex items-center'>
                         <Link 

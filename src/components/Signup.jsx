@@ -8,7 +8,8 @@ const Signup = () => {
     const [error, setError] = useState(""); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [birthday, setBirthday] = useState(''); // State for birthday
+    const [birthday, setBirthday] = useState('');
+    const [fullName, setFullName] = useState('');  // State for birthday
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Signup = () => {
         event.preventDefault();
         
         // Basic validation for email, password, and birthday
-        if (email === "" || password === "" || birthday === "") {
+        if (email === "" || password === "" || birthday === "" || fullName === "") {
             setError("Email, password, and birthday are required.");
             return;
         }
@@ -38,7 +39,7 @@ const Signup = () => {
             console.log('User signed up:', user);
             // Call the API to create the user on the server
             const uid = user.uid; // Assuming user object contains uid
-            const userData = { email, birthday }; // Adjust as necessary
+            const userData = { email, birthday, name: fullName}; // Adjust as necessary
     
             fetch(`http://localhost:3000/user/createuser/${uid}`, {
                 method: 'POST',
@@ -77,7 +78,7 @@ const Signup = () => {
         loginWithGoogle()
             .then((result) => {
                 const user = result.user;
-                const userData = { email:user.email , birthday:'' };
+                const userData = { email:user.email , birthday:'', name:'' };
                 fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
                     method: 'POST',
                     headers: {
@@ -137,6 +138,17 @@ const Signup = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                         className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
                                         placeholder="Password"
+                                    />
+                                </div>
+                                <div className="relative">
+                                    <input
+                                        id="fullName"
+                                        name="fullName"
+                                        type="text"
+                                        value={fullName}
+                                        onChange={(e) => setFullName(e.target.value)}
+                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                                        placeholder="full name"
                                     />
                                 </div>
                                 <div className="relative">

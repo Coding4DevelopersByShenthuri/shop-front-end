@@ -1,18 +1,39 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthProvider';
 
-const userHome = () => {
+const UserHome = () => {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
-      <div className='px-4 lg:px-24 bg-teal-100 flex items-center'>
-        <div className='flex w-full flex-col md:flex-row justify-between items-center gap-12 py-40'>
-          {/* left side */}
-          <div className='md:w-1/2 space-y-8 h-full'>
-            Welcome to user dashboard
-          </div>
+    <div className='bg-teal-100 mt-[80px]'>
+      <div className='container mx-auto px-4 lg:px-24 py-10'>
+        <div className='bg-white shadow-md rounded-lg p-8'>
+          <h1 className='text-3xl font-bold mb-6'>Welcome to your dashboard</h1>
+          
+          {user && (
+            <div className='space-y-4'>
+              <div className='text-lg'>
+                <span className='font-bold'>Name:</span> {user.userDetails[0]?.name || 'N/A'}
+              </div>
+              <div className='text-lg'>
+                <span className='font-bold'>Email:</span> {user.userDetails[0]?.email || 'N/A'}
+              </div>
+              <div className='text-lg'>
+                <span className='font-bold'>Role:</span> {user.userDetails[0]?.role || 'N/A'}
+              </div>
+              <div className='text-lg'>
+                <span className='font-bold'>Birthday:</span> {new Date(user.userDetails[0]?.birthday).toLocaleDateString() || 'N/A'}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default userHome;
+export default UserHome;
