@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import googleLogo from "../assets/google-logo.svg";
 
 const Login = () => {
-    const { login, loginWithGoogle,setUserDetails } = useContext(AuthContext); // Renamed 'loginwithGoogle' to 'loginWithGoogle' for consistency
+    const { login, loginWithGoogle, setUserDetails } = useContext(AuthContext);
     const [error, setError] = useState(""); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -42,7 +42,7 @@ const Login = () => {
         loginWithGoogle()
             .then((result) => {
                 const user = result.user;
-                const userData = { email:user.email , birthday:'' };
+                const userData = { email: user.email, birthday: '' };
                 fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
                     method: 'POST',
                     headers: {
@@ -58,8 +58,7 @@ const Login = () => {
                 })
                 .then((data) => {
                     console.log('User created on server:', data);
-                    setUserDetails()
-                    // Navigate to the desired location
+                    setUserDetails();
                     navigate(from, { replace: true });
                 })
                 .catch((error) => {
@@ -80,8 +79,8 @@ const Login = () => {
                     <div className="max-w-md mx-auto">
                         <h1 className="text-2xl font-semibold">Login Form</h1>
                         <div className="divide-y divide-gray-200">
-                            <form onSubmit={handleLogin} className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                                <div className="relative">
+                            <form onSubmit={handleLogin} className="py-8 mt-6 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                                <div className="relative mt-12"> {/* Increased gap here */}
                                     <input
                                         id="email"
                                         name="email"
