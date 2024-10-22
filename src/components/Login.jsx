@@ -42,7 +42,7 @@ const Login = () => {
         loginWithGoogle()
             .then((result) => {
                 const user = result.user;
-                const userData = { email: user.email, birthday: '' };
+                const userData = { email: user.email, birthday: '', name:'' };
                 fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
                     method: 'POST',
                     headers: {
