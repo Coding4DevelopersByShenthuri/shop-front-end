@@ -10,23 +10,24 @@ const BirthdayReminders = () => {
   const [error, setError] = useState(null);
   const [sendingEmail, setSendingEmail] = useState({}); // To track email sending status for each user
   const [isConfettiVisible, setIsConfettiVisible] = useState(false); // For confetti visibility
+  const [hasUpcomingBirthdays, setHasUpcomingBirthdays] = useState(false); // For sidebar alert
 
   useEffect(() => {
     const fetchBirthdays = async () => {
       try {
         const response = await axios.get('http://localhost:3000/birthday/upcoming-birthdays');
-        setBirthdays(response.data); // Assuming response.data contains an array of birthday customers including email
+        setBirthdays(response.data); // Assuming response.data contains an array of birthday customers
         setLoading(false);
+
+        // Set alert symbol if there are upcoming birthdays
+        if (response.data.length > 0) {
+          setHasUpcomingBirthdays(true); // Trigger alert in the sidebar
+        } else {
+          setHasUpcomingBirthdays(false); // No upcoming birthdays, no alert
+        }
       } catch (error) {
         setError('Failed to load birthdays');
         setLoading(false);
-      }
-
-      // Set alert symbol if there are upcoming birthdays
-      if (birthdayData.length > 0) {
-        setHasUpcomingBirthdays(true); // Trigger alert in the sidebar
-      } else {
-        setHasUpcomingBirthdays(false); // No upcoming birthdays, no alert
       }
     };
 

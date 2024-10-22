@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import QrScanner from "react-qr-scanner"; // Import the QR scanner
 import axios from "axios";
+import "./QRCodePage.css"; // Ensure to have styles defined here
 
 const QRCodePage = () => {
   const [error, setError] = useState(null);
@@ -8,11 +9,12 @@ const QRCodePage = () => {
   const [isPresent, setIsPresent] = useState(false);
   const [isScanning, setIsScanning] = useState(true); // State to manage scanner visibility
   const [isProcessing, setIsProcessing] = useState(false); // Flag to prevent multiple scans
+  const [zoom, setZoom] = useState(false); // State to manage zoom level
 
   const handleScan = async (data) => {
     if (data && !isProcessing) {
       setIsProcessing(true); // Set the flag to prevent further processing
-      
+
       // Play sound on successful scan
       const audio = new Audio('/sounds/scan-sound.mp3'); // Adjust the path as necessary
       audio.play().catch(err => console.error("Audio playback failed:", err));
@@ -61,18 +63,27 @@ const QRCodePage = () => {
     setIsProcessing(false); // Reset the processing flag for new scan
   };
 
+  const toggleZoom = () => {
+    setZoom(prevZoom => !prevZoom); // Toggle the zoom state
+  };
+
   return (
     <div className="flex flex-col items-center">
       <h2 className="text-xl font-semibold mb-4">Scan QR Code to Mark Attendance</h2>
       {error && <p className="text-red-500">Error: {error.message}</p>}
       
       {isScanning ? (
-        <QrScanner
-          delay={300}
-          onError={handleError}
-          onScan={handleScan}
-          style={{ width: "100%", maxWidth: "600px", border: "1px solid #ccc", borderRadius: "8px" }}
-        />
+        <div className={`scanner-container ${zoom ? 'zoom' : ''}`}>
+          <QrScanner
+            delay={300}
+            onError={handleError}
+            onScan={handleScan}
+            style={{ width: "100%", maxWidth: "600px" }}
+          />
+          <button onClick={toggleZoom} className="zoom-button">
+            {zoom ? "Reset Zoom" : "Zoom In"}
+          </button>
+        </div>
       ) : (
         <div className="mt-4">
           {isPresent ? (
@@ -83,7 +94,6 @@ const QRCodePage = () => {
                   <p>Name: {staffData.name}</p>
                   <p>Staff ID: {staffData.staffId}</p>
                   <p>Date: {staffData.date}</p>
-                  {/* Add any other staff details you want to display */}
                 </div>
               )}
             </div>
