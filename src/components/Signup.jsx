@@ -77,8 +77,9 @@ const Signup = () => {
     const handleRegister = () => {
         loginWithGoogle()
             .then((result) => {
+                console.log(result)
                 const user = result.user;
-                const userData = { email:user.email , birthday:'', name:'' };
+                const userData = { email:user.email , birthday:'', name:user.displayName };
                 fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
                     method: 'POST',
                     headers: {
