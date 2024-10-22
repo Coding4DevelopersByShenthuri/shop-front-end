@@ -13,6 +13,7 @@ import {
   HiUserGroup,
   HiCheckCircle,
   HiOutlineCake,
+  HiOutlineCreditCard,
 } from "react-icons/hi";
 import {
   BarChart2,
@@ -46,6 +47,7 @@ const checkLowStock = () => {
 
 // Sidebar items including Task Manager
 const SIDEBAR_ITEMS = [
+  { name: "Billing", icon: HiOutlineCreditCard, color: "#EC4899", href: "/admin/dashboard/billing"},
   { name: "Overview", icon: BarChart2, color: "#6366f1", href: "/admin/dashboard/overview" },
   { name: "Products", icon: HiShoppingBag, color: "#8B5CF6", href: "/admin/dashboard/products" },
   { name: "Users", icon: HiUser, color: "#EC4899", href: "/admin/dashboard/users" },

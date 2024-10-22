@@ -42,8 +42,8 @@ const Notifications = () => {
     }
 
     return (
-        <div className="p-8 rounded-lg shadow-lg flex-1 overflow-auto relative z-10 bg-gray-900">
-            <h2 className="text-2xl font-bold mb-6 text-gray-100">Low Stock Alerts</h2>
+        <div className="p-8 rounded-lg shadow-lg flex-1 overflow-auto relative z-10 glass-container">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">Low Stock Alerts</h2>
 
             {lowStockCategories.length > 0 ? (
                 <ul className="space-y-4">

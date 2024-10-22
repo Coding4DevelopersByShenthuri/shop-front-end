@@ -38,6 +38,7 @@ import QRCodePage from "../pages/QRCodePage";
 import BirthdayReminders from "../pages/BirthdayReminders";
 import ContactUs from "../components/ContactUs";
 import HelpPage from "../pages/HelpPage";
+import BillingPage from "../pages/BillingPage";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -142,6 +143,10 @@ const router = createBrowserRouter([
       {
         path: "upload",
         element: <UploadProduct />,
+      },
+      {
+        path: "billing",
+        element: <BillingPage />,
       },
       {
         path: "manage",
