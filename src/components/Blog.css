@@ -1,0 +1,98 @@
+/* Add styles specifically for the Blog page */
+.Blog-page {
+  background-color: #c6eff2 !important; /* Force apply background color */
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(50px);
+}
+
+/* Blog page styling */
+.blog-container {
+  max-width: 1200px; /* Set maximum width for the container */
+  margin: 0 auto; /* Center the container */
+  padding: 20px; /* Add padding for spacing */
+  backdrop-filter: blur(20px); /* Adjust blur intensity for glass effect */
+  background-color: rgba(247, 247, 247, 0.7); /* Semi-transparent background color */
+  border-radius: 15px; /* Optional: Rounded corners for a softer look */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional: Shadow for depth */
+}
+
+
+.blog-title {
+  text-align: center; /* Center the title */
+  font-size: 2.5rem; /* Font size for the title */
+  color: #333; /* Title color */
+  margin: 60px 0 40px; /* Increased top margin to drag down the heading */
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Fixed 3 columns */
+  gap: 20px; /* Space between grid items */
+}
+
+.blog-card {
+  background-color: #fff; /* Card background color */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Clip the image if it exceeds the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+  transition: transform 0.3s ease; /* Smooth hover transition */
+}
+
+.blog-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.blog-image {
+  width: 100%; /* Responsive image width */
+  height: 200px; /* Fixed height for images */
+  object-fit: cover; /* Ensure images cover the area without distortion */
+}
+
+.blog-content {
+  padding: 15px; /* Padding inside the card */
+}
+
+.blog-post-title {
+  font-size: 1.5rem; /* Font size for post title */
+  color: #333; /* Title color */
+  margin-bottom: 10px; /* Space below the title */
+}
+
+.blog-summary {
+  font-size: 1rem; /* Font size for summary */
+  color: #666; /* Summary color */
+  margin-bottom: 10px; /* Space below the summary */
+}
+
+.blog-date {
+  font-size: 0.9rem; /* Font size for date */
+  color: #aaa; /* Date color */
+  margin-bottom: 15px; /* Space below the date */
+}
+
+.read-more {
+  color: #007BFF; /* Link color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Bold text for link */
+}
+
+.read-more:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+@media (max-width: 768px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-grid {
+    grid-template-columns: 1fr; /* 1 column on mobile devices */
+  }
+}
