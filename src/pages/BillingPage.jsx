@@ -10,6 +10,8 @@ const BillingComponent = () => {
   const [error, setError] = useState(null);
   const [isPresent, setIsPresent] = useState(false);
   const [isScanning, setIsScanning] = useState(true);
+  const [cashAmount, setCashAmount] = useState(0); // State for cash amount
+  const [billNumber, setBillNumber] = useState(''); // State for bill number
 
   // Fetch product from API based on ID
   const fetchProduct = async (id) => {
@@ -57,9 +59,18 @@ const BillingComponent = () => {
   
     // Printed date and bill number
     const printedDate = new Date().toLocaleDateString();
-    const billNumber = Math.floor(Math.random() * 1000000); // Generate random bill number
+    const billNumberText = `OR${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`; // Generate formatted bill number
+    setBillNumber(billNumberText); // Set bill number state
     doc.text(`Date: ${printedDate}`, 10, 30);
     doc.text(`Bill No: ${billNumber}`, 70, 30);
+
+    // Function to generate the next bill number
+  const generateNextBillNumber = () => {
+    const currentNumber = parseInt(billNumber.replace("OR", "")); // Remove the "OR" prefix
+    const nextNumber = currentNumber + 1; // Increment the number
+    const newBillNumber = `OR${String(nextNumber).padStart(5, '0')}`; // Format it back to the "OR00001" style
+    setBillNumber(newBillNumber); // Update the bill number
+  };
   
     // Line separator
     doc.line(10, 35, 90, 35); // Horizontal line
@@ -99,7 +110,8 @@ const BillingComponent = () => {
   const handleSubmit = () => {
     console.log('Submitting bill:', products);
     handlePrintToPdf(); // Call the print function when submitting
-    setProducts([]); // Clear bill on submit
+    setProducts([]); // Clear bill on submit#
+    setCashAmount(0); // Reset cash amount
   };
 
   const totalAmount = products.reduce(
@@ -187,7 +199,7 @@ const BillingComponent = () => {
                         <h3 className="text-lg font-semibold">Product Added!</h3>
                       </div>
                     ) : (
-                      <p>QR code could not be scanned.</p>
+                      <p>QR code could not be scanned. Please try again.</p>
                     )}
                     <button 
                       onClick={handleNewScan} 
@@ -265,15 +277,32 @@ const BillingComponent = () => {
               ))}
             </ul>
             
-            <div className="border-t mt-4 pt-4 flex justify-between font-semibold text-gray-700">
-              <span>Total:</span>
-              <span>Rs {totalAmount}</span>
-            </div>
-            <div className="mt-4 text-center">
-              <p className="text-gray-500 text-sm">Thank you for shopping!</p>
-              <p className="text-gray-500 text-sm">Come again soon!</p>
-            </div>
-          </div>
+            {/* Displaying Total Amount */}
+<div className="mb-4">
+  <p className="font-semibold">Total Amount: Rs {totalAmount}</p>
+  <p className="font-semibold">Bill Number: {billNumber}</p>
+  
+  {/* Input box for Cash Amount */}
+  <div className="flex items-center mt-2">
+    <label htmlFor="cashAmount" className="mr-2">Cash Amount:</label>
+    <input
+      id="cashAmount"
+      type="number"
+      value={cashAmount}
+      onChange={(e) => setCashAmount(Number(e.target.value))}
+      className="border rounded w-32 p-1"
+      min="0"
+    />
+  </div>
+
+  <p className="font-semibold">Change: Rs {cashAmount >= totalAmount ? cashAmount - totalAmount : 0}</p>
+</div>
+
+<div className="mt-4 text-center">
+  <p className="text-gray-500 text-sm">Thank you for shopping!</p>
+  <p className="text-gray-500 text-sm">Come again soon!</p>
+</div>
+
           <button 
             onClick={handleSubmit} 
             className="w-full mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -282,6 +311,7 @@ const BillingComponent = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
