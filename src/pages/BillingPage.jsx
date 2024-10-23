@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios'; // Import axios for API requests
 import QrScanner from "react-qr-scanner"; // Import the QR scanner
 import jsPDF from 'jspdf'; // Import jsPDF for PDF generation
+import { AuthContext } from '../contexts/AuthProvider';
 
 const BillingComponent = () => {
   const [productId, setProductId] = useState('');
@@ -11,7 +12,7 @@ const BillingComponent = () => {
   const [isPresent, setIsPresent] = useState(false);
   const [isScanning, setIsScanning] = useState(true);
   const [cashAmount, setCashAmount] = useState(0); // State for cash amount
-  const [billNumber, setBillNumber] = useState(''); // State for bill number
+  const { user } = useContext(AuthContext);
 
   // Fetch product from API based on ID
   const fetchProduct = async (id) => {
@@ -43,73 +44,63 @@ const BillingComponent = () => {
     setProducts((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handlePrintToPdf = () => {
+  const handlePrintToPdf = (orderNumber) => {
     const doc = new jsPDF({ unit: 'mm', format: 'a6', orientation: 'portrait' });
-  
+
     // Set font styles
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-  
+
     // Add header with centered shop name
     doc.setFontSize(12);
     doc.text("Shenthu MART", 53, 10, { align: 'center' }); // Centered text
     doc.setFontSize(10);
     doc.text("Main Street, Jaffna.", 53, 15, { align: 'center' }); // Centered address
     doc.text("Mobile: +94 77 123 4567", 53, 20, { align: 'center' }); // Centered mobile number
-  
+
     // Printed date and bill number
     const printedDate = new Date().toLocaleDateString();
-    const billNumberText = `OR${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`; // Generate formatted bill number
-    setBillNumber(billNumberText); // Set bill number state
     doc.text(`Date: ${printedDate}`, 10, 30);
-    doc.text(`Bill No: ${billNumber}`, 70, 30);
+    doc.text(`Bill No: OR${orderNumber}`, 70, 30);
 
-    // Function to generate the next bill number
-  const generateNextBillNumber = () => {
-    const currentNumber = parseInt(billNumber.replace("OR", "")); // Remove the "OR" prefix
-    const nextNumber = currentNumber + 1; // Increment the number
-    const newBillNumber = `OR${String(nextNumber).padStart(5, '0')}`; // Format it back to the "OR00001" style
-    setBillNumber(newBillNumber); // Update the bill number
-  };
-  
     // Line separator
     doc.line(10, 35, 90, 35); // Horizontal line
-  
+
     // Add products
     let startY = 40; // Starting Y position for products
     products.forEach((product, index) => {
       const itemText = `${index + 1}. ${product.name}`; // Product name
       const quantityText = `x ${product.quantity}`; // Quantity
       const priceText = `Rs ${product.quantity * product.price}`; // Price
-  
+
       const itemY = startY + index * 6; // Vertical spacing between items
-  
+
       // Add product details
       doc.text(itemText, 10, itemY); // Product name (left)
       doc.text(quantityText, 60, itemY); // Quantity (center)
       doc.text(priceText, 80, itemY); // Price (right)
     });
-  
+
     // Calculate total
     const totalAmount = products.reduce((total, product) => total + product.price * product.quantity, 0);
     startY += products.length * 6; // Position for total
     doc.line(10, startY + 2, 90, startY + 2); // Line above total
     doc.text(`Total: Rs ${totalAmount}`, 10, startY + 8); // Total amount
-  
+
     // Footer with thank you note
     startY += 12; // Space before footer
     doc.setFontSize(8);
     doc.text("Thank you for shopping!", 53, startY, { align: 'center' });
     doc.text("Come again soon!", 53, startY + 5, { align: 'center' });
-  
+
     // Save the PDF
     doc.save('bill.pdf');
   };
-  
-  
-  const handleSubmit = () => {
-    console.log('Submitting bill:', products);
-    handlePrintToPdf(); // Call the print function when submitting
+
+
+  const handleSubmit = async () => {
+    const res = await axios.post('http://localhost:3000/order/add-order', { userId: user.userDetails[0]?._id, orderDetail: products });
+    handlePrintToPdf(res.data?.orderNumber); // Call the print function when submitting
     setProducts([]); // Clear bill on submit#
     setCashAmount(0); // Reset cash amount
   };
@@ -150,11 +141,11 @@ const BillingComponent = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
       <div className="w-full max-w-6xl bg-white shadow-md rounded-lg p-6 flex space-x-6">
-        
+
         {/* Left Section - Product Input and List */}
         <div className="w-1/2">
           <h2 className="text-2xl font-semibold mb-4 text-gray-700">Add Product</h2>
-          
+
           {/* Input box */}
           <div className="flex space-x-2 mb-4">
             <input
@@ -164,25 +155,25 @@ const BillingComponent = () => {
               placeholder="Enter Product ID"
               className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <button 
-              onClick={() => setShowQrPopup(true)} 
+            <button
+              onClick={() => setShowQrPopup(true)}
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
               Scan QR
             </button>
-            <button 
-              onClick={handleAddProduct} 
+            <button
+              onClick={handleAddProduct}
               className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
               Add Product
             </button>
           </div>
-          
+
           {/* QR Code Popup */}
           {showQrPopup && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
               <div className="bg-white p-6 rounded-lg shadow-lg">
                 <h2 className="text-xl font-semibold mb-4">Scan QR Code</h2>
                 {error && <p className="text-red-500">Error: {error.message}</p>}
-                
+
                 {isScanning ? (
                   <div className="scanner-container">
                     <QrScanner
@@ -201,14 +192,14 @@ const BillingComponent = () => {
                     ) : (
                       <p>QR code could not be scanned. Please try again.</p>
                     )}
-                    <button 
-                      onClick={handleNewScan} 
+                    <button
+                      onClick={handleNewScan}
                       className="mt-4 p-2 bg-blue-500 text-white rounded"
                     >
                       Scan New QR Code
                     </button>
-                    <button 
-                      onClick={() => setShowQrPopup(false)} 
+                    <button
+                      onClick={() => setShowQrPopup(false)}
                       className="mt-4 p-2 bg-red-500 text-white rounded">
                       Close
                     </button>
@@ -247,8 +238,8 @@ const BillingComponent = () => {
                     </td>
                     <td className="p-2 text-right border-r">Rs {product.price}</td>
                     <td className="p-2 text-center">
-                      <button 
-                        onClick={() => handleRemoveProduct(index)} 
+                      <button
+                        onClick={() => handleRemoveProduct(index)}
                         className="text-red-500 hover:text-red-600">
                         Remove
                       </button>
@@ -276,42 +267,45 @@ const BillingComponent = () => {
                 </li>
               ))}
             </ul>
-            
+
             {/* Displaying Total Amount */}
-<div className="mb-4">
-  <p className="font-semibold">Total Amount: Rs {totalAmount}</p>
-  <p className="font-semibold">Bill Number: {billNumber}</p>
-  
-  {/* Input box for Cash Amount */}
-  <div className="flex items-center mt-2">
-    <label htmlFor="cashAmount" className="mr-2">Cash Amount:</label>
-    <input
-      id="cashAmount"
-      type="number"
-      value={cashAmount}
-      onChange={(e) => setCashAmount(Number(e.target.value))}
-      className="border rounded w-32 p-1"
-      min="0"
-    />
-  </div>
+            <div className="mb-4">
+              <p className="font-semibold">Total Amount: Rs {totalAmount}</p>
+              {/* <p className="font-semibold">Bill Number: {billNumber}</p> */}
 
-  <p className="font-semibold">Change: Rs {cashAmount >= totalAmount ? cashAmount - totalAmount : 0}</p>
-</div>
+              {/* Input box for Cash Amount */}
+              <div className="flex items-center mt-2">
+                <label htmlFor="cashAmount" className="mr-2">Cash Amount:</label>
+                <input
+                  id="cashAmount"
+                  type="number"
+                  value={cashAmount}
+                  onChange={(e) => setCashAmount(Number(e.target.value))}
+                  className="border rounded w-32 p-1"
+                  min="0"
+                />
+              </div>
 
-<div className="mt-4 text-center">
-  <p className="text-gray-500 text-sm">Thank you for shopping!</p>
-  <p className="text-gray-500 text-sm">Come again soon!</p>
-</div>
+              <p className="font-semibold">Change: Rs {cashAmount >= totalAmount ? cashAmount - totalAmount : 0}</p>
+            </div>
 
-          <button 
-            onClick={handleSubmit} 
-            className="w-full mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Submit and Print
-          </button>
+            <div className="mt-4 text-center">
+              <p className="text-gray-500 text-sm">Thank you for shopping!</p>
+              <p className="text-gray-500 text-sm">Come again soon!</p>
+            </div>
+
+            <button
+              onClick={handleSubmit}
+              className={`w-full mt-6 px-4 py-2 rounded text-white ${products.length === 0 ? 'bg-gray-500' : 'bg-blue-500 hover:bg-blue-600'
+                }`}
+              disabled={products.length === 0}
+            >
+              Submit and Print
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 
