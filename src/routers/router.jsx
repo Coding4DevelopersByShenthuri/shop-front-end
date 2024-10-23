@@ -9,6 +9,7 @@ import UserHome from "../userHome/userHome";
 import Shop from "../shop/Shop";
 import About from "../components/About";
 import Blog from "../components/Blog";
+import Recipes from "../recipes/Recipes";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import ManageProducts from "../dashboard/ManageProducts";
 import EditProducts from "../dashboard/EditProducts";
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactUs />,
+      },
+      {
+        path: "/recipe",
+        element: <Recipes />,
       },
       {
         path: "/about",
