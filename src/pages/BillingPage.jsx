@@ -49,9 +49,9 @@ const BillingComponent = () => {
     doc.setFontSize(10);
   
     // Add header
-    doc.text("Sample Store", 10, 10);
+    doc.text("Shenthu MART", 10, 10);
     doc.setFontSize(8);
-    doc.text("123 Main Street", 10, 15);
+    doc.text("Main Street, Jaffna.", 10, 15);
     doc.text("Receipt", 10, 20);
     doc.line(10, 22, 100, 22); // Horizontal line for separation
   
