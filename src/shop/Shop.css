@@ -4,3 +4,25 @@
     min-height: 100vh; /* Ensures the background covers full viewport height */
     padding: 20px; /* Optional padding */
 }
+.category-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .category-icon:hover {
+    background-color: #e2e8f0; /* Change on hover */
+  }
+  
+  .category-icon p {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  

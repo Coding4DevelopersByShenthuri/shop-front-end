@@ -51,7 +51,7 @@ const HelpPage = () => {
             </div>
             {openFAQ === 3 && (
               <div className="faq-answer">
-                <p>To reach our support team, you can email us at <a href="mailto:ShenthuMART@gmail.com">ShenthuMART@gmail.com</a> or call us at +94743899907.</p>
+                <p>To reach our support team, you can email us at <a href="mailto:ShenthuMART@gmail.com">ShenthuMART@gmail.com</a> or call us at +94771234567.</p>
               </div>
             )}
           </div>
@@ -61,7 +61,7 @@ const HelpPage = () => {
           <h2>Contact Support</h2>
           <p>If you need further assistance, feel free to reach out to us at:</p>
           <p><FaEnvelope /> Email: <a href="mailto:ShenthuMART@gmail.com">ShenthuMART@gmail.com</a></p>
-          <p><FaPhone /> Phone: +94743899907</p>
+          <p><FaPhone /> Phone: +94 77 123 4567</p>
         </section>
       </div>
     </div>
