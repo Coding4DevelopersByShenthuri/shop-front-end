@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const TaskForm = () => {
@@ -26,22 +27,22 @@ const TaskForm = () => {
     'Handle Deliveries',
   ];
 
+  const fetchStaffMembers = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:3000/staff/all-staff-with-task');
+      if (!response.ok) throw new Error('Failed to fetch staff members.');
+      const data = await response.json();
+      setStaffMembers(data);
+    } catch (error) {
+      console.error('Error fetching staff members:', error);
+      setError('Failed to fetch staff members. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  }
   // Fetch staff members from the server
   useEffect(() => {
-    const fetchStaffMembers = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('http://localhost:3000/staff/all-staff-with-task');
-        if (!response.ok) throw new Error('Failed to fetch staff members.');
-        const data = await response.json();
-        setStaffMembers(data);
-      } catch (error) {
-        console.error('Error fetching staff members:', error);
-        setError('Failed to fetch staff members. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchStaffMembers();
   }, []);
 
@@ -82,10 +83,12 @@ const TaskForm = () => {
         console.error('Backend Error:', errorData);
         throw new Error(`${response.status}: ${errorData.message || 'Task could not be saved.'}`);
       }
-
+      const staffMail = staffMembers.find(e => e._id == taskData.staffId).email
+      const tasksResponse = await axios.post('http://localhost:3000/tasks/send-task-assignment-mail', {staffMail:staffMail,...taskData} );
       setConfirmationMessage('Task assigned successfully!');
       setTaskData({ staffId: '', title: '', description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
-
+      setStaffMembers([])
+      fetchStaffMembers();
       setTimeout(() => setConfirmationMessage(''), 3000);
     } catch (error) {
       console.error('Error saving task:', error);

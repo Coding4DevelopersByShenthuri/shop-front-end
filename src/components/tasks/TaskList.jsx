@@ -2,28 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const TaskList = ({ tasks,updateTaskStatus }) => {
-  const [staffNames, setStaffNames] = useState({});
-
-  // Function to fetch all staff details
-  const fetchStaffNames = async () => {
-    try {
-      const response = await axios.get('/api/staff'); // Adjust API route as needed
-      const staffData = response.data;
-      
-      // Create a mapping of staff ID to name
-      const staffMap = {};
-      staffData.forEach((staff) => {
-        staffMap[staff._id] = staff.name; // Assuming staff has _id and name fields
-      });
-      setStaffNames(staffMap);
-    } catch (error) {
-      console.error('Failed to fetch staff names:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchStaffNames(); // Fetch staff names when component loads
-  }, []);
 
 
   return (
@@ -43,7 +21,6 @@ const TaskList = ({ tasks,updateTaskStatus }) => {
             <p>{task.description || 'No description available'}</p>
             <p><strong>Priority:</strong> {task.priority || 'N/A'}</p>
             <p><strong>Due Date:</strong> {task.dueDate ? task.dueDate : 'No due date set'}</p>
-            <p><strong>Assigned To:</strong> {staffNames[task.assignedTo] || 'Unassigned'}</p>
             <p><strong>Status:</strong> {task.status || 'Pending'}</p>
 
             <label htmlFor={`status-${task._id || task.id}`} className="block mt-2">
