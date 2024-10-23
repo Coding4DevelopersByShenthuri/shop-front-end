@@ -195,8 +195,8 @@ const BillingComponent = () => {
         <div className="w-1/2">
           <h2 className="text-2xl font-semibold mb-4 text-gray-700">Bill Summary</h2>
           <div className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="text-center font-bold text-xl mb-4 text-gray-700">Sample Store</h3>
-            <p className="text-center text-gray-600 mb-2">123 Main Street</p>
+            <h3 className="text-center font-bold text-xl mb-4 text-gray-700">Shenthu MART</h3>
+            <p className="text-center text-gray-600 mb-2">Main Street, Jaffna.</p>
             <p className="text-center text-gray-600 mb-6">Receipt</p>
 
             <ul className="mb-4">
