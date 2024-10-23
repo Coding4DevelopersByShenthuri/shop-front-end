@@ -42,54 +42,60 @@ const BillingComponent = () => {
   };
 
   const handlePrintToPdf = () => {
-    const doc = new jsPDF({ unit: 'mm', format: 'a6', orientation: 'portrait' }); // A6 size for receipt
+    const doc = new jsPDF({ unit: 'mm', format: 'a6', orientation: 'portrait' });
   
     // Set font styles
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
   
-    // Add header
-    doc.text("Shenthu MART", 10, 10);
-    doc.setFontSize(8);
-    doc.text("Main Street, Jaffna.", 10, 15);
-    doc.text("Receipt", 10, 20);
-    doc.line(10, 22, 100, 22); // Horizontal line for separation
+    // Add header with centered shop name
+    doc.setFontSize(12);
+    doc.text("Shenthu MART", 53, 10, { align: 'center' }); // Centered text
+    doc.setFontSize(10);
+    doc.text("Main Street, Jaffna.", 53, 15, { align: 'center' }); // Centered address
+    doc.text("Mobile: +94 77 123 4567", 53, 20, { align: 'center' }); // Centered mobile number
+  
+    // Printed date and bill number
+    const printedDate = new Date().toLocaleDateString();
+    const billNumber = Math.floor(Math.random() * 1000000); // Generate random bill number
+    doc.text(`Date: ${printedDate}`, 10, 30);
+    doc.text(`Bill No: ${billNumber}`, 70, 30);
+  
+    // Line separator
+    doc.line(10, 35, 90, 35); // Horizontal line
   
     // Add products
-    let startY = 25; // Starting position for products
+    let startY = 40; // Starting Y position for products
     products.forEach((product, index) => {
       const itemText = `${index + 1}. ${product.name}`; // Product name
-      const quantityText = `x ${product.quantity}`; // Product quantity
-      const priceText = `Rs ${product.quantity * product.price}`; // Product price
-      
-      // Align text
-      const itemY = startY + index * 6; // Spacing between items
+      const quantityText = `x ${product.quantity}`; // Quantity
+      const priceText = `Rs ${product.quantity * product.price}`; // Price
   
-      // Add product name and quantity
-      doc.text(itemText, 10, itemY); // Align left
-      doc.text(quantityText, 80, itemY); // Align quantity
-      doc.text(priceText, 150, itemY); // Align price
+      const itemY = startY + index * 6; // Vertical spacing between items
+  
+      // Add product details
+      doc.text(itemText, 10, itemY); // Product name (left)
+      doc.text(quantityText, 60, itemY); // Quantity (center)
+      doc.text(priceText, 80, itemY); // Price (right)
     });
   
     // Calculate total
     const totalAmount = products.reduce((total, product) => total + product.price * product.quantity, 0);
     startY += products.length * 6; // Position for total
-    doc.line(10, startY + 2, 200, startY + 2); // Line above total
-    doc.setFontSize(10); // Reset font size for total
-    doc.text(`Total: Rs ${totalAmount}`, 10, startY + 8); // Align total
+    doc.line(10, startY + 2, 90, startY + 2); // Line above total
+    doc.text(`Total: Rs ${totalAmount}`, 10, startY + 8); // Total amount
   
-    // Footer
+    // Footer with thank you note
     startY += 12; // Space before footer
-    doc.setFontSize(8); // Smaller font for footer
-    doc.text("Thank you for shopping!", 10, startY);
-    doc.text("Come again soon!", 10, startY + 5);
+    doc.setFontSize(8);
+    doc.text("Thank you for shopping!", 53, startY, { align: 'center' });
+    doc.text("Come again soon!", 53, startY + 5, { align: 'center' });
   
     // Save the PDF
     doc.save('bill.pdf');
   };
   
   
-
   const handleSubmit = () => {
     console.log('Submitting bill:', products);
     handlePrintToPdf(); // Call the print function when submitting
