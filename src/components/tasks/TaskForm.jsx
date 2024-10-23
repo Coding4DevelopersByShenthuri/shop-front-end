@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const TaskForm = () => {
+  const [staffId, setStaffId] = useState('');
   const [taskData, setTaskData] = useState({
-    staffId: '', 
-    title: '', // Add title field to taskData
-    description: '', 
+    title: '', // Task title
+    description: '', // Task description
     priority: 'Medium', 
     dueDate: '', 
     status: 'Pending',
   });
 
   const [staffMembers, setStaffMembers] = useState([]);
-  const [assignments, setAssignments] = useState({});
   const [error, setError] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -67,8 +67,8 @@ const TaskForm = () => {
 
       // Assign task to the backend
       const newTask = {
+        staffId,
         ...taskData,
-        title: taskData.title, // Ensure task title is included in the request
       };
 
       const response = await fetch('http://localhost:3000/tasks/upload-task', {
@@ -76,7 +76,7 @@ const TaskForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newTask), // Send new task with title and other details
+        body: JSON.stringify(newTask),
       });
 
       if (!response.ok) {
@@ -85,9 +85,18 @@ const TaskForm = () => {
         throw new Error(`Error ${response.status}: ${errorData.message || 'Task could not be saved.'}`);
       }
 
-      setConfirmationMessage('Task assigned successfully!');
-      setAssignments({});
-      setTaskData({ staffId: '', title: '', description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
+      // Send email notification
+      const emailData = {
+        email: staffMembers.find(member => member._id === staffId).email,
+        subject: `New Task Assigned: ${taskData.title}`,
+        text: `You have been assigned a new task: ${taskData.description}`,
+      };
+
+      await axios.post('http://localhost:3000/send-email', emailData);
+
+      setConfirmationMessage('Task assigned successfully and email sent!');
+      setTaskData({ title: '', description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
+      setStaffId('');
 
       setTimeout(() => setConfirmationMessage(''), 3000);
     } catch (error) {
@@ -111,8 +120,8 @@ const TaskForm = () => {
         <label className="block mb-1">
           Select Staff Member:
           <select
-            value={taskData.staffId}
-            onChange={(e) => setTaskData({ ...taskData, staffId: e.target.value })}
+            value={staffId}
+            onChange={(e) => setStaffId(e.target.value)}
             required
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
@@ -131,7 +140,7 @@ const TaskForm = () => {
         <label className="block mb-1">
           Select Task:
           <select
-            value={taskData.title} // Bind title to the selected task
+            value={taskData.title}
             onChange={(e) => setTaskData({ ...taskData, title: e.target.value })}
             required
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
