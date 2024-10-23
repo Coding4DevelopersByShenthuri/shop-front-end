@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const TaskForm = () => {
-  const [staffId, setStaffId] = useState('');
   const [taskData, setTaskData] = useState({
-    title: '', // Task title
-    description: '', // Task description
-    priority: 'Medium', 
-    dueDate: '', 
+    staffId: '',
+    title: '',
+    description: '',
+    priority: 'Medium',
+    dueDate: '',
     status: 'Pending',
   });
 
@@ -67,7 +66,6 @@ const TaskForm = () => {
 
       // Assign task to the backend
       const newTask = {
-        staffId,
         ...taskData,
       };
 
@@ -82,21 +80,11 @@ const TaskForm = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Backend Error:', errorData);
-        throw new Error(`Error ${response.status}: ${errorData.message || 'Task could not be saved.'}`);
+        throw new Error(`${response.status}: ${errorData.message || 'Task could not be saved.'}`);
       }
 
-      // Send email notification
-      const emailData = {
-        email: staffMembers.find(member => member._id === staffId).email,
-        subject: `New Task Assigned: ${taskData.title}`,
-        text: `You have been assigned a new task: ${taskData.description}`,
-      };
-
-      await axios.post('http://localhost:3000/send-email', emailData);
-
-      setConfirmationMessage('Task assigned successfully and email sent!');
-      setTaskData({ title: '', description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
-      setStaffId('');
+      setConfirmationMessage('Task assigned successfully!');
+      setTaskData({ staffId: '', title: '', description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
 
       setTimeout(() => setConfirmationMessage(''), 3000);
     } catch (error) {
@@ -120,8 +108,8 @@ const TaskForm = () => {
         <label className="block mb-1">
           Select Staff Member:
           <select
-            value={staffId}
-            onChange={(e) => setStaffId(e.target.value)}
+            value={taskData.staffId}
+            onChange={(e) => setTaskData({ ...taskData, staffId: e.target.value })}
             required
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
