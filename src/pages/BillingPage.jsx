@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for API requests
 import QrScanner from "react-qr-scanner"; // Import the QR scanner
+import jsPDF from 'jspdf'; // Import jsPDF for PDF generation
 
 const BillingComponent = () => {
   const [productId, setProductId] = useState('');
@@ -40,8 +41,58 @@ const BillingComponent = () => {
     setProducts((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handlePrintToPdf = () => {
+    const doc = new jsPDF({ unit: 'mm', format: 'a6', orientation: 'portrait' }); // A6 size for receipt
+  
+    // Set font styles
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+  
+    // Add header
+    doc.text("Sample Store", 10, 10);
+    doc.setFontSize(8);
+    doc.text("123 Main Street", 10, 15);
+    doc.text("Receipt", 10, 20);
+    doc.line(10, 22, 100, 22); // Horizontal line for separation
+  
+    // Add products
+    let startY = 25; // Starting position for products
+    products.forEach((product, index) => {
+      const itemText = `${index + 1}. ${product.name}`; // Product name
+      const quantityText = `x ${product.quantity}`; // Product quantity
+      const priceText = `Rs ${product.quantity * product.price}`; // Product price
+      
+      // Align text
+      const itemY = startY + index * 6; // Spacing between items
+  
+      // Add product name and quantity
+      doc.text(itemText, 10, itemY); // Align left
+      doc.text(quantityText, 80, itemY); // Align quantity
+      doc.text(priceText, 150, itemY); // Align price
+    });
+  
+    // Calculate total
+    const totalAmount = products.reduce((total, product) => total + product.price * product.quantity, 0);
+    startY += products.length * 6; // Position for total
+    doc.line(10, startY + 2, 200, startY + 2); // Line above total
+    doc.setFontSize(10); // Reset font size for total
+    doc.text(`Total: Rs ${totalAmount}`, 10, startY + 8); // Align total
+  
+    // Footer
+    startY += 12; // Space before footer
+    doc.setFontSize(8); // Smaller font for footer
+    doc.text("Thank you for shopping!", 10, startY);
+    doc.text("Come again soon!", 10, startY + 5);
+  
+    // Save the PDF
+    doc.save('bill.pdf');
+  };
+  
+  
+
   const handleSubmit = () => {
     console.log('Submitting bill:', products);
+    handlePrintToPdf(); // Call the print function when submitting
     setProducts([]); // Clear bill on submit
   };
 
@@ -80,7 +131,7 @@ const BillingComponent = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6 flex space-x-6">
+      <div className="w-full max-w-6xl bg-white shadow-md rounded-lg p-6 flex space-x-6">
         
         {/* Left Section - Product Input and List */}
         <div className="w-1/2">
