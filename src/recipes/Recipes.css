@@ -1,6 +1,6 @@
 .recipes-container {
-    margin-top: 80px; /* Adjust this value based on the height of your navbar */
-    padding: 0 20px;  /* Optional padding for better spacing on the sides */
+    margin-top: 100px; /* Adjust this value based on the height of your navbar */
+    padding: 0 80px;  /* Optional padding for better spacing on the sides */
 }
   
 .recipe-card {
