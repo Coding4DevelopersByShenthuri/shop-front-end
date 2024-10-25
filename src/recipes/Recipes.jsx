@@ -25,33 +25,30 @@ const Recipes = () => {
 
   // Function to handle expanding a recipe
   const handleExpandRecipe = (recipe) => {
-    setExpandedRecipe((prev) => (prev && prev._id === recipe._id ? null : recipe)); // Toggle expand/collapse
+    setExpandedRecipe(recipe); // Set selected recipe to display in detail view
   };
 
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
-    <div className="Recipes-page"> {/* Light blue background wrapper */}
+    <div className="Recipes-page">
       <div className="recipes-container">
         <h1 className="recipes-title">Recipes From Our Products</h1>
         <div className="recipes-grid">
           {recipes.map((recipe) => (
-            <div className="recipe-card" key={recipe._id}>
+            <div className="recipe-card" key={recipe._id} onClick={() => handleExpandRecipe(recipe)}>
               {recipe.imageUrl && <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image" />}
               <h2 className="recipe-title">{recipe.title}</h2>
-              <p className="recipe-description">{recipe.description}</p>
+              <p className="recipe-description">
+                {recipe.description.slice(0, 100)}...
+              </p>
               <h3>Ingredients:</h3>
               <ul className="ingredients-list">
-                {recipe.ingredients.slice(0, 3).map((ingredient, index) => ( // Show only first 3 ingredients initially
+                {recipe.ingredients.slice(0, 3).map((ingredient, index) => (
                   <li key={index}>{ingredient}</li>
                 ))}
               </ul>
-
-              {/* Read More button */}
-              <button className="read-more-button" onClick={() => handleExpandRecipe(recipe)}>
-                {expandedRecipe && expandedRecipe._id === recipe._id ? 'Show Less' : 'Read More'}
-              </button>
             </div>
           ))}
         </div>

@@ -1,8 +1,8 @@
-/* Add styles specifically for the Recipes page */
+/* General page styling */
 .Recipes-page {
-  background-color: #e0f7fa !important; /* Force apply background color */
+  background-color: #e0f7fa;
   min-height: 100vh;
-  padding: 10px;
+  padding: 20px;
   font-family: 'Arial', sans-serif;
   display: flex;
   justify-content: center;
@@ -10,157 +10,130 @@
   backdrop-filter: blur(50px);
 }
 
+/* Recipes container styling */
 .recipes-container {
-  padding: 80px 20px; /* Top-bottom padding and side padding */
-  max-width: 1200px; /* Maximum width for the container */
-  margin: auto; /* Center the container */
-  background-color: rgba(247, 247, 247, 0.7); /* Semi-transparent background color */
-  backdrop-filter: blur(10px); /* Blur effect for the glass effect */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional: Shadow for depth */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for contrast */
+  max-width: 1200px;
+  margin: auto;
+  padding: 60px 20px;
+  background-color: rgba(247, 247, 247, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* Title styling */
 .recipes-title {
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 2.5rem; /* Increased font size */
-  color: #003366; /* Darker blue for better contrast */
+  font-size: 2.5em;
+  margin-bottom: 50px;
+  color: #333;
 }
 
+/* Grid layout for recipes */
 .recipes-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Five equal columns */
-  gap: 20px; /* Gap between grid items */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
 
+/* Card styling for individual recipes */
 .recipe-card {
-  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white for contrast */
-  border-radius: 10px; /* Rounded corners */
-  padding: 15px; /* Padding inside the card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow for depth */
-  overflow: hidden; /* Prevents overflow */
-  transition: transform 0.3s; /* Smooth transition for hover effect */
-  backdrop-filter: blur(10px); /* Glass effect */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Border for glass effect */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  height: 350px;
+  width: 100%;
+  overflow: hidden;
+  transition: transform 0.3s;
 }
 
 .recipe-card:hover {
-  transform: scale(1.05); /* Scale effect on hover */
+  transform: scale(1.05);
 }
 
+/* Image styling */
 .recipe-image {
-  width: 100%; /* Full width image */
-  height: auto; /* Auto height */
-  border-radius: 8px; /* Rounded corners for image */
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
+/* Title and description styling inside the card */
 .recipe-title {
-  font-size: 1.5em; /* Title font size */
-  margin: 10px 0; /* Margin around title */
-  color: #003366; /* Darker blue for title */
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #003366;
 }
 
 .recipe-description {
-  font-style: italic; /* Italic style for description */
-  color: #003366; /* Darker blue for description */
-  padding: 0 10px; /* Padding for description */
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
 }
 
+/* Ingredients and steps list styling */
 .ingredients-list, .steps-list {
-  margin: 10px 0; /* Margin around lists */
-  padding-left: 20px; /* Indentation for lists */
+  list-style: none;
+  margin: 10px 0;
+  padding-left: 20px;
 }
 
-.view-recipe-btn {
-  background: #4CAF50; /* Button background color */
-  border: none; /* Remove border */
-  color: #fff; /* White text for better contrast */
-  padding: 10px; /* Button padding */
-  text-align: center; /* Center text */
-  text-decoration: none; /* Remove underline */
-  display: inline-block; /* Inline block for button */
-  font-size: 16px; /* Button font size */
-  margin: 10px 0; /* Margin around button */
-  cursor: pointer; /* Pointer cursor */
-  border-radius: 5px; /* Rounded corners */
-}
-
-.view-recipe-btn:hover {
-  background: #45a049; /* Darker green on hover */
-}
-
-.read-more-button {
-  display: inline-block; /* Inline block for button */
-  margin-top: 10px; /* Margin on top */
-  padding: 10px 15px; /* Padding for button */
-  background-color: #007bff; /* Blue background */
-  color: white; /* White text */
-  text-decoration: none; /* Remove underline */
-  border-radius: 5px; /* Rounded corners */
-}
-
-.read-more-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
-.loading {
-  text-align: center; /* Center loading text */
-  font-size: 1.5em; /* Font size for loading text */
-  margin-top: 50px; /* Margin on top */
-}
-
-.error {
-  color: red; /* Red color for error text */
-  text-align: center; /* Center error text */
-  margin-top: 50px; /* Margin on top */
-  font-size: 1.2em; /* Font size for error text */
-}
-
+/* Recipe detail view styling */
 .recipe-detail-view {
-  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Slightly increased opacity for better visibility */
-  background: rgba(255, 255, 255, 0.8); /* More transparent for a better glass effect */
-  backdrop-filter: blur(80px); /* Adjusted blur for subtlety */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Shadow for depth */
-  transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-  color: #333; /* Dark text for contrast */
+  margin-top: 20px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .recipe-detail-view:hover {
-  background: rgba(255, 255, 255, 1.0); /* Slightly increase opacity on hover */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+  background: rgba(255, 255, 255, 1.0);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .detail-title {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 1.5em;
+  margin-bottom: 15px;
 }
 
 .detail-image {
-  width: 100%; /* Adjust to fit your layout */
-  max-width: 400px; /* Limit max size */
-  height: auto;
+  width: 80%;
+  height: 80%;
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
 
-.steps-list {
-  margin-left: 20px; /* Indent steps */
+/* Loading and error messages */
+.loading, .error {
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 50px;
 }
 
-/* New glass-container class for glass effect */
+.error {
+  color: red;
+}
+
+/* Glass container styling */
 .glass-container {
-  padding: 20px; /* Padding inside the glass container */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for contrast */
-  background: rgba(255, 255, 255, 0.4); /* More transparent for glass effect */
-  backdrop-filter: blur(100px); /* Blur the background */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(100px);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-container:hover {
-  background: rgba(255, 255, 255, 1.0); /* Slightly increase opacity on hover */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+  background: rgba(255, 255, 255, 1.0);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
+

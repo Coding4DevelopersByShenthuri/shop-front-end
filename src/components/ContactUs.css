@@ -16,18 +16,19 @@ body {
   height: 100vh; /* Full height of the viewport */
   display: flex; /* Use flexbox to center the content */
   justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  padding: 20px; /* Padding around the container */
+  align-items: flex-start; /* Align items to the start (top) */
+  padding: 70px 20px; /* Add padding to create space above the content */
 }
 
 .contact-us-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px; /* Inner padding for the form */
+  padding: 20px; /* Reduced padding */
   border-radius: 10px; /* Rounded corners for the container */
   width: 50%; /* Set to a percentage or specific pixel value for more flexibility */
   max-width: 500px; /* Maximum width */
+  height: auto; /* Set to auto or specify a height */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Increased shadow for depth */
   background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white background */
   backdrop-filter: blur(10px); /* Frosted glass effect */
@@ -49,7 +50,7 @@ body {
 
 .form-group {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* Reduced from 15px */
   display: flex;
   flex-direction: column;
 }
@@ -68,7 +69,7 @@ textarea {
 }
 
 textarea {
-  height: 100px;
+  height: 150px; /* Reduced from 100px */
 }
 
 .submit-button {
@@ -79,7 +80,7 @@ textarea {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 5px; /* Reduced from 10px */
   transition: background-color 0.3s; /* Smooth transition for background color */
 }
 
