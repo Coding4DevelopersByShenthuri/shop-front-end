@@ -1,6 +1,6 @@
 /* Add styles specifically for the Help page */
 .help-page {
-  background-color: #c6eff2 !important; /* Force apply background color */
+  background-color: #e0f7fa !important; /* Force apply background color */
   min-height: 100vh;
   padding: 10px;
   font-family: 'Arial', sans-serif;

@@ -40,6 +40,7 @@ import BirthdayReminders from "../pages/BirthdayReminders";
 import ContactUs from "../components/ContactUs";
 import HelpPage from "../pages/HelpPage";
 import BillingPage from "../pages/BillingPage";
+import ManageRecipes from "../dashboard/ManageRecipes";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -158,6 +159,10 @@ const router = createBrowserRouter([
         element: <ManageProducts />,
       },
       {
+        path: "recipes",
+        element: <ManageRecipes />,
+      },
+      {
         path: "newstaffs",
         element: <AddNewStaffs />,
       },
@@ -179,11 +184,11 @@ const router = createBrowserRouter([
       },
       {
         path: "qrcode",
-        element: <QRCodePage />
+        element: <QRCodePage />,
       },
       {
         path: "birthday-reminders",
-        element: <BirthdayReminders />
+        element: <BirthdayReminders />,
       },
       {
         path: "edit-products/:id",
