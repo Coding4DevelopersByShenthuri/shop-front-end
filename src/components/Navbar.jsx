@@ -57,7 +57,7 @@ const Navbar = () => {
                     </Link>
 
                     {/* Nav items for large devices */}
-                    <ul className='md:flex space-x-12 hidden'>
+                    <ul className='md:flex space-x-12 hidden pl-8'>
                         {navItems.map(({ link, path }) => (
                             <li key={path}>
                                 <Link to={path} className='block text-base text-black uppercase font-bold cursor-pointer hover:text-blue-700'>
