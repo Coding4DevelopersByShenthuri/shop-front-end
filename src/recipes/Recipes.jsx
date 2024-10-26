@@ -45,19 +45,25 @@ const Recipes = () => {
         {/* Category Selection */}
         <div className="category-filter">
           <button onClick={() => setSelectedCategory('All')}>
-            <span className="material-icons">grid_view</span> All
+            <span className="material-icons">grid_view</span> All📊
           </button>
           <button onClick={() => setSelectedCategory('Main course')}>
-            <span className="material-icons">restaurant_menu</span> Main Course
+            <span className="material-icons">restaurant_menu</span> Main Course🍽️
           </button>
           <button onClick={() => setSelectedCategory('Desserts')}>
-            <span className="material-icons">icecream</span> Desserts
+            <span className="material-icons">icecream</span> Desserts🍨
           </button>
           <button onClick={() => setSelectedCategory('Smoothies')}>
-            <span className="material-icons">local_drink</span> Smoothies
+            <span className="material-icons">local_drink</span> Smoothies🥤
           </button>
           <button onClick={() => setSelectedCategory('Salads')}>
-            <span className="material-icons">eco</span> Salads
+            <span className="material-icons">eco</span> Salads🥗
+          </button>
+          <button onClick={() => setSelectedCategory('Cakes')}>
+            <span className="material-icons">cake</span> Cakes🍰
+          </button>
+          <button onClick={() => setSelectedCategory('Cookies')}>
+            <span className="material-icons">cookie</span> Cookies🍪
           </button>
         </div>
 

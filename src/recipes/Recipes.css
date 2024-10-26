@@ -156,7 +156,7 @@
 }
 
 .category-filter button {
-  padding: 10px 15px; /* Adjust button padding for a better look */
+  padding: 5px 15px; /* Adjust button padding for a better look */
   border: none; /* Remove default border */
   border-radius: 5px; /* Rounded corners */
   background-color: #007BFF; /* Button background color */
