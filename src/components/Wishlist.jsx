@@ -44,6 +44,7 @@ const Wishlist = () => {
                     'Content-Type': 'application/json',
                     // 'Authorization': `Bearer ${your_token}`
                 },
+                body: JSON.stringify({ userId:user?.userDetails[0]?._id }),
             });
 
             if (!response.ok) {
@@ -51,7 +52,7 @@ const Wishlist = () => {
             }
 
             // Update the local state to remove the item
-            setWishlistItems((prevItems) => prevItems.filter(item => item.productId !== productId));
+            setWishlistItems((prevItems) => prevItems.filter(item => item._id !== productId));
         } catch (error) {
             setError(error.message);
         }
