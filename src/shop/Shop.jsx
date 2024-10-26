@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Card } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faCheese, faCarrot, faHeart } from '@fortawesome/free-solid-svg-icons'; // Import the heart icon
 import './shop.css';
+import { AuthContext } from '../contexts/AuthProvider';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]); // Wishlist state
   const [quantities, setQuantities] = useState({}); // State to hold product quantities
+  const [message, setMessage] = useState('');
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     fetch('http://localhost:3000/product/all-products')
@@ -15,14 +18,28 @@ const Shop = () => {
       .then((data) => setProducts(data));
   }, []);
 
-  const handleAddToWishlist = (product) => {
-    if (!wishlist.some(item => item._id === product._id)) {
-      setWishlist([...wishlist, product]);
-      alert(`${product.name} has been added to your wishlist!`); // Optional: Alert user
-    } else {
-      alert(`${product.name} is already in your wishlist.`);
-    }
-  };
+
+  const handleAddToWishlist = async (product) => {
+    console.log(product._id)
+    try {
+        const response = await fetch('http://localhost:3000/wishlists/add-list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId : product._id, userId:user.userDetails[0]?._id}),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            setMessage(`Added  to your wishlist!`);
+        } else {
+            setMessage('Failed to add product to wishlist.');
+        }
+    } catch (error) {
+        setMessage('An error occurred while adding to wishlist.');
+    } 
+};
 
   const handleQuantityChange = (productId, value) => {
     setQuantities({
