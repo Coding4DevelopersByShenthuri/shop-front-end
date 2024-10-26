@@ -25,6 +25,33 @@ const SingleProduct = () => {
       });
   }, [id]);
 
+  // Function to handle adding product to wishlist
+  const handleAddToWishlist = () => {
+    fetch('http://localhost:3000/wishlist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Include authorization if needed
+        'Authorization': `Bearer ${localStorage.getItem('token')}` // Adjust this based on your auth method
+      },
+      body: JSON.stringify({ productId: id }), // Send the product ID
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Failed to add product to wishlist');
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log('Product added to wishlist:', data);
+        alert('Product added to wishlist!'); // Optionally notify the user
+      })
+      .catch(error => {
+        console.error('Error adding product to wishlist:', error);
+        alert(error.message); // Optionally notify the user of the error
+      });
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -48,6 +75,8 @@ const SingleProduct = () => {
           <p><strong>Stock:</strong> {product.stock_quantity} {product.unit}</p>
           <p><strong>Origin:</strong> {product.origin}</p>
           <p><strong>Price:</strong> Rs {product.price}</p>
+          {/* Button to add to wishlist */}
+          <button onClick={handleAddToWishlist}>Add to Wishlist</button>
         </div>
       </div>
     </div>

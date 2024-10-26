@@ -41,6 +41,7 @@ import ContactUs from "../components/ContactUs";
 import HelpPage from "../pages/HelpPage";
 import BillingPage from "../pages/BillingPage";
 import ManageRecipes from "../dashboard/ManageRecipes";
+import Wishlist from '../components/Wishlist';
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist />
       },
       {
         path: "/product/:id",

@@ -1,17 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'flowbite-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesome
-import { faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faCheese, faCarrot } from '@fortawesome/free-solid-svg-icons'; // Example Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faCheese, faCarrot, faHeart } from '@fortawesome/free-solid-svg-icons'; // Import the heart icon
 import './shop.css';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [wishlist, setWishlist] = useState([]); // Wishlist state
+  const [quantities, setQuantities] = useState({}); // State to hold product quantities
 
   useEffect(() => {
     fetch('http://localhost:3000/product/all-products')
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
+
+  const handleAddToWishlist = (product) => {
+    if (!wishlist.some(item => item._id === product._id)) {
+      setWishlist([...wishlist, product]);
+      alert(`${product.name} has been added to your wishlist!`); // Optional: Alert user
+    } else {
+      alert(`${product.name} is already in your wishlist.`);
+    }
+  };
+
+  const handleQuantityChange = (productId, value) => {
+    setQuantities({
+      ...quantities,
+      [productId]: value
+    });
+  };
+
+  const handleAddToCart = (product) => {
+    const quantity = quantities[product._id] || 1; // Default to 1 if no quantity set
+    alert(`Added ${quantity} of ${product.name} to the cart!`); // Optional: Replace with actual cart logic
+  };
 
   // Group products by category
   const groupedProducts = products.reduce((acc, product) => {
@@ -78,7 +101,6 @@ const Shop = () => {
             <div className='grid gap-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
               {groupedProducts[category].map((product) => (
                 <Card key={product._id} className="w-full">
-                  {/* Adjusted the image styles */}
                   <img 
                     src={product.imageURL} 
                     alt={`${product.name} cover`} 
@@ -97,9 +119,24 @@ const Shop = () => {
                   <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
                     {product.unit}
                   </p>
-                  <button className='bg-blue-700 font-semibold text-white py-2 rounded'>Buy Now</button>
+                  <div className='flex justify-between mt-4'>
+                    <input
+                      type="number"
+                      min="1"
+                      value={quantities[product._id] || 1} // Default value
+                      onChange={(e) => handleQuantityChange(product._id, e.target.value)}
+                      className="border rounded px-2 py-1 w-16 text-center"
+                    />
+                    <button onClick={() => handleAddToCart(product)} className='bg-blue-700 font-semibold text-white py-3 px-8 rounded'>
+                      Buy Now
+                    </button>
+                    <button onClick={() => handleAddToWishlist(product)} className='text-red-500'>
+                      <FontAwesomeIcon icon={faHeart} className="text-3xl" />
+                    </button>
+                  </div>
                 </Card>
               ))}
+
             </div>
           </div>
         ))}
