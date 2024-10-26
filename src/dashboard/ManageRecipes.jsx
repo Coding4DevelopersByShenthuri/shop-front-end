@@ -8,6 +8,7 @@ function ManageRecipes() {
   const [formValues, setFormValues] = useState({
     title: '',
     description: '',
+    category: '',  // New field for category
     ingredients: [],
     steps: [],
     imageUrl: ''
@@ -64,6 +65,7 @@ function ManageRecipes() {
     setFormValues({
       title: recipe.title,
       description: recipe.description,
+      category: recipe.category,  // Set existing category for editing
       ingredients: recipe.ingredients,
       steps: recipe.steps,
       imageUrl: recipe.imageUrl
@@ -75,6 +77,7 @@ function ManageRecipes() {
     setFormValues({
       title: '',
       description: '',
+      category: '',
       ingredients: [],
       steps: [],
       imageUrl: ''
@@ -128,7 +131,15 @@ function ManageRecipes() {
             className="border p-2 rounded"
             required
           />
-          
+          <input
+            type="text"
+            placeholder="Category"
+            value={formValues.category}
+            onChange={(e) => setFormValues({ ...formValues, category: e.target.value })}
+            className="border p-2 rounded"
+            required
+          />
+
           <div className="flex">
             <input
               type="text"
@@ -185,6 +196,7 @@ function ManageRecipes() {
             <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-32 object-cover rounded mb-4" />
             <h3 className="text-lg font-semibold mb-1">{recipe.title}</h3>
             <p className="text-gray-700 mb-2">{recipe.description}</p>
+            <p className="text-gray-600 mb-2"><strong>Category:</strong> {recipe.category}</p> {/* Display category */}
             <div className="flex justify-between">
               <button onClick={() => handleEdit(recipe)} className="text-blue-500 hover:text-blue-700 flex items-center space-x-1">
                 <EyeIcon className="h-5 w-5" />

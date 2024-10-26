@@ -14,7 +14,8 @@
 .recipes-container {
   max-width: 1200px;
   margin: auto;
-  padding: 60px 20px;
+  padding: 70px 20px;
+  margin-top: 50px;
   background-color: rgba(247, 247, 247, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 15px;
@@ -26,7 +27,7 @@
 .recipes-title {
   text-align: center;
   font-size: 2.5em;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   color: #333;
 }
 
@@ -76,10 +77,21 @@
   font-style: italic;
 }
 
-/* Ingredients and steps list styling */
-.ingredients-list, .steps-list {
-  list-style: none;
-  margin: 10px 0;
+/* Ingredients list with bullets */
+.ingredients-list {
+  list-style-type: none; /* Removes default bullets */
+  padding-left: 20px;
+}
+
+.ingredients-list li::before {
+  content: "• "; /* Adds custom bullet */
+  color: #333;
+  margin-right: 5px;
+}
+
+/* Steps list with numbers */
+.steps-list {
+  list-style-type: decimal; /* Adds automatic numbers */
   padding-left: 20px;
 }
 
@@ -104,8 +116,8 @@
 }
 
 .detail-image {
-  width: 80%;
-  height: 80%;
+  width: 70%;
+  height: 70%;
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -136,4 +148,29 @@
   background: rgba(255, 255, 255, 1.0);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
+.category-filter {
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center the buttons */
+  gap: 15px; /* Space between buttons */
+  margin: 40px 0; /* Margin above and below the button group */
+}
 
+.category-filter button {
+  padding: 10px 15px; /* Adjust button padding for a better look */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #007BFF; /* Button background color */
+  color: white; /* Button text color */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  display: flex; /* Align items in a row */
+  align-items: center; /* Center the icon and text vertically */
+}
+
+.category-filter button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.category-filter button span {
+  margin-right: 5px; /* Space between the icon and the text */
+}
