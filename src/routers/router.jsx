@@ -8,7 +8,7 @@ import Home from "../home/Home";
 import UserHome from "../userHome/userHome";
 import Shop from "../shop/Shop";
 import About from "../components/About";
-import Blog from "../components/Blog";
+import Blog from "../blogs/Blog";
 import Recipes from "../recipes/Recipes";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import ManageProducts from "../dashboard/ManageProducts";
@@ -42,6 +42,7 @@ import HelpPage from "../pages/HelpPage";
 import BillingPage from "../pages/BillingPage";
 import ManageRecipes from "../dashboard/ManageRecipes";
 import Wishlist from '../components/Wishlist';
+import ManageBlogs from "../dashboard/ManageBlogs";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -166,6 +167,10 @@ const router = createBrowserRouter([
       {
         path: "recipes",
         element: <ManageRecipes />,
+      },
+      {
+        path: "blogs",
+        element: <ManageBlogs />,
       },
       {
         path: "newstaffs",
