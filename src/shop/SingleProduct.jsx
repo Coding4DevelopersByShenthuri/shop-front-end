@@ -1,18 +1,46 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthProvider';
 
 const SingleProduct = () => {
     const product = useLoaderData();
     const [count, setCount] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const { user } = useContext(AuthContext);
 
     if (!product) {
         return <div className="text-center mt-28 text-gray-500">Product not found.</div>;
     }
 
-    const { _id, name, imageURL, description, price } = product;
+    const { _id: productId, name, imageURL, description, price } = product;
 
     const incrementCount = () => setCount(prevCount => prevCount + 1);
     const decrementCount = () => setCount(prevCount => (prevCount > 1 ? prevCount - 1 : 1));
+
+    const addToWishlist = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('http://localhost:3000/wishlists/add-list', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId , userId:user.userDetails[0]?._id}),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setMessage(`Added ${count} of ${name} to your wishlist!`);
+            } else {
+                setMessage('Failed to add product to wishlist.');
+            }
+        } catch (error) {
+            setMessage('An error occurred while adding to wishlist.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="bg-[#E0F7FA] min-h-screen flex items-center justify-center py-16">
@@ -40,9 +68,14 @@ const SingleProduct = () => {
                         </button>
                     </div>
 
-                    <button className="bg-[#03A9F4] hover:bg-[#0288D1] text-white font-bold py-3 px-6 rounded transition duration-200">
-                        Add {count} to Wishlist
+                    <button
+                        onClick={addToWishlist}
+                        className="bg-[#03A9F4] hover:bg-[#0288D1] text-white font-bold py-3 px-6 rounded transition duration-200"
+                        disabled={loading}
+                    >
+                        {loading ? 'Adding...' : `Add ${count} to Wishlist`}
                     </button>
+                    {message && <p className="text-green-500 mt-4">{message}</p>}
                 </div>
             </div>
         </div>
