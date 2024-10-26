@@ -1,6 +1,6 @@
 /* General page styling */
 .Blogs-page {
-  background-color: #e0f7fa;
+  background-color: #e0f7fa; /* Updated to a lighter blue */
   min-height: 100vh;
   padding: 20px;
   font-family: 'Arial', sans-serif;
@@ -130,6 +130,7 @@
   background: rgba(255, 255, 255, 1.0);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
+
 .category-filter {
   display: flex; /* Use flexbox for layout */
   justify-content: center; /* Center the buttons */
