@@ -8,9 +8,8 @@ import { AuthContext } from '../contexts/AuthProvider';
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSticky, setSticky] = useState(false);
-    const { user,logOut } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
 
-    
     // Toggle menu
     const toggleMenu = () => {
         setIsMenuOpen(prevState => !prevState);
@@ -42,11 +41,10 @@ const Navbar = () => {
         { link: 'Home', path: '/' },
         { link: 'About', path: '/about' },
         { link: 'Shop', path: '/shop' },
-    //  { link: 'Admin', path: '/admin/dashboard' },
-        { link: 'Contact Us', path: '/contact'},
-        { link: 'Recipes', path: '/recipe'},
+        { link: 'Contact Us', path: '/contact' },
+        { link: 'Recipes', path: '/recipe' },
         { link: 'Blog', path: '/blog' },
-        { link: 'Help', path: '/help'},
+        { link: 'Help', path: '/help' },
     ];
 
     return (
@@ -62,60 +60,64 @@ const Navbar = () => {
                     <ul className='md:flex space-x-12 hidden'>
                         {navItems.map(({ link, path }) => (
                             <li key={path}>
-                                <Link to={path} className='block text-base text-black uppercase cursor-pointer hover:text-blue-700'>
+                                <Link to={path} className='block text-base text-black uppercase font-bold cursor-pointer hover:text-blue-700'>
                                     {link}
                                 </Link>
                             </li>
                         ))}
                     </ul>
                     {/* Sign Up button for large devices */}
-                    {!user && <div className='hidden lg:flex items-center'>
-                        <Link 
-                            to='/sign-up' 
-                            className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition'>
-                            Signup
-                        </Link>
-                        <Link 
-                            to='/login' 
-                            className='px-4 py-2 text-white bg-green-600 rounded hover:bg-blue-700 transition ml-4 mr-4'>
-                            Login
-                        </Link>
-                        <button aria-label="Toggle menu" onClick={toggleMenu}>
-                            <FaBarsStaggered className='w-5 hover:text-blue-700' />
-                        </button>
-                    </div>}
-                    {user && user.userDetails && user?.userDetails[0]?.role === 'user' && <div className='hidden lg:flex items-center'>
-                        <Link 
-                            to='/user/dashboard/overview' 
-                            className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition'>
-                            User Dashboard
-                        </Link>
-                        <button 
-                            onClick={logOut} 
-                            className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4' 
-                        >
-                            Logout
-                        </button>
-                        <button aria-label="Toggle menu" onClick={toggleMenu}>
-                            <FaBarsStaggered className='w-5 hover:text-blue-700' />
-                        </button>
-                    </div>}
-                    {user && user.userDetails && user?.userDetails[0]?.role === 'admin' && <div className='hidden lg:flex items-center'>
-                        <Link 
-                            to='/admin/dashboard/overview' 
-                            className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition'>
-                            Admin Dashboard
-                        </Link>
-                        <button 
-                            onClick={logOut} 
-                            className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4' 
-                        >
-                            Logout
-                        </button>
-                        <button aria-label="Toggle menu" onClick={toggleMenu}>
-                            <FaBarsStaggered className='w-5 hover:text-blue-700' />
-                        </button>
-                    </div>}
+                    {!user && (
+                        <div className='hidden lg:flex items-center'>
+                            <Link 
+                                to='/sign-up' 
+                                className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition font-bold'>
+                                Signup
+                            </Link>
+                            <Link 
+                                to='/login' 
+                                className='px-4 py-2 text-white bg-green-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
+                                Login
+                            </Link>
+                            <button aria-label="Toggle menu" onClick={toggleMenu}>
+                                <FaBarsStaggered className='w-5 hover:text-blue-700' />
+                            </button>
+                        </div>
+                    )}
+                    {user && user.userDetails && user?.userDetails[0]?.role === 'user' && (
+                        <div className='hidden lg:flex items-center'>
+                            <Link 
+                                to='/user/dashboard/overview' 
+                                className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold'>
+                                User Dashboard
+                            </Link>
+                            <button 
+                                onClick={logOut} 
+                                className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
+                                Logout
+                            </button>
+                            <button aria-label="Toggle menu" onClick={toggleMenu}>
+                                <FaBarsStaggered className='w-5 hover:text-blue-700' />
+                            </button>
+                        </div>
+                    )}
+                    {user && user.userDetails && user?.userDetails[0]?.role === 'admin' && (
+                        <div className='hidden lg:flex items-center'>
+                            <Link 
+                                to='/admin/dashboard/overview' 
+                                className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold'>
+                                Admin Dashboard
+                            </Link>
+                            <button 
+                                onClick={logOut} 
+                                className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
+                                Logout
+                            </button>
+                            <button aria-label="Toggle menu" onClick={toggleMenu}>
+                                <FaBarsStaggered className='w-5 hover:text-blue-700' />
+                            </button>
+                        </div>
+                    )}
                     {/* Menu button for mobile devices */}
                     <div className='md:hidden'>
                         <button 
@@ -131,7 +133,7 @@ const Navbar = () => {
                 {/* Nav items for small devices */}
                 <div className={`space-y-4 px-4 mt-16 py-7 bg-blue-700 ${isMenuOpen ? 'block fixed top-0 right-0 left-0' : 'hidden'}`}>
                     {navItems.map(({ link, path }) => (
-                        <Link key={path} to={path} className='block text-base text-white uppercase cursor-pointer'>
+                        <Link key={path} to={path} className='block text-base text-white uppercase font-bold cursor-pointer'>
                             {link}
                         </Link>
                     ))}
@@ -139,10 +141,9 @@ const Navbar = () => {
                     {/* Sign Up button for mobile devices */}
                     <Link 
                         to='/sign-up' 
-                        className='block text-base text-white uppercase cursor-pointer bg-blue-600 px-4 py-2 rounded'>
+                        className='block text-base text-white uppercase font-bold cursor-pointer bg-blue-600 px-4 py-2 rounded'>
                         Sign Up
                     </Link>
-                    
                 </div>
             </nav>
         </header>

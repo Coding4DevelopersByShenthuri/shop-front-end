@@ -9,7 +9,7 @@ body {
 
 /* Styles for Contact Us page */
 .contact-us-container {
-  background-image: url('../assets/Background.jpg'); /* Path to your background image */
+  background-image: url('../assets/bg.avif'); /* Path to your background image */
   background-size: cover; /* Cover the entire page */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Prevent repeating of the image */

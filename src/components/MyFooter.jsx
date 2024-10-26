@@ -9,41 +9,41 @@ function MyFooter() {
           <div>
             <Footer.Title title="Company" />
             <Footer.LinkGroup col>
-              <Footer.Link href="#">About</Footer.Link>
-              <Footer.Link href="#">Careers</Footer.Link>
-              <Footer.Link href="#">Brand Center</Footer.Link>
-              <Footer.Link href="#">Blog</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>About</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Careers</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Brand Center</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Blog</Footer.Link>
             </Footer.LinkGroup>
           </div>
           <div>
             <Footer.Title title="Help Center" />
             <Footer.LinkGroup col>
-              <Footer.Link href="#">Discord Server</Footer.Link>
-              <Footer.Link href="#">Twitter</Footer.Link>
-              <Footer.Link href="#">Facebook</Footer.Link>
-              <Footer.Link href="#">Contact Us</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Discord Server</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Twitter</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Facebook</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Contact Us</Footer.Link>
             </Footer.LinkGroup>
           </div>
           <div>
             <Footer.Title title="Legal" />
             <Footer.LinkGroup col>
-              <Footer.Link href="#">Privacy Policy</Footer.Link>
-              <Footer.Link href="#">Licensing</Footer.Link>
-              <Footer.Link href="#">Terms &amp; Conditions</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Privacy Policy</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Licensing</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Terms &amp; Conditions</Footer.Link>
             </Footer.LinkGroup>
           </div>
           <div>
             <Footer.Title title="Download" />
             <Footer.LinkGroup col>
-              <Footer.Link href="#">iOS</Footer.Link>
-              <Footer.Link href="#">Android</Footer.Link>
-              <Footer.Link href="#">Windows</Footer.Link>
-              <Footer.Link href="#">MacOS</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>iOS</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Android</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Windows</Footer.Link>
+              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>MacOS</Footer.Link>
             </Footer.LinkGroup>
           </div>
         </div>
         <div className="w-full bg-gray-700 px-4 py-6 sm:flex sm:items-center sm:justify-between">
-          <Footer.Copyright href="#" by="Shenthu MART. All Rights Reserved" year={2024} />
+        <Footer.Copyright href="#" by={<span style={{ color: "#D3D3D3" }}>Shenthu MART. All Rights Reserved</span>} year={2024} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <Footer.Icon href="https://www.facebook.com/profile.php?id=100085593338393&mibextid=ZbWKwL" icon={BsFacebook} />
             <Footer.Icon href="https://www.instagram.com/shenthuri_maran?igsh=aTJmdXlpbHV0cWN5" icon={BsInstagram} />
