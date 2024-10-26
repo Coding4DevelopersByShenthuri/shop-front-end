@@ -15,6 +15,7 @@ import {
   HiOutlineCake,
   HiOutlineCreditCard,
   HiFire,
+  HiOutlineDocumentText,
 } from "react-icons/hi";
 import {
   BarChart2,
@@ -65,6 +66,7 @@ const SIDEBAR_ITEMS = [
   { name: "Upload Staff Image", icon: HiPhotograph, color: "#6366f1", href: "/admin/dashboard/uploadstaff" },
   { name: "QR Attendance", icon: HiCheckCircle, color: "#F59E0B", href: "/admin/dashboard/qrcode" },
   { name: "Manage Recipes", icon: HiFire, color: "#3B82F6", href: "/admin/dashboard/recipes"},
+  { name: "Manage Blogs", icon: HiOutlineDocumentText, color: "#10B981", href: "/admin/dashboard/blogs"},
   {
     name: "Birthday Reminders",
     icon: HiOutlineCake,
