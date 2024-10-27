@@ -41,7 +41,7 @@ const Navbar = () => {
         { link: 'Home', path: '/' },
         { link: 'About', path: '/about' },
         { link: 'Shop', path: '/shop' },
-        { link: 'Contact Us', path: '/contact' },
+        { link: 'Contact', path: '/contact' },
         { link: 'Recipes', path: '/recipe' },
         { link: 'Blog', path: '/blog' },
         { link: 'Help', path: '/help' },
@@ -50,7 +50,7 @@ const Navbar = () => {
     return (
         <header className='w-full bg-transparent fixed top-0 right-0 left-0 transition-all ease-in duration-300'>
             <nav className={`py-4 lg:px-24 px-4 ${isSticky ? 'sticky top-0 left-0 right-0 bg-blue-300' : ''}`}>
-                <div className='flex justify-between items-center text-base gap-8'>
+                <div className='flex justify-between items-center text-base gap-9'>
                     {/* Logo */}
                     <Link to='/' className='text-2xl font-bold text-blue-700 flex items-center gap-7'>
                         <FaBlog className='inline-block' />Shenthu MART
