@@ -52,7 +52,7 @@ const Navbar = () => {
             <nav className={`py-4 lg:px-24 px-4 ${isSticky ? 'sticky top-0 left-0 right-0 bg-blue-300' : ''}`}>
                 <div className='flex justify-between items-center text-base gap-9'>
                     {/* Logo */}
-                    <Link to='/' className='text-2xl font-bold text-blue-700 flex items-center gap-7'>
+                    <Link to='/' className='text-2xl font-bold text-blue-700 flex items-center gap-5'>
                         <FaBlog className='inline-block' />Shenthu MART
                     </Link>
 
@@ -96,8 +96,8 @@ const Navbar = () => {
                         <div className='hidden lg:flex items-center'>
                             <Link 
                                 to='/user/dashboard/overview' 
-                                className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold'>
-                                User Dashboard
+                                className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold text-center'>
+                                User
                             </Link>
                             <button 
                                 onClick={logOut} 
@@ -113,12 +113,12 @@ const Navbar = () => {
                         <div className='hidden lg:flex items-center'>
                             <Link 
                                 to='/admin/dashboard/overview' 
-                                className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold'>
-                                Admin Dashboard
+                                className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold text-center'>
+                                Admin
                             </Link>
                             <button 
                                 onClick={logOut} 
-                                className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
+                                className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-3 mr-3 font-bold'>
                                 Logout
                             </button>
                             <button aria-label="Toggle menu" onClick={toggleMenu}>

@@ -107,6 +107,7 @@ const SideBar = () => {
                   transition={{ duration: 0.2, delay: 0.3 }}
                 >
                   <p className="text-white">{user?.displayName || "Demo User"}</p>
+                  <p className="text-black font-serif">Welcome to Admin Dashboard</p>
                 </motion.div>
               )}
             </AnimatePresence>
