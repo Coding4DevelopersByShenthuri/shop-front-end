@@ -1,11 +1,10 @@
 /* About.css */
-
 .about-background {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Full height of the viewport */
-    background-image: url('../assets/BackG.jpg'); /* Update this with your image path */
     background-size: cover; /* Ensure the background image covers the entire area */
+    background-color: #d1f1f6; /* Background color for the About page */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-attachment: fixed; /* Make the background image fixed */
@@ -17,7 +16,7 @@
     overflow-y: auto; /* Adds a scroll if content overflows */
     padding: 30px; /* Padding for the glass effect container */
     border-radius: 15px; /* Rounded corners */
-    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white background */
+    background-color: rgba(161, 149, 149, 0.2); /* Slightly transparent white background */
     backdrop-filter: blur(20px); /* Frosted glass effect */
     border: 1px solid rgba(255, 255, 255, 0.5); /* Light border for glass effect */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Box shadow for depth */

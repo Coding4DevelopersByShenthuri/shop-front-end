@@ -1,21 +1,20 @@
 /* General page styling */
 .Recipes-page {
-  background-color: #e0f7fa;
+  background-color: #d1f1f6;
   min-height: 100vh;
   padding: 20px;
   font-family: 'Arial', sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(50px);
+  flex-direction: column; /* Use column layout */
+  align-items: center; /* Center elements horizontally */
 }
 
 /* Recipes container styling */
 .recipes-container {
   max-width: 1200px;
   margin: auto;
-  padding: 70px 20px;
-  margin-top: 50px;
+  padding: 20px;
+  margin-top: 20px; /* Reduced margin */
   background-color: rgba(247, 247, 247, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 15px;
@@ -26,9 +25,10 @@
 /* Title styling */
 .recipes-title {
   text-align: center;
-  font-size: 2.5em;
-  margin-bottom: 60px;
-  color: #333;
+  font-size: 2.8em;
+  font-weight: bold;
+  margin: 100px 0 30px; /* Added top margin for space below the navigation bar */
+  color: #070707;
 }
 
 /* Grid layout for recipes */
@@ -79,19 +79,19 @@
 
 /* Ingredients list with bullets */
 .ingredients-list {
-  list-style-type: none; /* Removes default bullets */
+  list-style-type: none;
   padding-left: 20px;
 }
 
 .ingredients-list li::before {
-  content: "• "; /* Adds custom bullet */
+  content: "• ";
   color: #333;
   margin-right: 5px;
 }
 
 /* Steps list with numbers */
 .steps-list {
-  list-style-type: decimal; /* Adds automatic numbers */
+  list-style-type: decimal;
   padding-left: 20px;
 }
 
@@ -117,7 +117,7 @@
 
 .detail-image {
   width: 70%;
-  height: 70%;
+  height: auto; /* Use auto height for better aspect ratio */
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -148,29 +148,25 @@
   background: rgba(255, 255, 255, 1.0);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
+
+/* Category filter button styling */
 .category-filter {
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center the buttons */
-  gap: 15px; /* Space between buttons */
-  margin: 40px 0; /* Margin above and below the button group */
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px; /* Space below category filter */
 }
 
 .category-filter button {
-  padding: 5px 15px; /* Adjust button padding for a better look */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Rounded corners */
-  background-color: #007BFF; /* Button background color */
-  color: white; /* Button text color */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-  display: flex; /* Align items in a row */
-  align-items: center; /* Center the icon and text vertically */
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .category-filter button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
-}
-
-.category-filter button span {
-  margin-right: 5px; /* Space between the icon and the text */
+  background-color: #0056b3;
 }

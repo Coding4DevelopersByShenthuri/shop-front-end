@@ -12,8 +12,9 @@ const HelpPage = () => {
 
   return (
     <div className="help-page"> {/* Added class help-page here */}
+      {/* Move the title outside the help-container */}
+      <h1 className="help-title font-serif">Help & Support</h1>
       <div className="help-container">
-        <h1 className="help-title">Help & Support</h1>
         <p className="help-description">
           Welcome to the Help page! Here you can find information to assist you with common tasks.
         </p>

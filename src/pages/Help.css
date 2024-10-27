@@ -1,93 +1,107 @@
-/* Add styles specifically for the Help page */
+/* General page styling */
 .help-page {
-  background-color: #e0f7fa !important; /* Force apply background color */
+  background-color: #d1f1f6; /* Use the same lighter blue background */
   min-height: 100vh;
-  padding: 10px;
+  padding: 20px; /* Increased padding for consistency */
   font-family: 'Arial', sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(80px);
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center items horizontally */
+  backdrop-filter: blur(50px); /* Consistent blur effect */
 }
 
+/* Help container styling */
 .help-container {
-  background-color: rgba(247, 247, 247, 0.7);
-  backdrop-filter: blur(80px);
-  padding: 10px;
-  border-radius: 10px;
   max-width: 1200px;
-  width: 100%;
-  margin: 20px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  /* Removed backdrop-filter for a solid white background */
-  /* Optional border to enhance the look */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Optional border to match the white background */
+  margin: 35px auto 0; /* Adjusted top margin to push it down */
+  padding: 80px;
+  background-color: rgba(247, 247, 247, 0.9); /* Consistent background with opacity */
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* Title styling */
 .help-title {
-  font-size: 2rem;
-  color: #333;
-  margin: 50px 0 15px 0;
+  font-size: 2.8em; /* Same font size as blogs */
   text-align: center;
+  font-weight: bold;
+  margin: 100px 0 20px; /* Increased top margin to create more gap */
+  color: #0a0a0a;
 }
 
+/* Help description styling */
 .help-description {
-  font-size: 1.2rem;
-  color: #666;
+  font-size: 1.2em; /* Similar font size for consistency */
+  color: #666; /* Soft gray color */
   margin-bottom: 20px;
-  text-align: center;
+  text-align: center; /* Centered text */
 }
 
+/* Help section styling */
 .help-section {
-  margin: 20px 0;
+  width: 100%; /* Full width for sections */
+  margin: 20px 0; /* Vertical spacing */
 }
 
+/* Help section headings */
 .help-section h2 {
-  font-size: 1.5rem;
-  color: #444;
+  font-size: 1.5em;
+  color: #003366; /* Same blue as blog titles */
   margin-bottom: 10px;
 }
 
+/* List styling */
 .help-section ul {
-  list-style-type: disc;
+  list-style-type: disc; /* Bulleted list */
   padding-left: 20px;
 }
 
+/* List item styling */
 .help-section ul li {
   margin-bottom: 5px;
-  font-size: 1rem;
-  color: #555;
+  font-size: 1rem; /* Consistent font size */
+  color: #555; /* Darker gray for list items */
 }
 
+/* FAQ item styling */
 .faq-item {
-  background-color: #f9f9f9;
-  padding: 10px;
+  background-color: #fff; /* White background for cards */
+  padding: 15px; /* More padding for card effect */
   margin-bottom: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s; /* Add hover effect */
 }
 
+.faq-item:hover {
+  transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+/* FAQ question styling */
 .faq-question {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.2em; /* Consistent font size */
   font-weight: bold;
-  color: #333;
+  color: #003366; /* Same blue for questions */
 }
 
+/* FAQ answer styling */
 .faq-answer {
   margin-top: 10px;
-  font-size: 1rem;
+  font-size: 1rem; /* Consistent font size */
   color: #555;
 }
 
+/* Link styling */
 a {
-  color: #0b0c0d;
+  color: #007bff; /* Button color from blog */
   text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* Underline effect on hover */
 }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './Blog.css'; // Adjust the CSS file name as necessary
+import './Blog.css'; // Ensure this is the correct path to your CSS file
 import axios from 'axios';
 
 const Blog = () => {
-  const [blogs, setBlogs] = useState([]); // Renamed state to blogs
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [blogs, setBlogs] = useState([]); // State to hold blog data
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(''); // Error state
   const [expandedBlog, setExpandedBlog] = useState(null); // State for the expanded blog
   const [selectedCategory, setSelectedCategory] = useState('All'); // State for selected category
 
@@ -24,24 +24,24 @@ const Blog = () => {
     fetchBlogs();
   }, []);
 
-  // Function to handle expanding a blog
+  // Function to handle expanding a blog for detailed view
   const handleExpandBlog = (blog) => {
-    setExpandedBlog(blog); // Set selected blog to display in detail view
+    setExpandedBlog(blog);
   };
 
-  // Filter blogs based on selected category
+  // Filter blogs based on the selected category
   const filteredBlogs = selectedCategory === 'All'
     ? blogs
     : blogs.filter(blog => blog.category === selectedCategory);
 
+  // Loading and error states
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="Blog-page">
+      <h1 className="blogs-title font-serif">Our Latest Blogs</h1> {/* Title moved outside the container */}
       <div className="blogs-container">
-        <h1 className="blogs-title">Our Latest Blogs</h1>
-
         {/* Category Selection */}
         <div className="category-filter">
           <button onClick={() => setSelectedCategory('All')}>
@@ -82,7 +82,7 @@ const Blog = () => {
               <h3>Tags:</h3>
               <ul className="tags-list">
                 {blog.tags.slice(0, 3).map((tag, index) => (
-                  <li key={index}>{tag}</li> // Custom bullet added in CSS
+                  <li key={index}>{tag}</li> // Custom bullet can be styled in CSS
                 ))}
               </ul>
             </div>
@@ -105,11 +105,14 @@ const Blog = () => {
             <h3>Tags:</h3>
             <ul className="tags-list">
               {expandedBlog.tags.map((tag, index) => (
-                <li key={index}>{tag}</li> // Custom bullet added in CSS
+                <li key={index}>{tag}</li> // Custom bullet can be styled in CSS
               ))}
             </ul>
             <h3>Content:</h3>
-            <div className="blog-content" dangerouslySetInnerHTML={{ __html: expandedBlog.content }} />
+            <div
+              className="blog-content"
+              dangerouslySetInnerHTML={{ __html: expandedBlog.content }}
+            />
           </div>
         )}
       </div>

@@ -32,7 +32,7 @@ const Shop = () => {
 
         if (response.ok) {
             const data = await response.json();
-            setMessage(`Added  to your wishlist!`);
+            setMessage(`Added to your wishlist!`);
         } else {
             setMessage('Failed to add product to wishlist.');
         }
@@ -71,7 +71,7 @@ const Shop = () => {
   return (
     <div className='shop-page'>
       <div className='mt-28 px-4 lg:px-24'>
-        <h2 className='text-5xl font-bold text-center'>All Products are here!</h2>
+        <h2 className='text-5xl font-bold text-center font-serif mb-12'>All Products are here!</h2> {/* Adjusted margin-bottom here */}
 
         {/* Category Icons at the Top */}
         <div className="flex justify-center gap-6 my-8">
@@ -153,7 +153,6 @@ const Shop = () => {
                   </div>
                 </Card>
               ))}
-
             </div>
           </div>
         ))}

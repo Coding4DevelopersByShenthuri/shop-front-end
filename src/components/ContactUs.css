@@ -1,46 +1,50 @@
-/* ContactUs.css */
-
 /* General body styles for other pages */
 body {
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  height: 100vh; /* Full height of the viewport */
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
 /* Styles for Contact Us page */
 .contact-us-container {
   background-image: url('../assets/bg.avif'); /* Path to your background image */
-  background-size: cover; /* Cover the entire page */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Prevent repeating of the image */
-  height: 100vh; /* Full height of the viewport */
-  display: flex; /* Use flexbox to center the content */
-  justify-content: center; /* Center horizontally */
-  align-items: flex-start; /* Align items to the start (top) */
-  padding: 70px 20px; /* Add padding to create space above the content */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 120vh; /* Increase min-height to add page length */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 30px 80px; /* Padding for spacing */
+  justify-content: flex-start;
 }
 
+/* Contact Us title styling */
+.contact-us-title {
+  font-size: 2.8rem;
+  color: rgb(1, 1, 5); /* Dark blue color */
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+/* Content container with frosted glass effect */
 .contact-us-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px; /* Reduced padding */
-  border-radius: 10px; /* Rounded corners for the container */
-  width: 50%; /* Set to a percentage or specific pixel value for more flexibility */
-  max-width: 500px; /* Maximum width */
-  height: auto; /* Set to auto or specify a height */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Increased shadow for depth */
-  background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white background */
-  backdrop-filter: blur(10px); /* Frosted glass effect */
-  border: 1px solid rgba(255, 255, 255, 0.5); /* Light border for glass effect */
+  padding: 60px;
+  border-radius: 10px;
+  width: 50%; /* Increased width for larger screens */
+  max-width: 500px; /* Increased max-width */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  margin-bottom: 40px; /* Add margin to space below content */
 }
 
-.contact-us-container h2 {
-  font-size: 2.5rem; /* Set the font size to make it bigger */
-  color: rgb(1, 1, 5); /* Change the text color to blue */
-  margin-bottom: 20px; /* Add some space below the title */
-}
-
+/* Contact form styling */
 .contact-form {
   width: 100%;
   display: flex;
@@ -50,7 +54,7 @@ body {
 
 .form-group {
   width: 100%;
-  margin-bottom: 10px; /* Reduced from 15px */
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -61,41 +65,61 @@ textarea {
   padding: 20px;
   font-size: 16px;
   width: 100%;
-  max-width: 100%; /* Ensure full width */
-  border: 1px solid #ccc; /* Border color */
+  border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
-  transition: border-color 0.3s; /* Smooth transition for border color */
+  transition: border-color 0.3s;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+textarea::placeholder {
+  color: #aaa;
 }
 
 textarea {
-  height: 150px; /* Reduced from 100px */
+  height: 120px;
+  resize: vertical;
 }
 
 .submit-button {
-  padding: 10px 20px;
+  padding: 12px 25px;
   font-size: 18px;
   background-color: #28a745;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 5px; /* Reduced from 10px */
-  transition: background-color 0.3s; /* Smooth transition for background color */
+  margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
 .submit-button:hover {
   background-color: #218838;
 }
 
-.contact-us-container,
-.submit-button {
-  transition: 0.3s ease-in-out;
+/* Responsive styles */
+@media (max-width: 768px) {
+  .contact-us-content {
+    width: 80%;
+  }
+
+  .contact-us-title {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 600px) {
+  .contact-us-content {
+    width: 90%;
+  }
+
+  .contact-us-title {
+    font-size: 1.8rem;
+  }
+
   input,
   textarea {
-    max-width: 100%;
+    font-size: 14px;
   }
 }

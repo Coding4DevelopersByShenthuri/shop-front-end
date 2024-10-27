@@ -33,10 +33,10 @@ const About = () => {
         <h1 style={{ 
           textAlign: 'center', 
           fontWeight: 'bold', 
-          fontFamily: 'Georgia, serif', 
-          fontSize: '42px', 
+          fontFamily: 'serif', 
+          fontSize: '55px', 
           marginBottom: '40px',
-          paddingTop: '20px' // Add some padding at the top
+          paddingTop: '60px' // Add some padding at the top
         }}>
           About Us
         </h1>

@@ -47,8 +47,8 @@ const ContactUs = () => {
 
   return (
     <div className="contact-us-container">
+      <h2 className="contact-us-title font-serif text-center font-bold">Contact Us</h2> {/* Heading moved outside the content container */}
       <div className="contact-us-content">
-        <h2>Contact Us</h2>
         <form onSubmit={handleSubmit} className="contact-form">
           <div className="form-group">
             <label htmlFor="name">Name:</label>
@@ -58,7 +58,7 @@ const ContactUs = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter your name" // Placeholder added
+              placeholder="Enter your name"
               required
             />
           </div>
@@ -71,7 +71,7 @@ const ContactUs = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email" // Placeholder added
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -84,7 +84,7 @@ const ContactUs = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              placeholder="Enter the subject" // Placeholder added
+              placeholder="Enter the subject"
               required
             />
           </div>
@@ -96,7 +96,7 @@ const ContactUs = () => {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder="Type your message here" // Placeholder added
+              placeholder="Type your message here"
               required
             />
           </div>

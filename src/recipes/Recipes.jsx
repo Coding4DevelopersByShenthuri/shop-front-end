@@ -39,9 +39,8 @@ const Recipes = () => {
 
   return (
     <div className="Recipes-page">
+      <h1 className="recipes-title font-serif">Recipes From Our Products</h1> {/* Title moved outside the container */}
       <div className="recipes-container">
-        <h1 className="recipes-title">Recipes From Our Products</h1>
-
         {/* Category Selection */}
         <div className="category-filter">
           <button onClick={() => setSelectedCategory('All')}>
@@ -66,7 +65,6 @@ const Recipes = () => {
             <span className="material-icons">cookie</span> Cookies🍪
           </button>
         </div>
-
 
         <div className="recipes-grid">
           {filteredRecipes.map((recipe) => (
