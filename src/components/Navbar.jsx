@@ -77,11 +77,12 @@ const Navbar = () => {
                     </ul>
 
                     {/* Wishlist icon positioned to the right */}
-                    <div className='ml-auto hidden lg:flex items-center'>
-                        <button onClick={handleClick} className='text-red-500 hover:text-red-700 transition'>
-                            <FaHeart className='w-6 h-6' />
-                        </button>
-                    </div>
+                    <button onClick={handleClick} type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center text-white text-red-500 hover:text-red-700 transition">
+                        <FaHeart className='w-6 h-6' />
+                        <span class="sr-only">Notifications</span>
+                        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -end-1 dark:border-gray-900">20</div>
+                    </button>
+
 
                     {/* Sign Up and Login for large devices */}
                     {!user && (
