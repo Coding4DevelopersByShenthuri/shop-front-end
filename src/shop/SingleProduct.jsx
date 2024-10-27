@@ -68,13 +68,13 @@ const SingleProduct = () => {
                         </button>
                     </div>
 
-                    <button
+                    {user && <button
                         onClick={addToWishlist}
                         className="bg-[#03A9F4] hover:bg-[#0288D1] text-white font-bold py-3 px-6 rounded transition duration-200"
                         disabled={loading}
                     >
                         {loading ? 'Adding...' : `Add ${count} to Wishlist`}
-                    </button>
+                    </button>}
                     {message && <p className="text-green-500 mt-4">{message}</p>}
                 </div>
             </div>

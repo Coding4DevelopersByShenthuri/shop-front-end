@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faCheese, faCarrot, faHeart } from '@fortawesome/free-solid-svg-icons'; // Import the heart icon
 import './shop.css';
 import { AuthContext } from '../contexts/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -11,6 +12,7 @@ const Shop = () => {
   const [quantities, setQuantities] = useState({}); // State to hold product quantities
   const [message, setMessage] = useState('');
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:3000/product/all-products')
@@ -20,7 +22,10 @@ const Shop = () => {
 
 
   const handleAddToWishlist = async (product) => {
-    console.log(product._id)
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     try {
         const response = await fetch('http://localhost:3000/wishlists/add-list', {
             method: 'POST',
