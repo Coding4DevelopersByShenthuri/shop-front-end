@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // React icons
 import { FaBarsStaggered, FaBlog, FaXmark, FaHeart } from 'react-icons/fa6';
@@ -9,6 +9,7 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSticky, setSticky] = useState(false);
     const { user, logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     // Toggle menu
     const toggleMenu = () => {
@@ -19,6 +20,14 @@ const Navbar = () => {
     const handleClickOutside = (event) => {
         if (isMenuOpen && !event.target.closest('.menu-container')) {
             setIsMenuOpen(false);
+        }
+    };
+
+    const handleClick = () => {
+        if (user) {
+            navigate('/wishlists');
+        } else {
+            navigate('/login');
         }
     };
 
@@ -66,24 +75,24 @@ const Navbar = () => {
                             </li>
                         ))}
                     </ul>
-                    
+
                     {/* Wishlist icon positioned to the right */}
                     <div className='ml-auto hidden lg:flex items-center'>
-                        <Link to='/wishlists' className='text-red-500 hover:text-red-700 transition'>
+                        <button onClick={handleClick} className='text-red-500 hover:text-red-700 transition'>
                             <FaHeart className='w-6 h-6' />
-                        </Link>
+                        </button>
                     </div>
 
                     {/* Sign Up and Login for large devices */}
                     {!user && (
                         <div className='hidden lg:flex items-center'>
-                            <Link 
-                                to='/sign-up' 
+                            <Link
+                                to='/sign-up'
                                 className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition font-bold'>
                                 Signup
                             </Link>
-                            <Link 
-                                to='/login' 
+                            <Link
+                                to='/login'
                                 className='px-4 py-2 text-white bg-green-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
                                 Login
                             </Link>
@@ -94,13 +103,13 @@ const Navbar = () => {
                     )}
                     {user && user.userDetails && user?.userDetails[0]?.role === 'user' && (
                         <div className='hidden lg:flex items-center'>
-                            <Link 
-                                to='/user/dashboard/overview' 
+                            <Link
+                                to='/user/dashboard/overview'
                                 className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold text-center'>
                                 User
                             </Link>
-                            <button 
-                                onClick={logOut} 
+                            <button
+                                onClick={logOut}
                                 className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
                                 Logout
                             </button>
@@ -111,13 +120,13 @@ const Navbar = () => {
                     )}
                     {user && user.userDetails && user?.userDetails[0]?.role === 'admin' && (
                         <div className='hidden lg:flex items-center'>
-                            <Link 
-                                to='/admin/dashboard/overview' 
+                            <Link
+                                to='/admin/dashboard/overview'
                                 className='px-4 py-2 text-black bg-yellow-300 rounded hover:bg-blue-700 transition font-bold text-center'>
                                 Admin
                             </Link>
-                            <button 
-                                onClick={logOut} 
+                            <button
+                                onClick={logOut}
                                 className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-3 mr-3 font-bold'>
                                 Logout
                             </button>
@@ -128,9 +137,9 @@ const Navbar = () => {
                     )}
                     {/* Menu button for mobile devices */}
                     <div className='md:hidden'>
-                        <button 
-                            onClick={toggleMenu} 
-                            className='text-black focus:outline-none' 
+                        <button
+                            onClick={toggleMenu}
+                            className='text-black focus:outline-none'
                             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                         >
                             {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black' />}
@@ -147,8 +156,8 @@ const Navbar = () => {
                     ))}
 
                     {/* Sign Up button for mobile devices */}
-                    <Link 
-                        to='/sign-up' 
+                    <Link
+                        to='/sign-up'
                         className='block text-base text-white uppercase font-bold cursor-pointer bg-blue-600 px-4 py-2 rounded'>
                         Sign Up
                     </Link>
