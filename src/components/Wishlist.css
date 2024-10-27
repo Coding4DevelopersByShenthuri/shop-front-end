@@ -1,0 +1,26 @@
+/* Wishlist.css */
+.container {
+    background-color: #E0F7FA; /* Light Blue */
+    padding: 2rem;
+}
+
+h2 {
+    color: #010202; /* Dark Cyan */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #4fa1ab; /* Lighter Cyan */
+}
+
+td {
+    border: 1px solid #ccc;
+}
+
+.text-red-500 {
+    color: #FF5252; /* Customize as needed */
+}

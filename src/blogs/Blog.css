@@ -1,20 +1,20 @@
 /* General page styling */
 .Blog-page {
-  background-color: #d1f1f6; /* Lighter blue for the background */
+  background-color: #d1f1f6;
   min-height: 100vh;
   padding: 20px;
   font-family: 'Arial', sans-serif;
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center items horizontally */
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Blogs container styling */
 .blogs-container {
   max-width: 1200px;
   margin: auto;
-  padding: 80px;
-  margin-top: 20px; /* Consistent margin */
+  padding: 20px; /* Match Recipes.css padding */
+  margin-top: 20px;
   background-color: rgba(247, 247, 247, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 15px;
@@ -27,14 +27,14 @@
   text-align: center;
   font-size: 2.8em;
   font-weight: bold;
-  margin: 100px 0 30px; /* Consistent with Recipes.css */
-  color: #070707; /* Darker color for better readability */
+  margin: 100px 0 30px;
+  color: #070707;
 }
 
 /* Grid layout for blogs */
 .blogs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
 }
 
@@ -49,12 +49,12 @@
   height: 350px;
   width: 100%;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s; /* Add box-shadow transition */
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .blog-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Image styling */
@@ -69,7 +69,7 @@
 .blog-title {
   font-size: 1.2em;
   margin: 10px 0;
-  color: #003366; /* Consistent with Recipes.css */
+  color: #003366;
 }
 
 /* Blog detail view styling */
@@ -84,7 +84,7 @@
 
 .blog-detail-view:hover {
   background: rgba(255, 255, 255, 1.0);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* Enhanced hover effect */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .detail-title {
@@ -113,23 +113,23 @@
 
 /* Glass effect for category filter buttons */
 .category-filter {
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center the buttons */
-  gap: 15px; /* Space between buttons */
-  margin-bottom: 25px; /* Consistent space below category filter */
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
-/* Button styling */
 .category-filter button {
-  padding: 10px 15px; /* Adjusted button padding */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Rounded corners */
-  background-color: #007bff; /* Button background color */
-  color: white; /* Button text color */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  background-color: #007bff;
+  color: #fff;
+  padding: 6px 10px; /* Reduced padding for smaller button size */
+  font-size: 0.9em; /* Slightly smaller font size */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .category-filter button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3;
 }

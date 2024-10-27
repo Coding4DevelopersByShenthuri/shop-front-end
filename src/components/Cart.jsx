@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
-import './Wishlist.css';
+import './Cart.css'; // If you have specific styles for the Cart
 
-const Wishlist = () => {
-    const [wishlistItems, setWishlistItems] = useState([]);
+const Cart = () => {
+    const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { user } = useContext(AuthContext);
 
-    const fetchWishlistItems = async () => {
+    const fetchCartItems = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/wishlists/get-list/${user?.userDetails[0]?._id}`, {
+            const response = await fetch(`http://localhost:3000/carts/get-list/${user?.userDetails[0]?._id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -21,11 +21,11 @@ const Wishlist = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch wishlist items');
+                throw new Error('Failed to fetch cart items');
             }
 
             const data = await response.json();
-            setWishlistItems(data[0].items || []); // Adjust depending on your response structure
+            setCartItems(data[0].items || []); // Adjust depending on your response structure
         } catch (error) {
             setError(error.message);
         } finally {
@@ -34,15 +34,15 @@ const Wishlist = () => {
     };
 
     useEffect(() => {
-        user?.userDetails[0]?._id && fetchWishlistItems();
+        user?.userDetails[0]?._id && fetchCartItems();
     }, [user?.userDetails[0]?._id]);
 
-    // Function to handle item removal from the wishlist
+    // Function to handle item removal from the cart
     const handleRemoveItem = async () => {
         if (!selectedProduct) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/wishlists/${selectedProduct}`, {
+            const response = await fetch(`http://localhost:3000/carts/${selectedProduct}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,10 +51,10 @@ const Wishlist = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to remove item from wishlist');
+                throw new Error('Failed to remove item from cart');
             }
 
-            setWishlistItems((prevItems) => prevItems.filter(item => item._id !== selectedProduct));
+            setCartItems((prevItems) => prevItems.filter(item => item._id !== selectedProduct));
             setShowModal(false);
             setSelectedProduct(null);
         } catch (error) {
@@ -74,29 +74,33 @@ const Wishlist = () => {
 
     return (
         <div className="container mx-auto px-8 py-12 bg-lightblue-100">
-            <h2 className="text-3xl font-bold mb-4 mt-14 text-lightblue-900">My Wishlist</h2>
+            <h2 className="text-3xl font-bold mb-4 mt-14 text-lightblue-900">My Cart</h2>
 
             {error && <p className="text-red-500 mb-4">{error}</p>}
 
-            {wishlistItems.length > 0 ? (
+            {cartItems.length > 0 ? (
                 <div className="overflow-x-auto">
                     <table className="min-w-full border border-gray-300">
                         <thead className="bg-lightblue-200">
                             <tr>
                                 <th className="border px-4 py-2">Image</th>
                                 <th className="border px-4 py-2">Name</th>
+                                <th className="border px-4 py-2">Count</th>
                                 <th className="border px-4 py-2">Price per Unit</th>
+                                <th className="border px-4 py-2">Total Price</th>
                                 <th className="border px-4 py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {wishlistItems.map((item) => (
+                            {cartItems.map((item) => (
                                 <tr key={item._id}>
                                     <td className="border px-4 py-2">
                                         <img src={item.imageURL} alt={item.name} className="w-16 h-16 object-cover" />
                                     </td>
                                     <td className="border px-4 py-2">{item.name}</td>
+                                    <td className="border px-4 py-2">{item.count || 1}</td>
                                     <td className="border px-4 py-2">Rs {item.price}</td>
+                                    <td className="border px-4 py-2">Rs {item.price * (item.count || 1)}</td>
                                     <td className="border px-4 py-2">
                                         <Link
                                             to={`/product/${item._id}`}
@@ -115,7 +119,7 @@ const Wishlist = () => {
                     </table>
                 </div>
             ) : (
-                <p className="text-gray-600">Your wishlist is currently empty.</p>
+                <p className="text-gray-600">Your cart is currently empty.</p>
             )}
 
             {/* Modal for Confirm Deletion */}
@@ -142,4 +146,4 @@ const Wishlist = () => {
     );
 };
 
-export default Wishlist;
+export default Cart;

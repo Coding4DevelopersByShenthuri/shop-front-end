@@ -59,6 +59,12 @@ const Blog = () => {
           <button onClick={() => setSelectedCategory('Budgeting')}>
             <span className="material-icons">money</span> Budgeting💰
           </button>
+          <button onClick={() => setSelectedCategory('Healthy Eating')}>
+            <span className="material-icons">restaurant</span> Healthy Eating🥗
+          </button>
+          <button onClick={() => setSelectedCategory('Nutrition')}>
+            <span className="material-icons">eco</span> Nutrition 🥕
+          </button>
         </div>
 
         <div className="blogs-grid">
