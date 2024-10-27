@@ -10,8 +10,9 @@ function ManageBlogs() {
     content: '',
     category: '',
     imageUrl: '',
-    tags: [], // Include tags in form values
+    tags: [],
   });
+  const [tagInput, setTagInput] = useState(''); // State for tag input
   const [error, setError] = useState(''); // State for error messages
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function ManageBlogs() {
       resetForm();
       alert(currentBlog ? 'Blog updated successfully!' : 'Blog added successfully!');
     } catch (error) {
-      console.error('Failed to save Blog:', error);
+      console.error('Failed to save blog:', error);
       setError('Failed to save blog. Please try again.');
     }
   };
@@ -55,7 +56,7 @@ function ManageBlogs() {
         setBlogs(blogs.filter(blog => blog._id !== blogId));
         alert('Post deleted successfully!');
       } catch (error) {
-        console.error('Failed to delete Post:', error);
+        console.error('Failed to delete post:', error);
         setError('Failed to delete post. Please try again.');
       }
     }
@@ -81,12 +82,31 @@ function ManageBlogs() {
       imageUrl: '',
       tags: [],
     });
+    setTagInput('');
+  };
+
+  const addTag = (e) => {
+    e.preventDefault();
+    if (tagInput.trim()) {
+      setFormValues(prev => ({
+        ...prev,
+        tags: [...prev.tags, tagInput],
+      }));
+      setTagInput('');
+    }
+  };
+
+  const deleteTag = (index) => {
+    setFormValues(prev => ({
+      ...prev,
+      tags: prev.tags.filter((_, i) => i !== index),
+    }));
   };
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-semibold mb-4">Manage Blog Posts</h1>
-      {error && <div className="text-red-500 mb-4">{error}</div>} {/* Display error messages */}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
       <form onSubmit={handleSubmit} className="mb-6 p-4 border rounded bg-gray-50 shadow-sm">
         <h2 className="text-lg font-medium mb-2">{currentBlog ? 'Edit Blog' : 'Add New Blog'}</h2>
         <div className="grid gap-4 md:grid-cols-2">
@@ -95,15 +115,14 @@ function ManageBlogs() {
             placeholder="Title"
             value={formValues.title}
             onChange={(e) => setFormValues({ ...formValues, title: e.target.value })}
-            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border p-2 rounded"
             required
           />
           <textarea
             placeholder="Content"
             value={formValues.content}
             onChange={(e) => setFormValues({ ...formValues, content: e.target.value })}
-            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows={4}
+            className="border p-2 rounded h-32"
             required
           />
           <input
@@ -111,25 +130,43 @@ function ManageBlogs() {
             placeholder="Category"
             value={formValues.category}
             onChange={(e) => setFormValues({ ...formValues, category: e.target.value })}
-            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border p-2 rounded"
             required
           />
+          <div className="flex">
+            <input
+              type="text"
+              placeholder="Add Tag"
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              className="border p-2 rounded flex-grow"
+            />
+            <button onClick={addTag} className="ml-2 p-2 bg-blue-500 text-white rounded">
+              Add
+            </button>
+          </div>
+          <ul className="list-disc ml-4">
+            {formValues.tags.map((tag, index) => (
+              <li key={index} className="flex justify-between">
+                {tag}
+                <button
+                  onClick={() => deleteTag(index)}
+                  className="text-red-500 hover:text-red-700 ml-2"
+                >
+                  <TrashIcon className="h-5 w-5" />
+                </button>
+              </li>
+            ))}
+          </ul>
           <input
             type="text"
             placeholder="Image URL"
             value={formValues.imageUrl}
             onChange={(e) => setFormValues({ ...formValues, imageUrl: e.target.value })}
-            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            placeholder="Tags (comma separated)"
-            value={formValues.tags.join(', ')} // Convert tags array to a string for input
-            onChange={(e) => setFormValues({ ...formValues, tags: e.target.value.split(',').map(tag => tag.trim()) })} // Split and trim tags
-            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border p-2 rounded"
           />
         </div>
-        <button type="submit" className="mt-4 flex items-center space-x-1 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200">
+        <button type="submit" className="mt-4 flex items-center space-x-1 p-2 bg-blue-500 text-white rounded">
           <PlusCircleIcon className="h-5 w-5" />
           <span>{currentBlog ? 'Update Blog' : 'Add Blog'}</span>
         </button>
@@ -137,19 +174,12 @@ function ManageBlogs() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (
-          <div key={blog._id} className="border rounded-lg p-4 shadow-sm bg-white transition transform hover:scale-105">
-            {blog.imageUrl && (
-              <img src={blog.imageUrl} alt={blog.title} className="w-full h-32 object-cover rounded mb-4" />
-            )}
+          <div key={blog._id} className="border rounded-lg p-4 shadow-sm">
+            <img src={blog.imageUrl} alt={blog.title} className="w-full h-32 object-cover rounded mb-4" />
             <h3 className="text-lg font-semibold mb-1">{blog.title}</h3>
-            <p className="text-gray-700 mb-2">{blog.content.length > 100 ? `${blog.content.slice(0, 100)}...` : blog.content}</p>
+            <p className="text-gray-700 mb-2">{typeof blog.content === 'string' ? blog.content.substring(0, 100) + '...' : 'Content not available'}</p>
             <p className="text-gray-600 mb-2"><strong>Category:</strong> {blog.category}</p>
-            <h4 className="text-gray-600 mb-2"><strong>Tags:</strong></h4>
-            <ul className="tags-list mb-2">
-              {blog.tags && blog.tags.slice(0, 3).map((tag, index) => (
-                <li key={index} className="inline-block mr-2 bg-blue-100 text-blue-600 rounded px-2 py-1 text-sm">{tag}</li> // Custom bullet can be styled in CSS
-              ))}
-            </ul>
+            <p className="text-gray-600 mb-2"><strong>Tags:</strong> {blog.tags.join(', ')}</p>
             <div className="flex justify-between">
               <button onClick={() => handleEdit(blog)} className="text-blue-500 hover:text-blue-700 flex items-center space-x-1">
                 <EyeIcon className="h-5 w-5" />

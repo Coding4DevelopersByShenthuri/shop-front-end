@@ -40,7 +40,7 @@ const Blog = () => {
 
   return (
     <div className="Blog-page">
-      <h1 className="blogs-title font-serif">Our Latest Blogs</h1> {/* Title moved outside the container */}
+      <h1 className="blogs-title font-serif">Our Latest Blogs</h1> 
       <div className="blogs-container">
         {/* Category Selection */}
         <div className="category-filter">
@@ -56,7 +56,9 @@ const Blog = () => {
           <button onClick={() => setSelectedCategory('Lifestyle')}>
             <span className="material-icons">spa</span> Lifestyle🌿
           </button>
-          {/* Add more categories as needed */}
+          <button onClick={() => setSelectedCategory('Budgeting')}>
+            <span className="material-icons">money</span> Budgeting💰
+          </button>
         </div>
 
         <div className="blogs-grid">
@@ -100,19 +102,14 @@ const Blog = () => {
                 className="detail-image"
               />
             )}
-            <h3>Description:</h3>
-            <p>{expandedBlog.description || 'No description available.'}</p>
+            <h3>Content:</h3>
+            <p>{expandedBlog.content || 'No content available.'}</p>
             <h3>Tags:</h3>
             <ul className="tags-list">
               {expandedBlog.tags && expandedBlog.tags.map((tag, index) => (
                 <li key={index}>{tag}</li> // Custom bullet can be styled in CSS
               ))}
             </ul>
-            <h3>Content:</h3>
-            <div
-              className="blog-content"
-              dangerouslySetInnerHTML={{ __html: expandedBlog.content }}
-            />
           </div>
         )}
       </div>
