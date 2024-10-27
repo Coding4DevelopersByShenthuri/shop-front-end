@@ -74,14 +74,14 @@ const Blog = () => {
                 />
               )}
               <h2 className="blog-title">{blog.title}</h2>
-              <p className="blog-description">
-                {blog.description.length > 100
-                  ? `${blog.description.slice(0, 100)}...`
-                  : blog.description}
+              <p className="blog-content">
+                {blog.content && blog.content.length > 100
+                  ? `${blog.content.slice(0, 100)}...`
+                  : blog.content || 'No content available.'}
               </p>
               <h3>Tags:</h3>
               <ul className="tags-list">
-                {blog.tags.slice(0, 3).map((tag, index) => (
+                {blog.tags && blog.tags.slice(0, 3).map((tag, index) => (
                   <li key={index}>{tag}</li> // Custom bullet can be styled in CSS
                 ))}
               </ul>
@@ -101,10 +101,10 @@ const Blog = () => {
               />
             )}
             <h3>Description:</h3>
-            <p>{expandedBlog.description}</p>
+            <p>{expandedBlog.description || 'No description available.'}</p>
             <h3>Tags:</h3>
             <ul className="tags-list">
-              {expandedBlog.tags.map((tag, index) => (
+              {expandedBlog.tags && expandedBlog.tags.map((tag, index) => (
                 <li key={index}>{tag}</li> // Custom bullet can be styled in CSS
               ))}
             </ul>

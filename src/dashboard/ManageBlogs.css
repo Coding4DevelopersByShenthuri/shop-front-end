@@ -1,0 +1,14 @@
+.tags-list {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0;
+  }
+  
+  .tags-list li {
+    display: inline-block;
+    margin-right: 0.5rem;
+    background-color: #e0f7fa; /* Light blue background */
+    color: #006064; /* Dark blue text */
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+  }
+  
