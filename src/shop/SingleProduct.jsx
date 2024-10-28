@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
+import { useAppCountContext } from '../services/countService';
 
 const SingleProduct = () => {
     const product = useLoaderData();
@@ -8,6 +9,7 @@ const SingleProduct = () => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const { user } = useContext(AuthContext);
+    const { wishlistCount, updateWishlistCount } = useAppCountContext();
 
     if (!product) {
         return <div className="text-center mt-28 text-gray-500">Product not found.</div>;
@@ -30,6 +32,7 @@ const SingleProduct = () => {
             });
 
             if (response.ok) {
+                updateWishlistCount(user.userDetails[0]?._id)
                 const data = await response.json();
                 setMessage(`Added ${count} of ${name} to your wishlist!`);
             } else {

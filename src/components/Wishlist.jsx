@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 import './Wishlist.css';
+import { useAppCountContext } from '../services/countService';
 
 const Wishlist = () => {
     const [wishlistItems, setWishlistItems] = useState([]);
@@ -10,6 +11,7 @@ const Wishlist = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { user } = useContext(AuthContext);
+    const { wishlistCount, updateWishlistCount } = useAppCountContext();
 
     const fetchWishlistItems = async () => {
         try {
@@ -53,7 +55,7 @@ const Wishlist = () => {
             if (!response.ok) {
                 throw new Error('Failed to remove item from wishlist');
             }
-
+            updateWishlistCount(user?.userDetails[0]?._id)
             setWishlistItems((prevItems) => prevItems.filter(item => item._id !== selectedProduct));
             setShowModal(false);
             setSelectedProduct(null);
