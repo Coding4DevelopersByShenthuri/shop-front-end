@@ -8,6 +8,7 @@ import {
 import './shop.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
+import { useAppCountContext } from '../services/countService';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -18,6 +19,7 @@ const Shop = () => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const { updateWishlistCount } = useAppCountContext();
   const searchQuery = new URLSearchParams(location.search).get('search') || '';
 
   useEffect(() => {
@@ -54,9 +56,9 @@ const Shop = () => {
             },
             body: JSON.stringify({ productId: product._id, userId: user.userDetails[0]?._id }),
         });
-
         if (response.ok) {
             const data = await response.json();
+            updateWishlistCount(user.userDetails[0]?._id)
             setMessage(`Added to your wishlist!`);
         } else {
             setMessage('Failed to add product to wishlist.');

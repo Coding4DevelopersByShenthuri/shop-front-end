@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaBarsStaggered, FaBlog, FaXmark, FaHeart } from 'react-icons/fa6';
 import { FaShoppingCart } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';
+import { useAppCountContext } from '../services/countService';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,8 +12,8 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     // State to manage the wishlist count and cart counts
-    const [wishlistCount, setWishlistCount] = useState(0);
-    const [cartCount, setCartCount] = useState(0);
+    const { wishlistCount, updateWishlistCount , cartCount, updateCartCount} = useAppCountContext();
+
 
     // Toggle menu
     const toggleMenu = () => {
@@ -45,28 +46,8 @@ const Navbar = () => {
     // Fetch the wishlist count
     useEffect(() => {
         if (user) {
-            
-            const fetchWishlistCount = async () => {
-                try {
-                    const response = await fetch('http://localhost:3000/wishlists/count'); 
-                    const data = await response.json();
-                    setWishlistCount(data.count || 0);
-                } catch (error) {
-                    console.error("Failed to fetch wishlist count", error);
-                }
-            };
-
-            const fetchCartCount = async () => {
-                try {
-                    const response = await fetch('http://localhost:3000/carts/count');
-                    const data = await response.json();
-                    setCartCount(data.count || 0);
-                } catch (error) {
-                    console.error("Failed to fetch cart count", error);
-                }
-            };
-            fetchWishlistCount();
-            fetchCartCount();
+    
+        updateWishlistCount(user?.userDetails[0]?._id)
         }
     }, [user]);
 
