@@ -7,7 +7,7 @@ export const useAppCountContext = () => useContext(AppContext);
 
 export const AppCountProvider = ({ children }) => {
     const [wishlistCount, setWishlistCount] = useState(0);
-    const [cartCount, updateCartCount] = useState(0);
+    const [cartCount, setCartCount] = useState(0);
 
     const fetchWishlistCount = async (userId) => {
         if (!userId) return;
@@ -26,7 +26,7 @@ export const AppCountProvider = ({ children }) => {
         try {
             const response = await fetch(`http://localhost:3000/cards/cart-count/${userId}`);
             const data = await response.json();
-            setCardCount(data.count || 0);
+            setCartCount(data.count || 0);
         } catch (error) {
             console.error("Failed to fetch cart count", error);
         }
@@ -36,8 +36,8 @@ export const AppCountProvider = ({ children }) => {
         await fetchWishlistCount(userId);
     };
 
-    const updateCardCount = async (userId) => {
-        await fetchCardCount(userId);
+    const updateCartCount = async (userId) => {
+        await fetchCartCount(userId);
     };
 
     return (
