@@ -147,7 +147,7 @@ const Shop = () => {
                     src={product.imageURL} 
                     alt={`${product.name} cover`} 
                     className='h-80 w-full object-cover' 
-                    style={{ maxHeight: '400px', objectFit: 'cover' }} 
+                    style={{ maxHeight: '300px', objectFit: 'cover' }} 
                   />
                   <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-4">
                     {product.name}

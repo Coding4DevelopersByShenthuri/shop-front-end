@@ -13,7 +13,7 @@ const Cart = () => {
 
     const fetchCartItems = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/carts/get-list/${user?.userDetails[0]?._id}`, {
+            const response = await fetch(`http://localhost:3000/carts/get-cart/${user?.userDetails[0]?._id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
