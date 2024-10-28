@@ -75,7 +75,7 @@ const Cart = () => {
 
     return (
         <div className="container mx-auto px-8 py-12 bg-lightblue-100">
-            <h2 className="text-3xl font-bold mb-4 mt-14 text-lightblue-900">My Cart</h2>
+            <h2 className="text-3xl font-bold mb-4 mt-12 text-lightblue-900">My Cart</h2>
 
             {error && <p className="text-red-500 mb-4">{error}</p>}
 
