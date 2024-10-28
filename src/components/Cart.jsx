@@ -26,7 +26,7 @@ const Cart = () => {
 
             const data = await response.json();
             console.log(data)
-            setCartItems(data[0]?.items || []); 
+            setCartItems(data || []); 
         } catch (error) {
             setError(error.message);
         } finally {
@@ -76,7 +76,6 @@ const Cart = () => {
     return (
         <div className="container mx-auto px-8 py-12 bg-lightblue-100">
             <h2 className="text-3xl font-bold mb-4 mt-14 text-lightblue-900">My Cart</h2>
-
             {error && <p className="text-red-500 mb-4">{error}</p>}
 
             {cartItems.length > 0 ? (
@@ -96,12 +95,12 @@ const Cart = () => {
                             {cartItems.map((item) => (
                                 <tr key={item._id}>
                                     <td className="border px-4 py-2">
-                                        <img src={item.imageURL} alt={item.name} className="w-16 h-16 object-cover" />
+                                        <img src={item.productId.imageURL} alt={item.productId.name} className="w-16 h-16 object-cover" />
                                     </td>
-                                    <td className="border px-4 py-2">{item.name}</td>
-                                    <td className="border px-4 py-2">{item.count || 1}</td>
-                                    <td className="border px-4 py-2">Rs {item.price}</td>
-                                    <td className="border px-4 py-2">Rs {item.price * (item.count || 1)}</td>
+                                    <td className="border px-4 py-2">{item.productId.name}</td>
+                                    <td className="border px-4 py-2">{item.quantity || 1}</td>
+                                    <td className="border px-4 py-2">Rs {item.productId.price}</td>
+                                    <td className="border px-4 py-2">Rs {item.productId.price * (item.quantity || 1)}</td>
                                     <td className="border px-4 py-2">
                                         <Link
                                             to={`/product/${item._id}`}

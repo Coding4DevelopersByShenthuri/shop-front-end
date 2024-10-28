@@ -75,9 +75,26 @@ const Shop = () => {
     });
   };
 
-  const handleAddToCart = (product) => {
+  const handleAddToCart = async (product) => {
     const quantity = quantities[product._id] || 1; // Default to 1 if no quantity set
-    alert(`Added ${quantity} of ${product.name} to the cart!`); // Optional: Replace with actual cart logic
+    try {
+      const response = await fetch('http://localhost:3000/carts/add-cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId: product._id, userId: user.userDetails[0]?._id, quantity: quantity }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        updateWishlistCount(user.userDetails[0]?._id)
+        setMessage(`Added to your wishlist!`);
+      } else {
+        setMessage('Failed to add product to wishlist.');
+      }
+    } catch (error) {
+      setMessage('An error occurred while adding to wishlist.');
+    }
   };
 
   // Group products by category
