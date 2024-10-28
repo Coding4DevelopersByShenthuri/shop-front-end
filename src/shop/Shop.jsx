@@ -3,7 +3,7 @@ import { Card } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, 
-  faCheese, faCarrot, faHeart, faShoppingCart 
+  faCheese, faCarrot, faHeart 
 } from '@fortawesome/free-solid-svg-icons'; 
 import './shop.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -172,9 +172,6 @@ const Shop = () => {
                     </button>
                     <button onClick={() => handleAddToWishlist(product)} className='text-red-500'>
                       <FontAwesomeIcon icon={faHeart} className="text-3xl" />
-                    </button>
-                    <button onClick={() => handleAddToCart(product)} className='text-blue-500 ml-2'>
-                      <FontAwesomeIcon icon={faShoppingCart} className="text-3xl" />
                     </button>
                   </div>
                 </Card>
