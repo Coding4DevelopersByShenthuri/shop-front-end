@@ -25,7 +25,8 @@ const Cart = () => {
             }
 
             const data = await response.json();
-            setCartItems(data[0].items || []); 
+            console.log(data)
+            setCartItems(data[0]?.items || []); 
         } catch (error) {
             setError(error.message);
         } finally {
