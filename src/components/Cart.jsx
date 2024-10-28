@@ -103,7 +103,7 @@ const Cart = () => {
                                     <td className="border px-4 py-2">Rs {item.productId.price * (item.quantity || 1)}</td>
                                     <td className="border px-4 py-2">
                                         <Link
-                                            to={`/product/${item._id}`}
+                                            to={`/product/${item.productId._id}`}
                                             className="inline-block text-blue-500 hover:underline">
                                             View Details
                                         </Link>
