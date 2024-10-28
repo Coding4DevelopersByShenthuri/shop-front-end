@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
-import './Cart.css'; 
+import './Cart.css';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -26,13 +26,41 @@ const Cart = () => {
 
             const data = await response.json();
             console.log(data)
-            setCartItems(data[0]?.items || []); 
+            setCartItems(data[0]?.items || []);
         } catch (error) {
             setError(error.message);
         } finally {
             setLoading(false);
         }
     };
+
+    // Inside Cart component
+
+    const handleAddItem = async (productId, quantity) => {
+        try {
+            const response = await fetch(`http://localhost:3000/carts/add-cart${selectedProduct}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: user?.userDetails[0]?._id,
+                    productId,
+                    quantity,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add item to cart');
+            }
+
+            const updatedCart = await response.json();
+            setCartItems(updatedCart.items || []);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
 
     useEffect(() => {
         user?.userDetails[0]?._id && fetchCartItems();
