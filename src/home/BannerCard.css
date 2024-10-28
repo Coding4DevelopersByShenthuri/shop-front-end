@@ -1,39 +1,48 @@
+.banner {
+  display: flex; /* Make the banner a flex container */
+  justify-content: flex-start; /* Align items to the left */
+  /* Optional: Add padding or margin if needed */
+  padding: 70px; /* Adjust according to your layout */
+}
+
 .banner .swiper {
-    width: 240px;
-    height: 320px;
-  }
-  
+  width: 240px;
+  height: 320px;
+  /* Optional: Adjust margin if you want more spacing from the edges */
+  margin-right: 20px; /* Add margin to separate it from other content */
+}
+
 .banner .swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 18px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  .banner .swiper-slide:nth-child(1n) {
-    background-image: url('src/assets/banner/Banner1.jpg');
-    background-size: cover;
-  }
-  
-  .banner .swiper-slide:nth-child(2n) {
-    background-image: url('src/assets/banner/Banner2.jpg');
-    background-size: cover;
-  }
-  
-  .banner .swiper-slide:nth-child(3n) {
-    background-image: url('src/assets/banner/Banner3.jpg');
-    background-size: cover;
-  }
-  
-  .banner .swiper-slide:nth-child(4n) {
-    background-image: url('src/assets/banner/Banner4.jpg');
-    background-size: cover;
-  }
-  
-  .banner .swiper-slide:nth-child(5n) {
-    background-image: url('src/assets/banner/Banner5.jpg');
-    background-size: cover;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.banner .swiper-slide:nth-child(1n) {
+  background-image: url('src/assets/banner/Banner1.jpg');
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(2n) {
+  background-image: url('src/assets/banner/Banner2.jpg');
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(3n) {
+  background-image: url('src/assets/banner/Banner3.jpg');
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(4n) {
+  background-image: url('src/assets/banner/Banner4.jpg');
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(5n) {
+  background-image: url('src/assets/banner/Banner5.jpg');
+  background-size: cover;
+}

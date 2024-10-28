@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
-import './Cart.css'; // If you have specific styles for the Cart
+import './Cart.css'; 
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -25,7 +25,7 @@ const Cart = () => {
             }
 
             const data = await response.json();
-            setCartItems(data[0].items || []); // Adjust depending on your response structure
+            setCartItems(data[0].items || []); 
         } catch (error) {
             setError(error.message);
         } finally {

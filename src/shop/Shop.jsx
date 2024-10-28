@@ -1,25 +1,45 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Card } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faCheese, faCarrot, faHeart } from '@fortawesome/free-solid-svg-icons'; // Import the heart icon
+import { 
+  faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, 
+  faCheese, faCarrot, faHeart, faShoppingCart 
+} from '@fortawesome/free-solid-svg-icons'; 
 import './shop.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
-import { useNavigate } from 'react-router-dom';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [wishlist, setWishlist] = useState([]); // Wishlist state
-  const [quantities, setQuantities] = useState({}); // State to hold product quantities
-  const [message, setMessage] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [wishlist, setWishlist] = useState([]); 
+  const [quantities, setQuantities] = useState({}); 
+  const [message, setMessage] = useState("");
   const { user } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
+  const searchQuery = new URLSearchParams(location.search).get('search') || '';
 
   useEffect(() => {
     fetch('http://localhost:3000/product/all-products')
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => {
+        setProducts(data);
+        setFilteredProducts(data);
+      }); 
   }, []);
 
+  useEffect(() => {
+    // Filter products by search query
+    if (searchQuery) {
+      const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products); // Reset to all products if no query
+    }
+  }, [searchQuery, products]);
 
   const handleAddToWishlist = async (product) => {
     if (!user) {
@@ -32,7 +52,7 @@ const Shop = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ productId : product._id, userId:user.userDetails[0]?._id}),
+            body: JSON.stringify({ productId: product._id, userId: user.userDetails[0]?._id }),
         });
 
         if (response.ok) {
@@ -44,7 +64,7 @@ const Shop = () => {
     } catch (error) {
         setMessage('An error occurred while adding to wishlist.');
     } 
-};
+  };
 
   const handleQuantityChange = (productId, value) => {
     setQuantities({
@@ -59,7 +79,7 @@ const Shop = () => {
   };
 
   // Group products by category
-  const groupedProducts = products.reduce((acc, product) => {
+  const groupedProducts = filteredProducts.reduce((acc, product) => {
     const category = product.category || "Uncategorized";
     if (!acc[category]) {
       acc[category] = [];
@@ -76,11 +96,10 @@ const Shop = () => {
   return (
     <div className='shop-page'>
       <div className='mt-28 px-4 lg:px-24'>
-        <h2 className='text-5xl font-bold text-center font-serif mb-12'>All Products are here!</h2> {/* Adjusted margin-bottom here */}
+        <h2 className='text-5xl font-bold text-center font-serif mb-12'>All Products are here!</h2>
 
         {/* Category Icons at the Top */}
         <div className="flex justify-center gap-6 my-8">
-          {/* Add icons for each category and link them to the corresponding section */}
           <button onClick={() => scrollToCategory('Beverage')} className="category-icon">
             <FontAwesomeIcon icon={faWineBottle} className="text-4xl" />
             <p>Beverage</p>
@@ -118,7 +137,6 @@ const Shop = () => {
         {/* Iterate over grouped products by category */}
         {Object.keys(groupedProducts).map((category) => (
           <div key={category} id={category} className="my-12">
-            {/* Display Category Name */}
             <h3 className='text-4xl font-semibold mb-6'>{category}</h3>
             <div className='grid gap-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
               {groupedProducts[category].map((product) => (
@@ -154,6 +172,9 @@ const Shop = () => {
                     </button>
                     <button onClick={() => handleAddToWishlist(product)} className='text-red-500'>
                       <FontAwesomeIcon icon={faHeart} className="text-3xl" />
+                    </button>
+                    <button onClick={() => handleAddToCart(product)} className='text-blue-500 ml-2'>
+                      <FontAwesomeIcon icon={faShoppingCart} className="text-3xl" />
                     </button>
                   </div>
                 </Card>

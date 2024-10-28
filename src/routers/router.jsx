@@ -42,6 +42,7 @@ import HelpPage from "../pages/HelpPage";
 import BillingPage from "../pages/BillingPage";
 import ManageRecipes from "../dashboard/ManageRecipes";
 import Wishlist from '../components/Wishlist';
+import Cart from '../components/Cart';
 import ManageBlogs from "../dashboard/ManageBlogs";
 
 // Define the routes using createBrowserRouter
@@ -80,7 +81,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/wishlists",
-        element: <Wishlist />
+        element: <Wishlist />,
+      },
+      {
+        path: "/carts",
+        element: <Cart />,
       },
       {
         path: "/product/:id",

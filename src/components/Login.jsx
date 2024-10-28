@@ -31,7 +31,7 @@ const Login = () => {
                 if (error.message.includes('Firebase: Error (auth/invalid-credential).')) {
                     setError('Invalid credential');
                 } else {
-                    setError(userCredential);
+                    setError(error.message); // Updated to show the actual error message
                 }
                 return;
             });
@@ -42,7 +42,7 @@ const Login = () => {
         loginWithGoogle()
             .then((result) => {
                 const user = result.user;
-                const userData = { email: user.email, birthday: '', name:user.displayName  };
+                const userData = { email: user.email, birthday: '', name: user.displayName };
                 fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
                     method: 'POST',
                     headers: {
@@ -72,23 +72,24 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-            <div className="relative py-3 sm:max-w-md sm:mx-auto">
+        <div className="min-h-screen bg-teal-100 py-6 flex flex-col justify-center sm:py-12">
+            <div className="relative py-5 sm:max-w-md sm:mx-auto mt-12">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
                 <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
                     <div className="max-w-md mx-auto">
-                        <h1 className="text-2xl font-semibold">Login Form</h1>
+                        <h1 className="text-2xl font-semibold font-serif text-center">Login Form</h1>
                         <div className="divide-y divide-gray-200">
                             <form onSubmit={handleLogin} className="py-8 mt-6 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                                <div className="relative mt-12"> {/* Increased gap here */}
+                                <div className="relative"> 
                                     <input
                                         id="email"
                                         name="email"
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" 
                                         placeholder="Email address"
+                                        required
                                     />
                                 </div>
                                 <div className="relative">
@@ -98,16 +99,17 @@ const Login = () => {
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
+                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 rounded-md" 
                                         placeholder="Password"
+                                        required
                                     />
                                 </div>
                                 {error && (
                                     <p className="text-red-600 text-base">{error}</p>
                                 )}
                                 <p>If you don't have an account, please <Link to="/sign-up" className="text-blue-600 underline">Sign up</Link> here!</p>
-                                <div className="relative">
-                                    <button type="submit" className="bg-blue-500 text-white rounded-md px-6 py-2">Login</button>
+                                <div className="relative flex justify-center">
+                                    <button type="submit" className="bg-blue-500 text-white rounded-lg px-7 py-2 mt-6">Login</button> {/* Adjusted padding */}
                                 </div>
                             </form>
                         </div>

@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-// React icons
 import { FaBarsStaggered, FaBlog, FaXmark, FaHeart } from 'react-icons/fa6';
+import { FaShoppingCart } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';
 
 const Navbar = () => {
@@ -10,6 +9,10 @@ const Navbar = () => {
     const [isSticky, setSticky] = useState(false);
     const { user, logOut } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    // State to manage the wishlist count and cart counts
+    const [wishlistCount, setWishlistCount] = useState(0);
+    const [cartCount, setCartCount] = useState(0);
 
     // Toggle menu
     const toggleMenu = () => {
@@ -30,6 +33,42 @@ const Navbar = () => {
             navigate('/login');
         }
     };
+
+    const handleCartClick = () => {
+        if (user) {
+            navigate('/carts');
+         } else {
+            navigate('/login');
+         }  
+    };
+
+    // Fetch the wishlist count
+    useEffect(() => {
+        if (user) {
+            
+            const fetchWishlistCount = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/wishlists/count'); 
+                    const data = await response.json();
+                    setWishlistCount(data.count || 0);
+                } catch (error) {
+                    console.error("Failed to fetch wishlist count", error);
+                }
+            };
+
+            const fetchCartCount = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/carts/count');
+                    const data = await response.json();
+                    setCartCount(data.count || 0);
+                } catch (error) {
+                    console.error("Failed to fetch cart count", error);
+                }
+            };
+            fetchWishlistCount();
+            fetchCartCount();
+        }
+    }, [user]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -76,13 +115,23 @@ const Navbar = () => {
                         ))}
                     </ul>
 
-                    {/* Wishlist icon positioned to the right */}
-                    <button onClick={handleClick} type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center text-white text-red-500 hover:text-red-700 transition">
+                    {/* Wishlist icon with dynamic count */}
+                    <button onClick={handleClick} type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white text-red-500 hover:text-red-700 transition">
                         <FaHeart className='w-6 h-6' />
-                        <span class="sr-only">Notifications</span>
-                        <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -end-1 dark:border-gray-900">20</div>
+                        <span className="sr-only">Wishlist items</span>
+                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -end-1 dark:border-gray-900">
+                            {wishlistCount}
+                        </div>
                     </button>
 
+                    {/* Cart icon with dynamic count */}
+                    <button onClick={handleCartClick} type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-blue-500 hover:text-blue-700 transition">
+                        <FaShoppingCart className='w-6 h-6' />
+                        <span className="sr-only">Cart items</span>
+                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-blue-500 border-2 border-white rounded-full -top-1 -end-1">
+                            {cartCount}
+                        </div>
+                    </button>
 
                     {/* Sign Up and Login for large devices */}
                     {!user && (
@@ -102,6 +151,7 @@ const Navbar = () => {
                             </button>
                         </div>
                     )}
+                    {/* User-specific buttons */}
                     {user && user.userDetails && user?.userDetails[0]?.role === 'user' && (
                         <div className='hidden lg:flex items-center'>
                             <Link
@@ -119,6 +169,7 @@ const Navbar = () => {
                             </button>
                         </div>
                     )}
+
                     {user && user.userDetails && user?.userDetails[0]?.role === 'admin' && (
                         <div className='hidden lg:flex items-center'>
                             <Link
