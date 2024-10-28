@@ -15,7 +15,7 @@ const Wishlist = () => {
 
     const fetchWishlistItems = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/wishlists/add-cart/${user?.userDetails[0]?._id}`, {
+            const response = await fetch(`http://localhost:3000/wishlists/get-list/${user?.userDetails[0]?._id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const Wishlist = () => {
             }
 
             const data = await response.json();
-            setWishlistItems(data[0].items || []); 
+            setWishlistItems(data[0].items || []); // Adjust depending on your response structure
         } catch (error) {
             setError(error.message);
         } finally {
