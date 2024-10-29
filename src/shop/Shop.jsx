@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Card } from 'flowbite-react';
+import { Card, Modal } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, 
-  faCheese, faCarrot, faHeart 
-} from '@fortawesome/free-solid-svg-icons'; 
+import {
+  faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn,
+  faCheese, faCarrot, faHeart
+} from '@fortawesome/free-solid-svg-icons';
 import './shop.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
@@ -13,9 +13,13 @@ import { useAppCountContext } from '../services/countService';
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [wishlist, setWishlist] = useState([]); 
-  const [quantities, setQuantities] = useState({}); 
+  const [wishlist, setWishlist] = useState([]);
+  const [quantities, setQuantities] = useState({});
+  const [modalContent, setModalContent] = useState("");
   const [message, setMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+
   const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,7 +32,7 @@ const Shop = () => {
       .then((data) => {
         setProducts(data);
         setFilteredProducts(data);
-      }); 
+      });
   }, []);
 
   useEffect(() => {
@@ -49,23 +53,28 @@ const Shop = () => {
       return;
     }
     try {
-        const response = await fetch('http://localhost:3000/wishlists/add-list', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ productId: product._id, userId: user.userDetails[0]?._id }),
-        });
-        if (response.ok) {
-            const data = await response.json();
-            updateWishlistCount(user.userDetails[0]?._id)
-            setMessage(`Added to your wishlist!`);
-        } else {
-            setMessage('Failed to add product to wishlist.');
-        }
+      const response = await fetch('http://localhost:3000/wishlists/add-list', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId: product._id, userId: user.userDetails[0]?._id }),
+      });
+      if (response.ok) {
+        updateWishlistCount(user.userDetails[0]?._id);
+        setModalContent(`Added ${product.name} to your wishlist!`);
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 2000);
+      } else {
+        setMessage('Failed to add product to wishlist.');
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 2000);
+      }
     } catch (error) {
-        setMessage('An error occurred while adding to wishlist.');
-    } 
+      setMessage('An error occurred while adding to wishlist.');
+      setShowModal(true);
+      setTimeout(() => setShowModal(false), 2000);
+    }
   };
 
   const handleQuantityChange = (productId, value) => {
@@ -86,14 +95,14 @@ const Shop = () => {
         body: JSON.stringify({ productId: product._id, userId: user.userDetails[0]?._id, quantity: quantity }),
       });
       if (response.ok) {
-        const data = await response.json();
-        updateWishlistCount(user.userDetails[0]?._id)
-        setMessage(`Added to your wishlist!`);
+        setModalContent(`${product.name} x ${quantity} added to cart.`);
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 2000); // Hide modal after 2 seconds
       } else {
-        setMessage('Failed to add product to wishlist.');
+        setMessage('Failed to add product to cart.');
       }
     } catch (error) {
-      setMessage('An error occurred while adding to wishlist.');
+      setMessage('An error occurred while adding to cart.');
     }
   };
 
@@ -160,11 +169,11 @@ const Shop = () => {
             <div className='grid gap-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
               {groupedProducts[category].map((product) => (
                 <Card key={product._id} className="w-full">
-                  <img 
-                    src={product.imageURL} 
-                    alt={`${product.name} cover`} 
-                    className='h-80 w-full object-cover' 
-                    style={{ maxHeight: '400px', objectFit: 'cover' }} 
+                  <img
+                    src={product.imageURL}
+                    alt={`${product.name} cover`}
+                    className='h-80 w-full object-cover'
+                    style={{ maxHeight: '400px', objectFit: 'cover' }}
                   />
                   <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-4">
                     {product.name}
@@ -198,6 +207,15 @@ const Shop = () => {
             </div>
           </div>
         ))}
+
+        {/* Modal for confirmation message */}
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+              <p className="text-lg font-semibold text-gray-800">{modalContent}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
