@@ -14,7 +14,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="px-4 lg:px-24 bg-teal-100 flex items-center">
+    <div className="px-9 bg-teal-100 flex items-center">
       <div className="flex w-full flex-col md:flex-row justify-between items-center gap-8 py-40">
         {/* Left side */}
         <div className="md:w-1/2 space-y-8 h-full">
