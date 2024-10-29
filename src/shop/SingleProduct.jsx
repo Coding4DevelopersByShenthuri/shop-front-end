@@ -55,7 +55,7 @@ const SingleProduct = () => {
                     <p className="text-gray-700 text-lg mb-4">{description || "Grab the Product Now!"}</p>
                     <p className="text-3xl font-semibold text-emerald-500 mb-6">Rs {price || "N/A"}</p>
 
-                    <div className="flex items-center gap-4 justify-center lg:justify-start mb-6">
+                    {/* <div className="flex items-center gap-4 justify-center lg:justify-start mb-6">
                         <button
                             onClick={decrementCount}
                             className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded"
@@ -69,14 +69,14 @@ const SingleProduct = () => {
                         >
                             +
                         </button>
-                    </div>
+                    </div> */}
 
                     {user && <button
                         onClick={addToWishlist}
                         className="bg-[#03A9F4] hover:bg-[#0288D1] text-white font-bold py-3 px-6 rounded transition duration-200"
                         disabled={loading}
                     >
-                        {loading ? 'Adding...' : `Add ${count} to Wishlist`}
+                        {loading ? 'Adding...' : `Add  to Wishlist`}
                     </button>}
                     {message && <p className="text-green-500 mt-4">{message}</p>}
                 </div>
