@@ -47,7 +47,7 @@ const UserHome = () => {
   }
 
   return (
-    <div className='mt-20'>
+    <div className='user-dash'>
       <div className='container mx-auto px-4 lg:px-24 py-10'>
         <div className='user-dashboard'>
           <h1 className='text-3xl font-bold mb-6'>Welcome to your dashboard</h1>
