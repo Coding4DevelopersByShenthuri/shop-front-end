@@ -4,7 +4,7 @@ import { AuthContext } from '../contexts/AuthProvider';
 import './Wishlist.css';
 import { useAppCountContext } from '../services/countService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Wishlist = () => {
     const [wishlistItems, setWishlistItems] = useState([]);
@@ -80,35 +80,36 @@ const Wishlist = () => {
         <div className="container mx-auto px-8 py-12 bg-lightblue-100">
             <div className='mt-28 px-4 lg:px-24'>
                 <h2 className="text-3xl font-bold mb-4 mt-14 text-lightblue-900">My Wishlist</h2>
-
+    
                 {error && <p className="text-red-500 mb-4">{error}</p>}
-
+    
                 {wishlistItems.length > 0 ? (
-                    <div className="overflow-x-auto">
+                    <div className="wishlist-grid">
                         {wishlistItems.map((item) => (
-                            <a key={item._id} class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                {/* <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="/docs/images/blog/image-4.jpg" alt=""> */}
-                                <img src={item.imageURL} alt={item.name} className="pl-4 object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" />
-                                <div class="flex flex-col justify-between p-4 leading-normal">
-                                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
-                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Grab Now!. Just Have a Look People</p>
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-3xl font-bold text-gray-900 dark:text-white">Rs {item.price}</span>
-
-                                        <a><Link
-                                            to={`/product/${item._id}`}
-                                            className="inline-block text-blue-500 hover:underline">
-                                            <FontAwesomeIcon icon={faEye} size="lg" />
-                                        </Link></a>
-                                        <FontAwesomeIcon onClick={() => confirmRemoveItem(item._id)} icon={faShoppingCart} size="lg" />
-                                    </div>
+                            <div key={item._id} className="wishlist-item-box bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl p-4 transition duration-300">
+                                <img src={item.imageURL} alt={item.name} className="object-cover w-full rounded h-48 mb-4" />
+                                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">{item.name}</h5>
+                                <p className="font-normal text-gray-700 dark:text-gray-400 mb-4">Grab Now! Just Have a Look People</p>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-3xl font-bold text-gray-900 dark:text-white">Rs {item.price}</span>
+                                    <Link
+                                        to={`/product/${item._id}`}
+                                        className="text-blue-800 hover:text-blue-500 no-underline">
+                                        <FontAwesomeIcon icon={faEye} size="lg" />
+                                    </Link>
+                                    <FontAwesomeIcon
+                                        onClick={() => confirmRemoveItem(item._id)}
+                                        icon={faTrash}
+                                        size="lg"
+                                        className="text-red-600 hover:text-red-800 cursor-pointer" />
                                 </div>
-                            </a>
+                            </div>
                         ))}
                     </div>
                 ) : (
                     <p className="text-gray-600">Your wishlist is currently empty.</p>
-                )}
+                )};
+    
 
                 {/* Modal for Confirm Deletion */}
                 {showModal && (
