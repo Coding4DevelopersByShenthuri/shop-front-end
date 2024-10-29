@@ -2,3 +2,7 @@
     color: #FF5252; /* Customize as needed */
 }
 
+.bg-lightblue-200 {
+    background-color: #46a8b5; /* Slightly darker light blue for table header */
+}
+
