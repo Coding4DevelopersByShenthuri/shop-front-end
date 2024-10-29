@@ -95,12 +95,12 @@ const Wishlist = () => {
                                     <div class="flex items-center justify-between">
                                         <span class="text-3xl font-bold text-gray-900 dark:text-white">Rs {item.price}</span>
 
-                                        <a href="#"><Link
-                                    to={`/product/${item._id}`}
-                                    className="inline-block text-blue-500 hover:underline">
-                                          <FontAwesomeIcon icon={faEye} size="lg" />
-                                </Link></a>
-                                <FontAwesomeIcon onClick={() => confirmRemoveItem(item._id)} icon={faShoppingCart} size="lg" />
+                                        <a><Link
+                                            to={`/product/${item._id}`}
+                                            className="inline-block text-blue-500 hover:underline">
+                                            <FontAwesomeIcon icon={faEye} size="lg" />
+                                        </Link></a>
+                                        <FontAwesomeIcon onClick={() => confirmRemoveItem(item._id)} icon={faShoppingCart} size="lg" />
                                     </div>
                                 </div>
                             </a>
