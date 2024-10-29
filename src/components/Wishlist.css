@@ -6,8 +6,8 @@
 /* Main grid container styling */
 .wishlist-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Wider columns for a more spacious layout */
-    gap: 1rem; /* Larger gap between items */
+    grid-template-columns: repeat(4, minmax(250px, 1fr)); /* Fixed column count */
+    gap: 2rem; /* Larger gap between items */
     margin-top: 2.5rem;
 }
 
