@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Eye } from "lucide-react";
+import { Search, Eye, Trash } from "lucide-react";
 
 const orderData = [
 	{ id: "ORD001", customer: "John Doe", total: 235.4, status: "Delivered", date: "2023-07-01" },
@@ -108,6 +108,9 @@ const OrdersTable = () => {
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
 									<button className='text-indigo-700 hover:text-indigo-300 mr-2'>
 										<Eye size={18} />
+									</button>
+									<button className='text-red-700 hover:text-red-300 mr-2'>
+										<Trash size={18} />
 									</button>
 								</td>
 							</motion.tr>
