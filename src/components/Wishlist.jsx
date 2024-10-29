@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 import './Wishlist.css';
 import { useAppCountContext } from '../services/countService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const Wishlist = () => {
     const [wishlistItems, setWishlistItems] = useState([]);
@@ -92,19 +94,15 @@ const Wishlist = () => {
                                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Grab Now!. Just Have a Look People</p>
                                     <div class="flex items-center justify-between">
                                         <span class="text-3xl font-bold text-gray-900 dark:text-white">Rs {item.price}</span>
-                                        <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><Link
+
+                                        <a href="#"><Link
                                     to={`/product/${item._id}`}
                                     className="inline-block text-blue-500 hover:underline">
-                                    View Details
+                                          <FontAwesomeIcon icon={faEye} size="lg" />
                                 </Link></a>
+                                <FontAwesomeIcon onClick={() => confirmRemoveItem(item._id)} icon={faShoppingCart} size="lg" />
                                     </div>
                                 </div>
-                                {/* 
-                                <button
-                                    onClick={() => confirmRemoveItem(item._id)}
-                                    className="ml-10 text-red-500 hover:underline">
-                                    Remove
-                                </button> */}
                             </a>
                         ))}
                     </div>
