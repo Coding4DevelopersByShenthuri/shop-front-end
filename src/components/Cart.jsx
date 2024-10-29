@@ -7,7 +7,8 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+    const [showRemoveModal, setShowRemoveModal] = useState(false);
+    const [showClearModal, setShowClearModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { user } = useContext(AuthContext);
 
@@ -25,7 +26,6 @@ const Cart = () => {
             }
 
             const data = await response.json();
-            console.log(data)
             setCartItems(data || []); 
         } catch (error) {
             setError(error.message);
@@ -56,10 +56,9 @@ const Cart = () => {
             }
 
             // Refetch cart items after deletion
-            await fetchCartItems(); // Ensure cart is updated from server
+            await fetchCartItems(); 
 
-            setCartItems((prevItems) => prevItems.filter(item => item._id !== selectedProduct));
-            setShowModal(false);
+            setShowRemoveModal(false);
             setSelectedProduct(null);
         } catch (error) {
             setError(error.message);
@@ -69,7 +68,35 @@ const Cart = () => {
     // Show confirmation modal before deleting
     const confirmRemoveItem = (productId) => {
         setSelectedProduct(productId);
-        setShowModal(true);
+        setShowRemoveModal(true);
+    };
+
+    // Function to handle clearing the cart
+    const handleClearCart = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/carts/clear-cart`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: user?.userDetails[0]?._id }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to clear cart');
+            }
+
+            // Refetch cart items after clearing
+            await fetchCartItems();
+            setShowClearModal(false);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    // Show confirmation modal before clearing the cart
+    const confirmClearCart = () => {
+        setShowClearModal(true);
     };
 
     const calculateTotalPrice = () => {
@@ -127,14 +154,19 @@ const Cart = () => {
                     {/* Display Total Price */}
                     <div className="mt-6 text-right">
                         <p className="text-xl font-bold">Total: Rs {calculateTotalPrice()}</p>
-                    </div> 
+                    </div>
+                    <button
+                        onClick={confirmClearCart}
+                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                        Clear Cart
+                    </button>
                 </div>
             ) : (
                 <p className="text-gray-600">Your cart is currently empty.</p>
             )}
 
-            {/* Modal for Confirm Deletion */}
-            {showModal && (
+            {/* Modal for Confirm Item Removal */}
+            {showRemoveModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white p-6 rounded shadow-lg text-center max-w-sm mx-auto">
                         <p className="text-lg font-semibold mb-4">Are you sure you want to remove this item?</p>
@@ -145,7 +177,28 @@ const Cart = () => {
                                 Yes, Remove
                             </button>
                             <button
-                                onClick={() => setShowModal(false)}
+                                onClick={() => setShowRemoveModal(false)}
+                                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal for Confirm Clear Cart */}
+            {showClearModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded shadow-lg text-center max-w-sm mx-auto">
+                        <p className="text-lg font-semibold mb-4">Are you sure you want to clear your cart?</p>
+                        <div className="flex justify-center space-x-4">
+                            <button
+                                onClick={handleClearCart}
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                                Yes, Clear Cart
+                            </button>
+                            <button
+                                onClick={() => setShowClearModal(false)}
                                 className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
                                 Cancel
                             </button>
@@ -156,7 +209,5 @@ const Cart = () => {
         </div>
     );
 };
-
-
 
 export default Cart;
