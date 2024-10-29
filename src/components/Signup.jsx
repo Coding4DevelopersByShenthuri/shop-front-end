@@ -67,7 +67,6 @@ const Signup = () => {
                     });
             })
             .catch((error) => {
-                console.log(error);
                 setError(error.message);
                 console.error(`Error: ${error.message}`);
             });
@@ -77,7 +76,6 @@ const Signup = () => {
     const handleRegister = () => {
         loginWithGoogle()
             .then((result) => {
-                console.log(result);
                 const user = result.user;
                 const userData = { email: user.email, birthday: '', name: user.displayName };
 

@@ -85,7 +85,6 @@ const AuthProvider = ({ children }) => {
       }
       setLoading(false); // Ensure loading ends after fetching or if no user
     });
-    console.log('cc')
   };
   
 

@@ -23,7 +23,7 @@ const Shop = () => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const { updateWishlistCount } = useAppCountContext();
+  const { updateWishlistCount,updateCartCount } = useAppCountContext();
   const searchQuery = new URLSearchParams(location.search).get('search') || '';
 
   useEffect(() => {
@@ -95,6 +95,7 @@ const Shop = () => {
         body: JSON.stringify({ productId: product._id, userId: user.userDetails[0]?._id, quantity: quantity }),
       });
       if (response.ok) {
+        updateCartCount(user.userDetails[0]?._id);
         setModalContent(`${product.name} x ${quantity} added to cart.`);
         setShowModal(true);
         setTimeout(() => setShowModal(false), 2000); // Hide modal after 2 seconds

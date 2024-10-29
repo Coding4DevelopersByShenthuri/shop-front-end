@@ -12,7 +12,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     // State to manage the wishlist count and cart counts
-    const { wishlistCount, updateWishlistCount , cartCount, updateCartCount} = useAppCountContext();
+    const { wishlistCount, updateWishlistCount, cartCount, updateCartCount } = useAppCountContext();
 
 
     // Toggle menu
@@ -38,16 +38,16 @@ const Navbar = () => {
     const handleCartClick = () => {
         if (user) {
             navigate('/carts');
-         } else {
+        } else {
             navigate('/login');
-         }  
+        }
     };
 
     // Fetch the wishlist count
     useEffect(() => {
         if (user) {
-    
-        updateWishlistCount(user?.userDetails[0]?._id)
+            updateCartCount(user?.userDetails[0]?._id)
+            updateWishlistCount(user?.userDetails[0]?._id)
         }
     }, [user]);
 

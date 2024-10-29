@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/AuthProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faTrash } from '@fortawesome/free-solid-svg-icons'; 
 import './Cart.css';
+import { useAppCountContext } from '../services/countService';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -13,6 +14,7 @@ const Cart = () => {
     const [showClearModal, setShowClearModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { user } = useContext(AuthContext);
+    const { updateWishlistCount,updateCartCount } = useAppCountContext();
 
     const fetchCartItems = async () => {
         try {
@@ -45,7 +47,7 @@ const Cart = () => {
         if (!selectedProduct) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/carts/:productId${selectedProduct}`, {
+            const response = await fetch(`http://localhost:3000/carts/${selectedProduct}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +58,7 @@ const Cart = () => {
             if (!response.ok) {
                 throw new Error('Failed to remove item from cart');
             }
-
+            updateCartCount(user.userDetails[0]?._id);
             // Refetch cart items after deletion
             await fetchCartItems();
 

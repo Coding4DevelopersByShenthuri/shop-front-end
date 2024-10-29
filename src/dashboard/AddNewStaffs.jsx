@@ -66,7 +66,6 @@ function AddNewStaff() {
       location
     };
 
-    console.log(staffObj);
 
     // Send staff data to db
     fetch("http://localhost:3000/staff/add-staff", {

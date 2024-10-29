@@ -24,7 +24,7 @@ export const AppCountProvider = ({ children }) => {
     const fetchCartCount = async (userId) => {
         if (!userId) return;
         try {
-            const response = await fetch(`http://localhost:3000/cards/cart-count/${userId}`);
+            const response = await fetch(`http://localhost:3000/carts/cart-count/${userId}`);
             const data = await response.json();
             setCartCount(data.count || 0);
         } catch (error) {

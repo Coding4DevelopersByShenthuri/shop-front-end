@@ -49,7 +49,6 @@ const QRCodePage = () => {
         alert("Invalid QR code data. Please scan a valid code.");
       }
     } catch (error) {
-      console.log(error);
       alert("An error occurred while marking attendance.");
     }
   };
