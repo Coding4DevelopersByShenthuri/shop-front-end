@@ -25,9 +25,6 @@ const Cart = () => {
                 },
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch cart items');
-            }
 
             const data = await response.json();
             setCartItems(data || []);
@@ -47,7 +44,7 @@ const Cart = () => {
         if (!selectedProduct) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/carts/${selectedProduct}`, {
+            const response = await fetch(`http://localhost:3000/carts/product/${selectedProduct}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
