@@ -1,6 +1,5 @@
 /* Cart.css */
 .container {
-    background-color: #E0F7FA; /* Light Blue */
     padding: 2rem;
 }
 
@@ -13,10 +12,6 @@ table {
     border-collapse: collapse;
 }
 
-th {
-    background-color: #4fa1ab; /* Lighter Cyan */
-}
-
 td {
     border: 1px solid #ccc;
 }
@@ -25,25 +20,8 @@ td {
     color: #FF5252; /* Customize as needed */
 }
 
-/* Additional styles for the Cart */
-.text-blue-500 {
-    color: #007BFF; /* Customize link color for viewing product details */
-}
-
 button {
     cursor: pointer; /* Change cursor to pointer for buttons */
-}
-
-.bg-lightblue-100 {
-    background-color: #E0F7FA; /* Light Blue for cart background */
-}
-
-.bg-lightblue-200 {
-    background-color: #B2EBF2; /* Slightly darker blue for header */
-}
-
-.bg-white {
-    background-color: #FFFFFF; /* White for modal background */
 }
 
 .hover\:underline:hover {
