@@ -108,7 +108,7 @@ const Wishlist = () => {
                     </div>
                 ) : (
                     <p className="text-gray-600">Your wishlist is currently empty.</p>
-                )};
+                )}
     
 
                 {/* Modal for Confirm Deletion */}
