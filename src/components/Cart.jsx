@@ -85,7 +85,7 @@ const Cart = () => {
             if (!response.ok) {
                 throw new Error('Failed to clear cart');
             }
-
+            updateCartCount(user.userDetails[0]?._id);
             // Refetch cart items after clearing
             await fetchCartItems();
             setShowClearModal(false);
