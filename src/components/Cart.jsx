@@ -43,7 +43,7 @@ const Cart = () => {
         if (!selectedProduct) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/carts/${selectedProduct}`, {
+            const response = await fetch(`http://localhost:3000/carts/:productId${selectedProduct}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,6 +54,9 @@ const Cart = () => {
             if (!response.ok) {
                 throw new Error('Failed to remove item from cart');
             }
+
+            // Refetch cart items after deletion
+            await fetchCartItems(); // Ensure cart is updated from server
 
             setCartItems((prevItems) => prevItems.filter(item => item._id !== selectedProduct));
             setShowModal(false);
