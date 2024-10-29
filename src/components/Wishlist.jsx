@@ -108,7 +108,7 @@ const Wishlist = () => {
                                             </Link>
                                             <button
                                                 onClick={() => confirmRemoveItem(item._id)}
-                                                className="ml-2 text-red-500 hover:underline">
+                                                className="ml-10 text-red-500 hover:underline">
                                                 Remove
                                             </button>
                                         </td>

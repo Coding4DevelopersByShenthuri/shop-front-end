@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
-import './Cart.css'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
+import { faTrash } from '@fortawesome/free-solid-svg-icons'; 
+import './Cart.css';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -26,7 +28,7 @@ const Cart = () => {
             }
 
             const data = await response.json();
-            setCartItems(data || []); 
+            setCartItems(data || []);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -56,7 +58,7 @@ const Cart = () => {
             }
 
             // Refetch cart items after deletion
-            await fetchCartItems(); 
+            await fetchCartItems();
 
             setShowRemoveModal(false);
             setSelectedProduct(null);
@@ -143,8 +145,9 @@ const Cart = () => {
                                         </Link>
                                         <button
                                             onClick={() => confirmRemoveItem(item._id)}
-                                            className="ml-2 text-red-500 hover:underline">
-                                            Remove
+                                            className="ml-2 text-red-500 hover:underline flex items-center"
+                                            style={{ marginLeft: 'auto', marginTop: '-18px' }}> {/* Adjust the negative margin to move it further up */}
+                                            <FontAwesomeIcon icon={faTrash} className="mr-8" /> {/* Reduce right margin if needed */}
                                         </button>
                                     </td>
                                 </tr>

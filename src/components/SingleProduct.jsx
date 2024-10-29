@@ -69,15 +69,8 @@ const SingleProduct = () => {
           alt={`Image of ${product.name}`} 
           style={{ width: '300px', height: 'auto' }} 
         />
-        {/* Display additional product details next to the image */}
-        <div>
-          <p><strong>Category:</strong> {product.category}</p>
-          <p><strong>Stock:</strong> {product.stock_quantity} {product.unit}</p>
-          <p><strong>Origin:</strong> {product.origin}</p>
-          <p><strong>Price:</strong> Rs {product.price}</p>
-          {/* Button to add to wishlist */}
-          <button onClick={handleAddToWishlist}>Add to Wishlist</button>
-        </div>
+        {/* Button to add to wishlist */}
+        <button onClick={handleAddToWishlist}>Add to Wishlist</button>
       </div>
     </div>
   );
