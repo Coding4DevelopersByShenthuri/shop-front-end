@@ -188,9 +188,6 @@ const Shop = () => {
                   <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
                     Per: {product.unit}
                   </p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                    From: {product.origin}
-                  </p>
                   <div className='flex justify-between mt-4'>
                     <input
                       type="number"
