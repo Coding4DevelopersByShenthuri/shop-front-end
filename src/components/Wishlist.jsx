@@ -46,7 +46,7 @@ const Wishlist = () => {
         if (!selectedProduct) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/wishlists/${selectedProduct}`, {
+            const response = await fetch(`http://localhost:3000/wishlists/product/${selectedProduct}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
