@@ -186,7 +186,10 @@ const Shop = () => {
                     Rs {product.price}
                   </p>
                   <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                    {product.unit}
+                    Per: {product.unit}
+                  </p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
+                    From: {product.origin}
                   </p>
                   <div className='flex justify-between mt-4'>
                     <input
