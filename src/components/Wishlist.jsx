@@ -77,9 +77,9 @@ const Wishlist = () => {
     }
 
     return (
-        <div className="container mx-auto px-8 py-12 bg-lightblue-100">
+        <div className="container mx-auto px-8 py-12 bg-teal-100">
             <div className='mt-28 px-4 lg:px-24'>
-                <h2 className="text-3xl font-bold mb-4 mt-14 text-lightblue-900">My Wishlist</h2>
+                <h2 className="text-4xl font-bold mb-5 mt-14 text-black font-serif">My Wishlist</h2>
     
                 {error && <p className="text-red-500 mb-4">{error}</p>}
     

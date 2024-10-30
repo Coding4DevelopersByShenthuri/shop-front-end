@@ -108,14 +108,14 @@ const Cart = () => {
     }
 
     return (
-        <div className="container mx-auto px-8 py-12 bg-lightblue-100">
-            <h2 className="text-3xl font-bold mb-4 mt-32 text-lightblue-900">My Cart</h2>
+        <div className="container mx-auto px-8 py-12 bg-teal-100">
+            <h2 className="text-4xl font-bold mb-6 mt-32 text-black font-serif">My Cart</h2>
             {error && <p className="text-red-500 mb-4">{error}</p>}
 
             {cartItems.length > 0 ? (
                 <div className="overflow-x-auto">
-                    <table className="min-w-full border border-gray-300">
-                        <thead className="bg-lightblue-200">
+                    <table className="min-w-full border border-gray-400">
+                        <thead className="bg-teal-500">
                             <tr>
                                 <th className="border px-4 py-2">Image</th>
                                 <th className="border px-4 py-2">Name</th>
