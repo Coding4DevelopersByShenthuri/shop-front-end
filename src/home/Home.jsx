@@ -1,5 +1,6 @@
 import React from 'react'
 import Banner from '../components/Banner'
+import './Home.css';
 import BestSellerProducts from './BestSellerProducts'
 import FavProduct from './FavProduct'
 import PromoBanner from './PromoBanner'
@@ -8,7 +9,10 @@ import Review from './Review'
 
 const Home = () => {
   return (
-    <div>
+    <div className='home-container'>
+      <div className="shape shape-top-left"></div>
+      <div className="shape shape-bottom-right"></div>
+      <div className="shape shape-top-right-opposite"></div>
       <Banner/>
       <BestSellerProducts/>
       <FavProduct/>

@@ -1,0 +1,33 @@
+.home-container {
+    position: relative;
+  }
+  
+  .shape {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 350px; /* Adjust size as needed */
+    height: 350px;
+    opacity: 0.7; 
+  }
+  
+  .shape-top-left {
+    top: 22%;
+    left: 0;
+    background-image: url('../assets/shape-1.png'); 
+  }
+  
+  .shape-bottom-right {
+    bottom: 9%;
+    right: 0;
+    background-image: url('../assets/shape-2.png'); 
+  }
+  
+  .shape-top-right-opposite {
+    top: 53%;
+    left: 0;
+    background-image: url('../assets/shape-5.png');
+  }
+  
+
+  
