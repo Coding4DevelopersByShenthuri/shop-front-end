@@ -6,8 +6,8 @@
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
-    width: 350px; /* Adjust size as needed */
-    height: 350px;
+    width: 400px; /* Adjust size as needed */
+    height: 400px;
     opacity: 0.7; 
   }
   
@@ -18,15 +18,15 @@
   }
   
   .shape-bottom-right {
-    bottom: 9%;
+    bottom: 23%;
     right: 0;
     background-image: url('../assets/shape-2.png'); 
   }
   
   .shape-top-right-opposite {
-    top: 53%;
+    top: 51%;
     left: 0;
-    background-image: url('../assets/shape-5.png');
+    background-image: url('../assets/shape-3.png');
   }
   
 
