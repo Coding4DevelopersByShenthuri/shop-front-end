@@ -39,6 +39,11 @@ const Recipes = () => {
 
   return (
     <div className="Recipes-page">
+      {/* Background Shapes */}
+      <div className="shape shape-top-left"></div>
+      <div className="shape shape-right"></div>
+      <div className="shape shape-bottom-right"></div>
+      <div className="shape shape-top-right-opposite"></div>
       <h1 className="recipes-title font-serif">Recipes From Our Products</h1> {/* Title moved outside the container */}
       <div className="recipes-container">
         {/* Category Selection */}
