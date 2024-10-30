@@ -170,3 +170,19 @@
 .category-filter button:hover {
   background-color: #0056b3;
 }
+.shape1-top-left {
+  top: 10%;
+  left: 0;
+  width: 250px;
+  height: 250px;
+  background-image: url('../assets/Shapes/shape-9.png');
+  opacity: 0.9;
+}
+.shape1-top-right {
+  top: 20%;
+  left: 87%;
+  width: 200px;
+  height: 200px;
+  background-image: url('../assets/Shapes/shape-3.png');
+  opacity: 0.9;
+}

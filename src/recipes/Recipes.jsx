@@ -39,6 +39,8 @@ const Recipes = () => {
 
   return (
     <div className="Recipes-page">
+      <div className="shape shape1-top-left"></div>
+      <div className="shape shape1-top-right"></div>
       <h1 className="recipes-title font-serif">Recipes From Our Products</h1> {/* Title moved outside the container */}
       <div className="recipes-container">
         {/* Category Selection */}
