@@ -40,6 +40,10 @@ const Blog = () => {
 
   return (
     <div className="Blog-page">
+       <div className="shape shape-top-left">
+        </div>
+        <div className="shape shape-bottom-left">
+        </div>
       <h1 className="blogs-title font-serif">Our Latest Blogs</h1> 
       <div className="blogs-container">
         {/* Category Selection */}

@@ -47,6 +47,10 @@ const ContactUs = () => {
 
   return (
     <div className="contact-us-container">
+       <div className="shape shape-top-left">
+        </div>
+        <div className="shape shape-bottom-left">
+        </div>
       <h2 className="contact-us-title font-serif text-center font-bold">Contact Us</h2> {/* Heading moved outside the content container */}
       <div className="contact-us-content">
         <form onSubmit={handleSubmit} className="contact-form">

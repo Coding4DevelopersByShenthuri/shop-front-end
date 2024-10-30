@@ -12,6 +12,10 @@ const HelpPage = () => {
 
   return (
     <div className="help-page"> {/* Added class help-page here */}
+     <div className="shape shape-top-left">
+        </div>
+        <div className="shape shape-bottom-left">
+        </div>
       {/* Move the title outside the help-container */}
       <h1 className="help-title font-serif">Help & Support</h1>
       <div className="help-container">

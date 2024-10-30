@@ -130,6 +130,10 @@ const Shop = () => {
 
   return (
     <div className='shop-page'>
+       <div className="shape shape-top-left">
+        </div>
+        <div className="shape shape-bottom-left">
+        </div>
       <div className='mt-28 px-4 lg:px-24'>
         <h2 className='text-5xl font-bold text-center font-serif mb-12'>All Products are here!</h2>
 
