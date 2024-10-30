@@ -82,11 +82,13 @@ const Shop = () => {
   };
 
   const handleQuantityChange = (productId, value) => {
+    const quantityValue = Math.max(1, value); // Ensure minimum quantity is 1
     setQuantities({
       ...quantities,
-      [productId]: value
+      [productId]: quantityValue
     });
-  };
+};
+
 
   const handleAddToCart = async (product) => {
     const quantity = quantities[product._id] || 1; // Default to 1 if no quantity set
