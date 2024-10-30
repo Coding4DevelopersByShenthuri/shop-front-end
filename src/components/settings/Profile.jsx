@@ -1,19 +1,20 @@
 import { User } from "lucide-react";
 import SettingSection from "./SettingSection";
+import profileImage from '../../assets/Profile.jpg';
 
 const Profile = () => {
 	return (
 		<SettingSection icon={User} title={"Profile"}>
 			<div className='flex flex-col sm:flex-row items-center mb-6'>
 				<img
-					src='https://randomuser.me/api/portraits/women/0.jpg'
+					src={profileImage}
 					alt='Profile'
 					className='rounded-full w-20 h-20 object-cover mr-4'
 				/>
 
 				<div>
-					<h3 className='text-lg font-semibold text-gray-100'>Liza Lee</h3>
-					<p className='text-gray-400'>Liza.Lee@example.com</p>
+					<h3 className='text-lg font-semibold text-gray-100'>Shenthu MART</h3>
+					<p className='text-gray-400'>Shenthurimaran@gmail.com</p>
 				</div>
 			</div>
 
