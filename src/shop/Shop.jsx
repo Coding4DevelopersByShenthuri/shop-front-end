@@ -87,7 +87,7 @@ const Shop = () => {
       ...quantities,
       [productId]: quantityValue
     });
-};
+  };
 
 
   const handleAddToCart = async (product) => {
