@@ -1,7 +1,7 @@
 import React from 'react';
 import Supermarket3 from '../assets/Supermarket3.jpg';
-import Supermarket2 from '../assets/Bg.jpg'; 
-import Supermarket1 from '../assets/Supermarket1.jpg'; 
+import Supermarket2 from '../assets/Bg.jpg';
+import Supermarket1 from '../assets/Supermarket1.jpg';
 import Slider from 'react-slick'; // Import Slider from react-slick
 import './About.css'; // Import the CSS file for styles
 import "slick-carousel/slick/slick.css"; // Slick-carousel base styles
@@ -23,39 +23,44 @@ const About = () => {
 
   return (
     <div className="about-background">
-      <div style={{ 
-        padding: '60px 20px', 
-        maxWidth: '1500px', 
-        margin: '0 auto', 
-        fontFamily: 'Arial, sans-serif', 
-        color: 'black' 
+      <div style={{
+        padding: '60px 20px',
+        maxWidth: '1500px',
+        margin: '0 auto',
+        fontFamily: 'Arial, sans-serif',
+        color: 'black'
       }}>
-        <h1 style={{ 
-          textAlign: 'center', 
-          fontWeight: 'bold', 
-          fontFamily: 'serif', 
-          fontSize: '55px', 
+        <h1 style={{
+          textAlign: 'center',
+          fontWeight: 'bold',
+          fontFamily: 'serif',
+          fontSize: '55px',
           marginBottom: '40px',
           paddingTop: '60px' // Add some padding at the top
         }}>
           About Us
         </h1>
 
+        <div className="shape shape-top-left">
+        </div>
+        <div className="shape shape-bottom-left">
+        </div>
+
         {/* Slider Component */}
         <div style={{ marginBottom: '40px' }}>
           <Slider {...settings}>
             {images.map((image, index) => (
               <div key={index}>
-                <img 
-                  src={image} 
-                  alt={`Supermarket ${index + 0.5}`} 
-                  style={{ 
+                <img
+                  src={image}
+                  alt={`Supermarket ${index + 0.5}`}
+                  style={{
                     width: '50%', // Adjusted width to 80%
                     height: '400px', // Adjusted height to 400px
-                    objectFit: 'cover', 
-                    borderRadius: '10px', 
+                    objectFit: 'cover',
+                    borderRadius: '10px',
                     margin: '0 auto' // Center the image
-                  }} 
+                  }}
                 />
               </div>
             ))}
