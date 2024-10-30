@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { TrendingUp, Users, ShoppingBag, DollarSign } from "lucide-react";
+import { TrendingUp, Users, ShoppingBag } from "lucide-react";
 
 const INSIGHTS = [
 	{
@@ -16,11 +16,6 @@ const INSIGHTS = [
 		icon: ShoppingBag,
 		color: "text-purple-500",
 		insight: 'Product category "Electronics" shows the highest growth potential based on recent market trends.',
-	},
-	{
-		icon: DollarSign,
-		color: "text-yellow-500",
-		insight: "Optimizing pricing strategy could potentially increase overall profit margins by 5-7%.",
 	},
 ];
 

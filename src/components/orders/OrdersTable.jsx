@@ -3,14 +3,14 @@ import { motion } from "framer-motion";
 import { Search, Eye, Trash } from "lucide-react";
 
 const orderData = [
-	{ id: "ORD001", customer: "John Doe", total: 235.4, status: "Delivered", date: "2023-07-01" },
-	{ id: "ORD002", customer: "Vinusayan", total: 412.0, status: "Processing", date: "2023-07-02" },
-	{ id: "ORD003", customer: "Yaazhan", total: 162.5, status: "Shipped", date: "2023-07-03" },
-	{ id: "ORD004", customer: "Keerthi", total: 750.2, status: "Pending", date: "2023-07-04" },
-	{ id: "ORD005", customer: "Dhanush", total: 95.8, status: "Delivered", date: "2023-07-05" },
-	{ id: "ORD006", customer: "Charlie", total: 310.75, status: "Processing", date: "2023-07-06" },
-	{ id: "ORD007", customer: "David", total: 528.9, status: "Shipped", date: "2023-07-07" },
-	{ id: "ORD008", customer: "Shajee", total: 189.6, status: "Delivered", date: "2023-07-08" },
+	{ id: "ORD001", customer: "John Doe", total: 2500, status: "Delivered", date: "2023-07-01" },
+	{ id: "ORD002", customer: "Vinusayan", total: 4100, status: "Processing", date: "2023-07-02" },
+	{ id: "ORD003", customer: "Yaazhan", total: 1600, status: "Shipped", date: "2023-07-03" },
+	{ id: "ORD004", customer: "Keerthi", total: 7250, status: "Pending", date: "2023-07-04" },
+	{ id: "ORD005", customer: "Dhanush", total: 1500, status: "Delivered", date: "2023-07-05" },
+	{ id: "ORD006", customer: "Charlie", total: 2000, status: "Processing", date: "2023-07-06" },
+	{ id: "ORD007", customer: "David", total: 5200, status: "Shipped", date: "2023-07-07" },
+	{ id: "ORD008", customer: "Shajee", total: 1890, status: "Delivered", date: "2023-07-08" },
 ];
 
 const OrdersTable = () => {
@@ -87,7 +87,7 @@ const OrdersTable = () => {
 									{order.customer}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200'>
-									${order.total.toFixed(2)}
+									Rs {order.total.toFixed(2)}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
 									<span

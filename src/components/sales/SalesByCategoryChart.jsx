@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 const salesByCategory = [
 	{ name: "Electronics", value: 400 },
-	{ name: "Clothing", value: 300 },
-	{ name: "Home & Garden", value: 200 },
+	{ name: "Grocery", value: 300 },
+	{ name: "Fruits & Vegetables", value: 200 },
 	{ name: "Books", value: 100 },
 	{ name: "Others", value: 150 },
 ];
