@@ -109,7 +109,7 @@ const Cart = () => {
 
     return (
         <div className="page-container">
-            <div className='w-full mt-28 px-4 lg:px-24'>
+            <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24'>
             <h2 className="text-4xl font-bold mb-6 mt-32 text-black font-serif">My Cart</h2>
             {error && <p className="text-red-500 mb-4">{error}</p>}
 
