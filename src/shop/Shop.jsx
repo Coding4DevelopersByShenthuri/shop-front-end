@@ -5,7 +5,7 @@ import {
   faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn,
   faCheese, faCarrot, faHeart
 } from '@fortawesome/free-solid-svg-icons';
-import './shop.css';
+import './Shop.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 import { useAppCountContext } from '../services/countService';
