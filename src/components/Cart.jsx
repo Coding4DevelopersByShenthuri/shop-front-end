@@ -145,8 +145,8 @@ const Cart = () => {
                                         <button
                                             onClick={() => confirmRemoveItem(item._id)}
                                             className="ml-2 text-red-500 hover:underline flex items-center"
-                                            style={{ marginLeft: 'auto', marginTop: '-18px' }}> {/* Adjust the negative margin to move it further up */}
-                                            <FontAwesomeIcon icon={faTrash} className="mr-8" /> {/* Reduce right margin if needed */}
+                                            style={{ marginLeft: 'auto', marginTop: '-20px' }}> {/* Adjust the negative margin to move it further up */}
+                                            <FontAwesomeIcon icon={faTrash} className="mr-0.25" /> {/* Reduce right margin if needed */}
                                         </button>
                                     </td>
                                 </tr>
