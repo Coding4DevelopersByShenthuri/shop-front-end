@@ -17,6 +17,7 @@ const Navbar = () => {
 
     // Toggle menu
     const toggleMenu = () => {
+        console.log('fuck')
         setIsMenuOpen(prevState => !prevState);
     };
 
@@ -51,19 +52,19 @@ const Navbar = () => {
         }
     }, [user]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setSticky(window.scrollY > 100);
-        };
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         setSticky(window.scrollY > 100);
+    //     };
 
-        window.addEventListener('scroll', handleScroll);
-        document.addEventListener('click', handleClickOutside);
+    //     window.addEventListener('scroll', handleScroll);
+    //     document.addEventListener('click', handleClickOutside);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, [isMenuOpen]);
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll);
+    //         document.removeEventListener('click', handleClickOutside);
+    //     };
+    // }, [isMenuOpen]);
 
     // Navigation items
     const navItems = [
@@ -127,9 +128,6 @@ const Navbar = () => {
                                 className='px-4 py-2 text-white bg-green-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
                                 Login
                             </Link>
-                            <button aria-label="Toggle menu" onClick={toggleMenu}>
-                                <FaBarsStaggered className='w-5 hover:text-blue-700' />
-                            </button>
                         </div>
                     )}
                     {/* User-specific buttons */}
@@ -144,9 +142,6 @@ const Navbar = () => {
                                 onClick={logOut}
                                 className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
                                 Logout
-                            </button>
-                            <button aria-label="Toggle menu" onClick={toggleMenu}>
-                                <FaBarsStaggered className='w-5 hover:text-blue-700' />
                             </button>
                         </div>
                     )}
@@ -163,9 +158,6 @@ const Navbar = () => {
                                 className='px-4 py-2 text-white focus:outline-none bg-red-600 rounded hover:bg-blue-700 transition ml-3 mr-3 font-bold'>
                                 Logout
                             </button>
-                            <button aria-label="Toggle menu" onClick={toggleMenu}>
-                                <FaBarsStaggered className='w-5 hover:text-blue-700' />
-                            </button>
                         </div>
                     )}
                     {/* Menu button for mobile devices */}
@@ -181,6 +173,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Nav items for small devices */}
+                {JSON.stringify(isMenuOpen)}
                 <div className={`space-y-4 px-4 mt-16 py-7 bg-blue-700 ${isMenuOpen ? 'block fixed top-0 right-0 left-0' : 'hidden'}`}>
                     {navItems.map(({ link, path }) => (
                         <Link key={path} to={path} className='block text-base text-white uppercase font-bold cursor-pointer'>
