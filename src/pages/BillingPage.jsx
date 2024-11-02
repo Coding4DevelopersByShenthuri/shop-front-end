@@ -99,7 +99,7 @@ const BillingComponent = () => {
 
 
   const handleSubmit = async () => {
-    const res = await axios.post('http://localhost:3000/order/add-order', { userId: user.userDetails[0]?._id, orderDetail: products });
+    const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/order/add-order`, { userId: user.userDetails[0]?._id, orderDetail: products });
     handlePrintToPdf(res.data?.orderNumber); // Call the print function when submitting
     setProducts([]); // Clear bill on submit#
     setCashAmount(0); // Reset cash amount

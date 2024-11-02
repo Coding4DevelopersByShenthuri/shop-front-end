@@ -13,7 +13,7 @@ const UploadStaff = () => {
 
   // Fetch all staff on component load
   useEffect(() => {
-    fetch("http://localhost:3000/staff/all-staffs") // Ensure this route is correct
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staffs`) // Ensure this route is correct
       .then(res => res.json())
       .then(data => setStaffData(data))
       .catch(err => console.error("Error fetching staff:", err));
@@ -63,7 +63,7 @@ const UploadStaff = () => {
     formDataToSend.append('staffId', selectedStaffId);
     formDataToSend.append('image', staffImage);
 
-    fetch('http://localhost:3000/staff/upload-staff-image', { // Ensure this route is correct
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/upload-staff-image`, { // Ensure this route is correct
       method: 'POST',
       body: formDataToSend
     })

@@ -68,7 +68,7 @@ function AddNewStaff() {
 
 
     // Send staff data to db
-    fetch("http://localhost:3000/staff/add-staff", {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/add-staff`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

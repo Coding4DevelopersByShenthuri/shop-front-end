@@ -15,7 +15,7 @@ const BirthdayReminders = () => {
   useEffect(() => {
     const fetchBirthdays = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/birthday/upcoming-birthdays');
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/birthday/upcoming-birthdays`);
         setBirthdays(response.data); // Assuming response.data contains an array of birthday customers
         setLoading(false);
 
@@ -43,7 +43,7 @@ const BirthdayReminders = () => {
   const handleSendEmail = async (user) => {
     setSendingEmail((prev) => ({ ...prev, [user._id]: true })); // Set sending state to true for that user
     try {
-      await axios.post('http://localhost:3000/birthday/send-wish', {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/birthday/send-wish`, {
         email: user.email,
         name: user.name,
         message: `Happy Birthday ${user.name}! 🎉🎂 Wishing you a wonderful year ahead!`,

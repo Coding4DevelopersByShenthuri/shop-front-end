@@ -10,7 +10,7 @@ const ManageStaffs = () => {
   const [error, setError] = useState(null); 
 
   useEffect(() => {
-    fetch("http://localhost:3000/staff/all-staffs") // API endpoint for fetching staff members
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staffs`) // API endpoint for fetching staff members
       .then(res => res.json())
       .then(data => {
         setAllStaffs(data);

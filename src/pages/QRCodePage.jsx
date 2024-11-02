@@ -33,7 +33,7 @@ const QRCodePage = () => {
     try {
       if (data?.text) {
         // Fetch staff details based on scanned QR code
-        const response = await axios.post("http://localhost:3000/attendance/mark-attendance", {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/attendance/mark-attendance`, {
           staffId: data.text
         });
 

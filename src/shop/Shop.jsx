@@ -28,7 +28,7 @@ const Shop = () => {
   const searchQuery = new URLSearchParams(location.search).get('search') || '';
 
   useEffect(() => {
-    fetch('http://localhost:3000/product/all-products')
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -57,7 +57,7 @@ const Shop = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:3000/wishlists/add-list', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/wishlists/add-list`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const Shop = () => {
   const handleAddToCart = async (product) => {
     const quantity = quantities[product._id] || 1; // Default to 1 if no quantity set
     try {
-      const response = await fetch('http://localhost:3000/carts/add-cart', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/carts/add-cart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -5,7 +5,7 @@ const OtherProducts = () => {
     const [products, setProducts] = useState([]); // Renamed to products
   
     useEffect(() => {
-        fetch("http://localhost:3000/product/all-products")
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`)
           .then(res => res.json())
           .then(data => setProducts(data.slice(0, 8))); // Updated to setProducts
     }, []);

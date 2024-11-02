@@ -24,7 +24,7 @@ const StaffList = () => {
 
   const fetchStaff = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/staff/all-staff-with-task');
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staff-with-task`);
       setStaff(response.data);
     } catch (err) {
       console.error('Error fetching staff:', err);

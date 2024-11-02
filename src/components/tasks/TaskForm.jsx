@@ -30,7 +30,7 @@ const TaskForm = () => {
   const fetchStaffMembers = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/staff/all-staff-with-task');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staff-with-task`);
       if (!response.ok) throw new Error('Failed to fetch staff members.');
       const data = await response.json();
       setStaffMembers(data);
@@ -70,7 +70,7 @@ const TaskForm = () => {
         ...taskData,
       };
 
-      const response = await fetch('http://localhost:3000/tasks/upload-task', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/tasks/upload-task`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const TaskForm = () => {
         throw new Error(`${response.status}: ${errorData.message || 'Task could not be saved.'}`);
       }
       const staffMail = staffMembers.find(e => e._id == taskData.staffId).email
-      const tasksResponse = await axios.post('http://localhost:3000/tasks/send-task-assignment-mail', {staffMail:staffMail,...taskData} );
+      const tasksResponse = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/tasks/send-task-assignment-mail`, {staffMail:staffMail,...taskData} );
       setConfirmationMessage('Task assigned successfully!');
       setTaskData({ staffId: '', title: '', description: '', priority: 'Medium', dueDate: '', status: 'Pending' });
       setStaffMembers([])

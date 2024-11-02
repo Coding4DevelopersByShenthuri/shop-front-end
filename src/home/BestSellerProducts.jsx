@@ -5,7 +5,7 @@ const BestSellerProducts = () => {
     const [products, setProducts] = useState([]);
   
     useEffect( () => {
-        fetch("http://localhost:3000/product/all-products").then(res => res.json()).then(data => setProducts(data.slice(0, 8)))
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`).then(res => res.json()).then(data => setProducts(data.slice(0, 8)))
     },  [])
   return (
     <div>

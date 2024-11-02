@@ -10,7 +10,7 @@ const StaffAttendance = () => {
   useEffect(() => {
     const fetchStaffData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/staff/all-staffs"); // Update the URL if needed
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staffs`); // Update the URL if needed
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -52,7 +52,7 @@ const StaffAttendance = () => {
 
     // Send attendance data to backend
     try {
-      const response = await fetch("http://localhost:3000/attendance", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/attendance`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

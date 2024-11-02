@@ -21,7 +21,7 @@ function ManageBlogs() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/blogs');
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/blogs`);
       setBlogs(response.data);
     } catch (error) {
       console.error('Error fetching blogs:', error);
@@ -37,7 +37,7 @@ function ManageBlogs() {
         const response = await axios.put(`http://localhost:3000/blogs/${currentBlog._id}`, blogData);
         setBlogs(blogs.map(blog => (blog._id === currentBlog._id ? response.data : blog)));
       } else {
-        const response = await axios.post('http://localhost:3000/blogs', blogData);
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/blogs`, blogData);
         setBlogs([...blogs, response.data]);
       }
       resetForm();

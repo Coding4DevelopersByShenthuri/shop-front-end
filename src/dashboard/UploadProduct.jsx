@@ -93,7 +93,7 @@ function UploadProduct() {
       }
 
       // Insert the new product document into the database
-      const productResponse = await axios.post('http://localhost:3000/product/upload-product', newProduct);
+      const productResponse = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/product/upload-product`, newProduct);
       const productId = productResponse.data._id;
       // If a file is selected, upload the file and update the product document with the image URL
       if (imageFile && productId) {
@@ -101,7 +101,7 @@ function UploadProduct() {
         formData.append('image', imageFile);
         formData.append('productId', productId);
 
-        await axios.post('http://localhost:3000/product/upload-product-image', formData, {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/product/upload-product-image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

@@ -22,7 +22,7 @@ function ManageRecipes() {
 
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/recipes');
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/recipes`);
       setRecipes(response.data);
     } catch (error) {
       console.error('Error fetching recipes:', error);
@@ -37,7 +37,7 @@ function ManageRecipes() {
         const response = await axios.put(`http://localhost:3000/recipes/${currentRecipe._id}`, recipeData);
         setRecipes(recipes.map(recipe => (recipe._id === currentRecipe._id ? response.data : recipe)));
       } else {
-        const response = await axios.post('http://localhost:3000/recipes', recipeData);
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/recipes`, recipeData);
         setRecipes([...recipes, response.data]);
       }
       resetForm();

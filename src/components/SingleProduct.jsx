@@ -27,7 +27,7 @@ const SingleProduct = () => {
 
   // Function to handle adding product to wishlist
   const handleAddToWishlist = () => {
-    fetch('http://localhost:3000/wishlist', {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/wishlist`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
