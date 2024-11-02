@@ -1,6 +1,6 @@
 import { User } from "lucide-react";
 import SettingSection from "./SettingSection";
-import profileImage from '../../assets/Profile.jpg';
+import profileImage from '../../assets/profile.jpg';
 
 const Profile = () => {
 	return (
