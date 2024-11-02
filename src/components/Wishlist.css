@@ -25,6 +25,18 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.wish-list-page {
+    background-color: #d1f1f6;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-backdrop-filter: blur(50px);
+    backdrop-filter: blur(50px);
+}
+
 .wishlist-item-box:hover {
     transform: translateY(-4px); /* Subtle lift on hover */
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
