@@ -52,19 +52,19 @@ const Navbar = () => {
         }
     }, [user, updateCartCount, updateWishlistCount]);
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         setSticky(window.scrollY > 100);
-    //     };
+     useEffect(() => {
+         const handleScroll = () => {
+             setSticky(window.scrollY > 100);
+         };
 
-    //     window.addEventListener('scroll', handleScroll);
-    //     document.addEventListener('click', handleClickOutside);
+         window.addEventListener('scroll', handleScroll);
+         document.addEventListener('click', handleClickOutside);
 
-    //     return () => {
-    //         window.removeEventListener('scroll', handleScroll);
-    //         document.removeEventListener('click', handleClickOutside);
-    //     };
-    // }, [isMenuOpen]);
+         return () => {
+             window.removeEventListener('scroll', handleScroll);
+             document.removeEventListener('click', handleClickOutside);
+         };
+     }, [isMenuOpen]);
 
     // Navigation items
     const navItems = [
