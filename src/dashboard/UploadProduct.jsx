@@ -21,7 +21,8 @@ function UploadProduct() {
     "Dried",
     "Condiments",
     "Chocolates",
-    "Sweets"
+    "Sweets",
+    "leafy greens"
   ];
 
   const productUnits = [
@@ -34,7 +35,8 @@ function UploadProduct() {
     "Tin",
     "Cup",
     "Litre",
-    "Scoop"
+    "Scoop",
+    "Bundle"
   ];
 
   const productOrigins = [
