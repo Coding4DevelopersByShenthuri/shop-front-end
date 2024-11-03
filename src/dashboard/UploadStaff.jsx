@@ -143,7 +143,7 @@ const UploadStaff = () => {
             <div className="flex-1 flex flex-col items-center justify-center p-4">
               {staff.imageUrl ? (
                 <img 
-                  src={`http://localhost:3000${staff.imageUrl}`}  // Use the correct image URL
+                  src={`${import.meta.env.VITE_API_BASE_URL}${staff.imageUrl}`}  // Use the correct image URL
                   alt={staff.name} 
                   className="w-full h-64 object-cover rounded mb-2" 
                 />

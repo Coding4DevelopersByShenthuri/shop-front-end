@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
       setLoading(true); // Ensure loading starts when auth state changes
       if (currentUser) {
         try {
-          const response = await fetch(`http://localhost:3000/user/userdetail/${currentUser.uid}`);
+          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user/userdetail/${currentUser.uid}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }

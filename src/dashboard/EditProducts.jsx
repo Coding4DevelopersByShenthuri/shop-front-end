@@ -98,7 +98,7 @@ function EditProducts() {
     };
 
     // Update product data
-    fetch(`http://localhost:3000/product/product/${id}`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"

@@ -34,7 +34,7 @@ function ManageBlogs() {
     try {
       const blogData = { ...formValues };
       if (currentBlog) {
-        const response = await axios.put(`http://localhost:3000/blogs/${currentBlog._id}`, blogData);
+        const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/blogs/${currentBlog._id}`, blogData);
         setBlogs(blogs.map(blog => (blog._id === currentBlog._id ? response.data : blog)));
       } else {
         const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/blogs`, blogData);
@@ -52,7 +52,7 @@ function ManageBlogs() {
     const confirmed = window.confirm('Are you sure you want to delete this post?');
     if (confirmed) {
       try {
-        await axios.delete(`http://localhost:3000/blogs/${blogId}`);
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/blogs/${blogId}`);
         setBlogs(blogs.filter(blog => blog._id !== blogId));
         alert('Post deleted successfully!');
       } catch (error) {

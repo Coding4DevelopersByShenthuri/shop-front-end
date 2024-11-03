@@ -34,7 +34,7 @@ function ManageRecipes() {
     try {
       const recipeData = { ...formValues };
       if (currentRecipe) {
-        const response = await axios.put(`http://localhost:3000/recipes/${currentRecipe._id}`, recipeData);
+        const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/recipes/${currentRecipe._id}`, recipeData);
         setRecipes(recipes.map(recipe => (recipe._id === currentRecipe._id ? response.data : recipe)));
       } else {
         const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/recipes`, recipeData);
@@ -51,7 +51,7 @@ function ManageRecipes() {
     const confirmed = window.confirm('Are you sure you want to delete this recipe?');
     if (confirmed) {
       try {
-        await axios.delete(`http://localhost:3000/recipes/${recipeId}`);
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/recipes/${recipeId}`);
         setRecipes(recipes.filter(recipe => recipe._id !== recipeId));
         alert('Recipe deleted successfully!');
       } catch (error) {

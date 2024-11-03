@@ -91,7 +91,7 @@ const router = createBrowserRouter([
         path: "/product/:id",
         element: <SingleProduct />,
         loader: async ({ params }) =>
-          fetch(`http://localhost:3000/product/product/${params.id}`),
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`),
       },
       {
         path: "/sign-up",
@@ -209,13 +209,13 @@ const router = createBrowserRouter([
         path: "edit-products/:id",
         element: <EditProducts />,
         loader: async ({ params }) =>
-          fetch(`http://localhost:3000/product/product/${params.id}`),
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`),
       },
       {
         path: "edit-staffs/:id",
         element: <EditStaffs />,
         loader: async ({ params }) =>
-          fetch(`http://localhost:3000/staff/staff/${params.id}`),
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/staff/${params.id}`),
       },
       {
         path: "*", // Catch-all for undefined admin routes

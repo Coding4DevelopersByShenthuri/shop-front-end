@@ -42,7 +42,7 @@ const Signup = () => {
                 const uid = user.uid; // Assuming user object contains uid
                 const userData = { email, birthday, name: fullName }; // Adjust as necessary
 
-                fetch(`http://localhost:3000/user/createuser/${uid}`, {
+                fetch(`${import.meta.env.VITE_API_BASE_URL}/user/createuser/${uid}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const Signup = () => {
                 const user = result.user;
                 const userData = { email: user.email, birthday: '', name: user.displayName };
 
-                fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
+                fetch(`${import.meta.env.VITE_API_BASE_URL}/user/createuser/${user.uid}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

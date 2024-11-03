@@ -63,7 +63,7 @@ function EditStaffs() {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/staff/staff/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/staff/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"

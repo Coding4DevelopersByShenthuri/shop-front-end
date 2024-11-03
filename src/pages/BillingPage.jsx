@@ -17,7 +17,7 @@ const BillingComponent = () => {
   // Fetch product from API based on ID
   const fetchProduct = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3000/product/product/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/product/product/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error fetching product:', error);

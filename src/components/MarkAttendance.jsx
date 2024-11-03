@@ -9,7 +9,7 @@ const MarkAttendance = ({ staffId, token }) => {
   useEffect(() => {
     const markAttendance = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/mark-attendance?staffId=${staffId}&token=${token}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/mark-attendance?staffId=${staffId}&token=${token}`);
         if (response.status === 200) {
           // Successfully marked attendance, redirect to another page
           history.push("/attendance"); // Adjust this route as needed

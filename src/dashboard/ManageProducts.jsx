@@ -43,7 +43,7 @@ const ManageProducts = () => {
     const isConfirmed = window.confirm("Are you sure you want to delete this product? This action cannot be undone.");
 
     if (isConfirmed) {
-      fetch(`http://localhost:3000/product/product/${id}`, {
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${id}`, {
         method: "DELETE",
       })
         .then(res => res.json())

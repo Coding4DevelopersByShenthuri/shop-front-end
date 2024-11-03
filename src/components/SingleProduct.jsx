@@ -8,7 +8,7 @@ const SingleProduct = () => {
 
   useEffect(() => {
     // Fetch product details based on the ID
-    fetch(`http://localhost:3000/product/product/${id}`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${id}`)
       .then(res => {
         if (!res.ok) {
           throw new Error("Product not found");

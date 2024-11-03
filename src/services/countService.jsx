@@ -12,7 +12,7 @@ export const AppCountProvider = ({ children }) => {
     const fetchWishlistCount = async (userId) => {
         if (!userId) return;
         try {
-            const response = await fetch(`http://localhost:3000/wishlists/wish-count/${userId}`);
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/wishlists/wish-count/${userId}`);
             const data = await response.json();
             console.log('Wishlist Count:', data);
             setWishlistCount(data.count || 0);
@@ -24,7 +24,7 @@ export const AppCountProvider = ({ children }) => {
     const fetchCartCount = async (userId) => {
         if (!userId) return;
         try {
-            const response = await fetch(`http://localhost:3000/carts/cart-count/${userId}`);
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/carts/cart-count/${userId}`);
             const data = await response.json();
             setCartCount(data.count || 0);
         } catch (error) {

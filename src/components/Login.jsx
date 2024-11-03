@@ -43,7 +43,7 @@ const Login = () => {
             .then((result) => {
                 const user = result.user;
                 const userData = { email: user.email, birthday: '', name: user.displayName };
-                fetch(`http://localhost:3000/user/createuser/${user.uid}`, {
+                fetch(`${import.meta.env.VITE_API_BASE_URL}/user/createuser/${user.uid}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

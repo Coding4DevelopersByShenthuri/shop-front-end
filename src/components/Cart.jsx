@@ -17,7 +17,7 @@ const Cart = () => {
 
     const fetchCartItems = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/carts/get-cart/${user?.userDetails[0]?._id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/carts/get-cart/${user?.userDetails[0]?._id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const Cart = () => {
         if (!selectedProduct) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/carts/product/${selectedProduct}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/carts/product/${selectedProduct}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const Cart = () => {
     // Function to handle clearing the cart
     const handleClearCart = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/carts/clear-cart`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/carts/clear-cart`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
