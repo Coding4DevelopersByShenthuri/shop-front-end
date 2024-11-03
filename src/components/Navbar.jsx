@@ -50,7 +50,7 @@ const Navbar = () => {
             updateCartCount(user?.userDetails[0]?._id)
             updateWishlistCount(user?.userDetails[0]?._id)
         }
-    }, [user]);
+    }, [user, updateCartCount, updateWishlistCount]);
 
     // useEffect(() => {
     //     const handleScroll = () => {
