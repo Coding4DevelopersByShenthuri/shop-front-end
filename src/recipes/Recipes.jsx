@@ -27,7 +27,8 @@ const Recipes = () => {
   }, []);
 
   // Function to handle expanding a recipe
-  const handleExpandRecipe = (recipeId) => {
+  const handleExpandRecipe = (obj) => {
+    const recipeId = obj._id
     navigate(`/recipes/${recipeId}`); // Navigate to SingleRecipe route with recipeId
   };
 

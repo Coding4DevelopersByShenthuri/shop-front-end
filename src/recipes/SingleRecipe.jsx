@@ -1,27 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLoaderData, useParams } from 'react-router-dom';
 
 const SingleRecipe = () => {
+  const recipe = useLoaderData();
   const { recipeId } = useParams();
-  const [recipe, setRecipe] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/recipes/${recipeId}`);
-        setRecipe(response.data);
-      } catch (err) {
-        setError('Error fetching recipe details. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecipe();
-  }, [recipeId]);
 
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;

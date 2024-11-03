@@ -105,7 +105,7 @@ const router = createBrowserRouter([
         path: "/recipes/:id",
         element: <SingleRecipe />,
         loader: async ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/blogs/blog/${params.id}`),
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/recipes/recipes/${params.id}`),
       },
       {
         path: "/sign-up",
