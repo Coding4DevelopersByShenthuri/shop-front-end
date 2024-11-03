@@ -18,6 +18,7 @@ import UploadProduct from "../dashboard/UploadProduct";
 import AddNewStaffs from "../dashboard/AddNewStaffs";
 import ManageStaffs from "../dashboard/ManageStaffs";
 import SingleProduct from "../shop/SingleProduct";
+import SingleBlog from "../blogs/SingleBlog";
 import Signup from "../components/Signup";
 import Overview from "../pages/OverviewPage";
 import Login from "../components/Login";
@@ -92,6 +93,12 @@ const router = createBrowserRouter([
         element: <SingleProduct />,
         loader: async ({ params }) =>
           fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`),
+      },
+      {
+        path: "/blog/:id",
+        element: <SingleBlog />,
+        loader: async ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/blogs/blog/${params.id}`),
       },
       {
         path: "/sign-up",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Blog.css'; // Ensure this is the correct path to your CSS file
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]); // State to hold blog data
@@ -8,6 +9,7 @@ const Blog = () => {
   const [error, setError] = useState(''); // Error state
   const [expandedBlog, setExpandedBlog] = useState(null); // State for the expanded blog
   const [selectedCategory, setSelectedCategory] = useState('All'); // State for selected category
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -24,15 +26,15 @@ const Blog = () => {
     fetchBlogs();
   }, []);
 
-  // Function to handle expanding a blog for detailed view
-  const handleExpandBlog = (blog) => {
-    setExpandedBlog(blog);
-  };
-
   // Filter blogs based on the selected category
   const filteredBlogs = selectedCategory === 'All'
     ? blogs
     : blogs.filter(blog => blog.category === selectedCategory);
+    
+
+  const handleExpandBlog = (blogId) => {
+    navigate(`/blogs/${blogId}`); // Navigate to SingleBlog route with blogId
+  };
 
   // Loading and error states
   if (loading) return <div className="loading">Loading...</div>;
