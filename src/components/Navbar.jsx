@@ -64,7 +64,7 @@ const Navbar = () => {
              window.removeEventListener('scroll', handleScroll);
              document.removeEventListener('click', handleClickOutside);
          };
-     }, [isMenuOpen]);
+     }, []);
 
     // Navigation items
     const navItems = [
