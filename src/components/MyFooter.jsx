@@ -9,19 +9,19 @@ function MyFooter() {
           <div>
             <Footer.Title title="Company" />
             <Footer.LinkGroup col>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>About</Footer.Link>
+              <Footer.Link href="/about" style={{ color: "#D3D3D3" }}>About</Footer.Link>
               <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Careers</Footer.Link>
               <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Brand Center</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Blog</Footer.Link>
+              <Footer.Link href="/blog" style={{ color: "#D3D3D3" }}>Blog</Footer.Link>
             </Footer.LinkGroup>
           </div>
           <div>
             <Footer.Title title="Help Center" />
             <Footer.LinkGroup col>
               <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Discord Server</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Twitter</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Facebook</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Contact Us</Footer.Link>
+              <Footer.Link href="https://x.com/ShenthuriM47295?t=bAh1Ip8sFiopySnrN7Ge_w&s=09" style={{ color: "#D3D3D3" }}>Twitter</Footer.Link>
+              <Footer.Link href="https://www.facebook.com/profile.php?id=100085593338393&mibextid=ZbWKwL" style={{ color: "#D3D3D3" }}>Facebook</Footer.Link>
+              <Footer.Link href="/contact" style={{ color: "#D3D3D3" }}>Contact Us</Footer.Link>
             </Footer.LinkGroup>
           </div>
           <div>
