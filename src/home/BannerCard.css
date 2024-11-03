@@ -23,26 +23,26 @@
 }
 
 .banner .swiper-slide:nth-child(1n) {
-  background-image: url('src/assets/banner/Banner1.jpg');
+  background-image: url('banner/Banner1.jpg');
   background-size: cover;
 }
 
 .banner .swiper-slide:nth-child(2n) {
-  background-image: url('src/assets/banner/Banner2.jpg');
+  background-image: url('banner/Banner2.jpg');
   background-size: cover;
 }
 
 .banner .swiper-slide:nth-child(3n) {
-  background-image: url('src/assets/banner/Banner3.jpg');
+  background-image: url('banner/Banner3.jpg');
   background-size: cover;
 }
 
 .banner .swiper-slide:nth-child(4n) {
-  background-image: url('src/assets/banner/Banner4.jpg');
+  background-image: url('banner/Banner4.jpg');
   background-size: cover;
 }
 
 .banner .swiper-slide:nth-child(5n) {
-  background-image: url('src/assets/banner/Banner5.jpg');
+  background-image: url('banner/Banner5.jpg');
   background-size: cover;
 }
