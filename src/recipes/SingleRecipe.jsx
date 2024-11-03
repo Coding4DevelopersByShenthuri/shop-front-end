@@ -14,7 +14,8 @@ const SingleRecipe = () => {
   if (!recipe) return <div>No recipe found.</div>;
 
   return (
-    <div className="SingleRecipe bg-teal-100 p-4 rounded shadow-md">
+    <div className="page-container">
+      <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24 mt-16'>
       <h2 className="recipe-title text-2xl font-bold">{recipe.title}</h2>
       {recipe.imageUrl && (
         <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image w-full h-auto rounded mt-2" />
@@ -33,6 +34,7 @@ const SingleRecipe = () => {
           <li key={index}>{step}</li>
         ))}
       </ul>
+      </div>
     </div>
   );
 };

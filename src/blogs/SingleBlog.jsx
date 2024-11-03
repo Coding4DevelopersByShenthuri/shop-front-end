@@ -13,16 +13,18 @@ const SingleBlog = () => {
   if (!blog) return null;
 
   return (
-    <div className="single-blog bg-teal-100">
+    <div className="page-container">
+      <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24 mt-16'>
       <h2>{blog.title}</h2>
       {blog.imageUrl && <img src={blog.imageUrl} alt={blog.title} />}
       <p>{blog.content}</p>
-      <h3>Tags:xx</h3>
+      <h3>Tags:</h3>
       <ul>
         {blog.tags && blog.tags.map((tag, index) => (
           <li key={index}>{tag}</li>
         ))}
       </ul>
+    </div>
     </div>
   );
 };
