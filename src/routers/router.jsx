@@ -45,6 +45,7 @@ import ManageRecipes from "../dashboard/ManageRecipes";
 import Wishlist from '../components/Wishlist';
 import Cart from '../components/Cart';
 import ManageBlogs from "../dashboard/ManageBlogs";
+import SingleRecipe from "../recipes/SingleRecipe";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -97,6 +98,12 @@ const router = createBrowserRouter([
       {
         path: "/blogs/:id",
         element: <SingleBlog />,
+        loader: async ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/blogs/blog/${params.id}`),
+      },
+      {
+        path: "/recipes/:id",
+        element: <SingleRecipe />,
         loader: async ({ params }) =>
           fetch(`${import.meta.env.VITE_API_BASE_URL}/blogs/blog/${params.id}`),
       },

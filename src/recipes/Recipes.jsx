@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Recipes.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -8,6 +9,7 @@ const Recipes = () => {
   const [error, setError] = useState('');
   const [expandedRecipe, setExpandedRecipe] = useState(null); // State for the expanded recipe
   const [selectedCategory, setSelectedCategory] = useState('All'); // State for selected category
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -25,8 +27,8 @@ const Recipes = () => {
   }, []);
 
   // Function to handle expanding a recipe
-  const handleExpandRecipe = (recipe) => {
-    setExpandedRecipe(recipe); // Set selected recipe to display in detail view
+  const handleExpandRecipe = (recipeId) => {
+    navigate(`/recipes/${recipeId}`); // Navigate to SingleRecipe route with recipeId
   };
 
   // Filter recipes based on selected category
