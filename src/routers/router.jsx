@@ -95,7 +95,7 @@ const router = createBrowserRouter([
           fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`),
       },
       {
-        path: "/blog/:id",
+        path: "/blogs/:id",
         element: <SingleBlog />,
         loader: async ({ params }) =>
           fetch(`${import.meta.env.VITE_API_BASE_URL}/blogs/blog/${params.id}`),
