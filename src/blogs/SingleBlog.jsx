@@ -28,7 +28,7 @@ const SingleBlog = () => {
   if (!blog) return null;
 
   return (
-    <div className="single-blog">
+    <div className="single-blog bg-teal-100">
       <h2>{blog.title}</h2>
       {blog.imageUrl && <img src={blog.imageUrl} alt={blog.title} />}
       <p>{blog.content}</p>

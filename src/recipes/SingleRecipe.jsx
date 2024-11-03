@@ -28,7 +28,7 @@ const SingleRecipe = () => {
   if (!recipe) return <div>No recipe found.</div>;
 
   return (
-    <div className="SingleRecipe">
+    <div className="SingleRecipe bg-teal-100">
       <h2 className="recipe-title">{recipe.title}</h2>
       {recipe.imageUrl && (
         <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image" />
