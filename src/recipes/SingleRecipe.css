@@ -1,0 +1,38 @@
+  .loading {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #555;
+    padding: 2rem;
+  }
+  
+  .error {
+    color: red;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .recipe-title {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .recipe-image {
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .ingredients-list, .steps-list {
+    margin-top: 1rem;
+    padding-left: 1rem;
+  }
+  
+  h3 {
+    margin-top: 1.5rem;
+    color: #444;
+  }
+  
+  li {
+    line-height: 1.6;
+  }
+  
