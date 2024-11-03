@@ -32,8 +32,8 @@ const Blog = () => {
     : blogs.filter(blog => blog.category === selectedCategory);
     
 
-  const handleExpandBlog = (blogId) => {
-    navigate(`/blogs/${blogId}`); // Navigate to SingleBlog route with blogId
+  const handleExpandBlog = (obj) => {
+    navigate(`/blogs/${obj._id}`); // Navigate to SingleBlog route with blogId
   };
 
   // Loading and error states
