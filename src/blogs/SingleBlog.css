@@ -138,7 +138,7 @@
 
   .shape3-bottom-right {
     position: absolute;
-    bottom: -100%; /* Increase this value to move it down */
+    bottom: -113%; /* Increase this value to move it down */
     right: 3%;
     width: 350px;
     height: 350px;
