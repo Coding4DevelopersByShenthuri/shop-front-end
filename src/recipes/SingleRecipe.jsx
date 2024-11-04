@@ -15,25 +15,31 @@ const SingleRecipe = () => {
 
   return (
     <div className="single-recipe-page page-container">
+      <div className="shape shape2-top-left">
+      </div>
+      <div className="shape shape2-bottom-left">
+      </div>
+      <div className="shape shape2-top-right">
+      </div>
       <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24 mt-16'>
-      <h2 className="recipe-title text-2xl font-bold">{recipe.title}</h2>
-      {recipe.imageUrl && (
-        <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image w-full h-auto rounded mt-10" />
-      )}
-      <h3 className="mt-4 text-xl font-semibold">Description:</h3>
-      <p className="mb-4">{recipe.description}</p>
-      <h3 className="text-xl font-semibold">Ingredients:</h3>
-      <ul className="ingredients-list list-disc pl-5 mb-4">
-        {recipe.ingredients.map((ingredient, index) => (
-          <li key={index}>{ingredient}</li>
-        ))}
-      </ul>
-      <h3 className="text-xl font-semibold">Steps:</h3>
-      <ul className="steps-list list-decimal pl-5">
-        {recipe.steps.map((step, index) => (
-          <li key={index}>{step}</li>
-        ))}
-      </ul>
+        <h2 className="recipe-title text-2xl font-bold">{recipe.title}</h2>
+        {recipe.imageUrl && (
+          <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image w-full h-auto rounded mt-10" />
+        )}
+        <h3 className="mt-4 text-xl font-semibold">Description:</h3>
+        <p className="mb-4">{recipe.description}</p>
+        <h3 className="text-xl font-semibold">Ingredients:</h3>
+        <ul className="ingredients-list list-disc pl-5 mb-4">
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
+        </ul>
+        <h3 className="text-xl font-semibold">Steps:</h3>
+        <ul className="steps-list list-decimal pl-5">
+          {recipe.steps.map((step, index) => (
+            <li key={index}>{step}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -112,3 +112,29 @@
     width: 95%; /* Adjust width for very small screens */
   }
 }
+.shape2-top-left {
+  top: 85%;
+  left: 0;
+  width: 250px;
+  height: 250px;
+  background-image: url('../assets/Shapes/shape-4.png');
+  opacity: 0.9;
+}
+.shape2-bottom-left {
+  top: 10%;
+  right: 65%;
+  width: 350px;
+  height: 350px;
+  background-image: url('../assets/Shapes/shape-11.png');
+  opacity: 0.7;
+}
+.shape2-top-right {
+  top: 10%; /* Position from the top */
+  right: 0; /* Align to the right */
+  width: 200px; /* Width of the shape */
+  height: 200px; /* Height of the shape */
+  background-image: url('../assets/Shapes/shape-4.png'); /* Path to your shape image */
+  opacity: 0.9; /* Transparency */
+  position: absolute; /* Ensure it's positioned absolutely */
+}
+
