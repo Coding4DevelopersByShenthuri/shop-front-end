@@ -8,8 +8,8 @@
     width: 100%;
     max-width: 1200px;
     margin: 9rem auto;
-    padding: 1.5rem;
-    background: rgba(181, 188, 188, 0.2); /* Semi-transparent white */
+    padding: 2.5rem;
+    background: rgba(247, 247, 247, 0.9); /* Semi-transparent white */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(50px); /* Blur effect for glassmorphism */
