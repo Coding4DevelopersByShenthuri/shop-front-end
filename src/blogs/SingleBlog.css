@@ -138,8 +138,8 @@
 
   .shape3-bottom-right {
     position: absolute;
-    bottom: -113%; /* Increase this value to move it down */
     right: 3%;
+    bottom: 0px;
     width: 350px;
     height: 350px;
     background-image: url('../assets/Shapes/shape-11.png');
