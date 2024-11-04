@@ -11,10 +11,11 @@ const Home = () => {
   return (
     <div className='home-container'>
       <div className="shape shape-top-left"></div>
-      <div className="shape shape-top-right"></div>
-      <div className="shape shape-bottom-right"></div>
-      <div className="shape shape-top-right-opposite"></div>
       <div className="shape shape-bottom-left"></div>
+      <div className="shape shape-bottom-right"></div>
+      <div className="shape shape6-bottom-left"></div>
+      <div className="shape shape6-bottom-right"></div>
+      <div className="shape shape6-top-left"></div>
       <Banner/>
       <BestSellerProducts/>
       <FavProduct/>
