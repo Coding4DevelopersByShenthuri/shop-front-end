@@ -1,33 +1,68 @@
-/* About.css */
+/* Base styling for the About page */
 .about-background {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Full height of the viewport */
-    background-size: cover; /* Ensure the background image covers the entire area */
-    background-color: #d1f1f6; /* Background color for the About page */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-attachment: fixed; /* Make the background image fixed */
+    min-height: 100vh;
+    background-size: cover;
+    background-color: #d1f1f6;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /* Existing .about-content styles */
 .about-content {
-    flex: 1; /* This allows the content to take the available space */
-    overflow-y: auto; /* Adds a scroll if content overflows */
-    padding: 30px; /* Padding for the glass effect container */
-    border-radius: 15px; /* Rounded corners */
-    background-color: rgba(161, 149, 149, 0.2); /* Slightly transparent white background */
-    backdrop-filter: blur(20px); /* Frosted glass effect */
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Light border for glass effect */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-    margin: 0 auto; /* Center the content */
-    max-width: 1500px; /* Maximum width for the content */
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: rgba(161, 149, 149, 0.2);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 1500px;
 }
 
 /* Footer styles */
 footer {
-    margin-top: auto; /* This pushes the footer to the bottom */
-    padding: 20px; /* Adjust as needed */
-    background-color: #f8f8f8; /* Light background for the footer */
-    text-align: center; /* Center align footer text */
+    margin-top: auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+/* Responsive Design */
+
+/* Tablets and smaller screens */
+@media (max-width: 1024px) {
+    .about-content {
+        padding: 20px;
+        max-width: 90%;
+        border-radius: 10px;
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+    .about-content {
+        padding: 15px;
+        max-width: 100%;
+        border-radius: 8px;
+        margin: 10px;
+    }
+    .about-background {
+        background-attachment: scroll; /* Fix background for smoother mobile scroll */
+    }
+}
+
+@media (max-width: 480px) {
+    .about-content {
+        padding: 10px;
+        font-size: 0.9rem; /* Adjust font size for smaller screens */
+    }
+    footer {
+        padding: 15px;
+        font-size: 0.8rem; /* Adjust footer text size */
+    }
 }
