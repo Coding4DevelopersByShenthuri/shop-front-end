@@ -78,6 +78,11 @@ const Wishlist = () => {
 
     return (
         <div className="page-container">
+            <div className="shape shape5-bottom-left">
+            </div>
+
+            <div className="shape shape5-bottom-right">
+            </div>
             <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24 mt-16'>
                 <h2 className="text-4xl font-bold mb-5 mt-14 text-black font-serif">My Wishlist</h2>
     
