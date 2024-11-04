@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
+import './SingleBlog.css';
 
 const SingleBlog = () => {
   const blog = useLoaderData();
@@ -13,7 +14,7 @@ const SingleBlog = () => {
   if (!blog) return null;
 
   return (
-    <div className="page-container">
+    <div className="single-blog-page-container">
       <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24 mt-16'>
       <h2>{blog.title}</h2>
       {blog.imageUrl && <img src={blog.imageUrl} alt={blog.title} />}
