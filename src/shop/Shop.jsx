@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Card, Modal } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn,
+  faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faLeaf, faPizzaSlice, faDrum,
   faCheese, faCarrot, faHeart
 } from '@fortawesome/free-solid-svg-icons';
 import './Shop.css';
@@ -170,6 +170,18 @@ const Shop = () => {
           <button onClick={() => scrollToCategory('Meat')} className="category-icon">
             <FontAwesomeIcon icon={faFish} className="text-4xl" />
             <p>Meat</p>
+          </button>
+          <button onClick={() => scrollToCategory('Canned')} className="category-icon">
+            <FontAwesomeIcon icon={faDrum} className="text-4xl" />
+            <p>Canned</p>
+          </button>
+          <button onClick={() => scrollToCategory('leafy greens')} className="category-icon">
+            <FontAwesomeIcon icon={faLeaf} className="text-4xl" />
+            <p>leafy greens</p>
+          </button>
+          <button onClick={() => scrollToCategory('Snacks')} className="category-icon">
+            <FontAwesomeIcon icon={faPizzaSlice} className="text-4xl" />
+            <p>Snacks</p>
           </button>
         </div>
         {loading ? (
