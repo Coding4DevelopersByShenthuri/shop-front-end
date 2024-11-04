@@ -16,8 +16,8 @@ const SingleBlog = () => {
       <div className="shape shape3-bottom-left">
       </div>
 
-      {/* <div className="shape shape3-bottom-right">
-      </div> */}
+      <div className="shape shape3-bottom-right">
+      </div>
       <div className="single-blog-container">
         <h2 className="single-blog-title">{blog.title}</h2>
         {blog.imageUrl && (
