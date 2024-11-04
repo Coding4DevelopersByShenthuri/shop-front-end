@@ -1,0 +1,21 @@
+.shape4-bottom-left {
+    position: absolute;
+    top: 12%;
+    right: 3%;
+    width: 350px;
+    height: 350px;
+    background-image: url('../assets/Shapes/shape-5.png');
+    opacity: 0.3;
+    transform: rotate(89deg);
+  }
+
+  .shape4-bottom-right {
+    position: absolute;
+    bottom: -60%; /* Increase this value to move it down */
+    right: 77%;
+    width: 350px;
+    height: 350px;
+    background-image: url('../assets/Shapes/shape-5.png');
+    opacity: 0.4;
+    transform: rotate(-90deg);
+  }
