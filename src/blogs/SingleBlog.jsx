@@ -12,7 +12,7 @@ const SingleBlog = () => {
   if (!blog) return null;
 
   return (
-    <div className="single-blog-page-container">
+    <div className="single-blog-page-container page-container">
       <div className="shape shape3-bottom-left">
       </div>
 
