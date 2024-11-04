@@ -19,10 +19,10 @@
   }
 
   .shape-bottom-left {
-    top: 10%;
-    right: -3%;
-    width: 270px;
-    height: 270px;
+    top: 20%;
+    right: 0.005%;
+    width: 229px;
+    height: 229px;
     background-image: url('../assets/Shapes/shape-6.png');
     opacity: 0.5;
   }
