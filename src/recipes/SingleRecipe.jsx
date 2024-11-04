@@ -14,11 +14,11 @@ const SingleRecipe = () => {
   if (!recipe) return <div>No recipe found.</div>;
 
   return (
-    <div className="page-container">
+    <div className="single-recipe-page page-container">
       <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24 mt-16'>
       <h2 className="recipe-title text-2xl font-bold">{recipe.title}</h2>
       {recipe.imageUrl && (
-        <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image w-full h-auto rounded mt-2" />
+        <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image w-full h-auto rounded mt-10" />
       )}
       <h3 className="mt-4 text-xl font-semibold">Description:</h3>
       <p className="mb-4">{recipe.description}</p>
