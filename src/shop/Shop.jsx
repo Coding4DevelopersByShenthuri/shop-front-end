@@ -289,7 +289,7 @@ const Shop = () => {
             {/* Iterate over grouped products by category */}
             {Object.keys(groupedProducts).map((category) => (
               <>
-                {activeCategories.includes(category) &&
+                {(activeCategories.length === 0 || activeCategories.includes(category)) && (
                   <div key={category} id={category} className="my-12">
                     <h3 className='text-4xl font-semibold mb-6'>{category}</h3>
                     <div className='grid gap-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
@@ -332,10 +332,11 @@ const Shop = () => {
                       ))}
                     </div>
                   </div>
-                }
+                )}
               </>
             ))}
           </>
+
         )}
 
 
