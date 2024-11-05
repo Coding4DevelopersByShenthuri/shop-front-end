@@ -11,7 +11,7 @@ function EditProducts() {
     "Vegetables",
     "Meat",
     "Canned",
-    "Cleaning Supplies",
+    "Cleaners",
     "Snacks",
     "Frozen",
     "Grains",

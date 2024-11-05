@@ -11,18 +11,18 @@ function UploadProduct() {
     "Vegetables",
     "Meat",
     "Canned",
-    "Cleaning Supplies",
+    "Cleaners",
     "Snacks",
     "Frozen",
     "Grains",
-    "Baking Things",
+    "Bakings",
     "Spices",
     "Oils",
     "Dried",
     "Condiments",
     "Chocolates",
     "Sweets",
-    "leafy greens"
+    "Leafy"
   ];
 
   const productUnits = [

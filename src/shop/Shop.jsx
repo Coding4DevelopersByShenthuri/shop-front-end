@@ -3,7 +3,7 @@ import { Card, Modal } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faLeaf, faPizzaSlice, faDrum,
-  faCheese, faCarrot, faHeart
+  faCheese, faCarrot, faHeart, faToggleOff, faToggleOn
 } from '@fortawesome/free-solid-svg-icons';
 import './Shop.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -19,6 +19,17 @@ const Shop = () => {
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isBeverageVisible, setIsBeverageVisible] = useState(true);
+  const [isFruitsVisible, setIsFruitsVisible] = useState(true);
+  const [isDairyVisible, setIsDairyVisible] = useState(true);
+  const [isVegetablesVisible, setIsVegetablesVisible] = useState(true);
+  const [isMeatVisible, setIsMeatVisible] = useState(true);
+  const [isCannedVisible, setIsCannedVisible] = useState(true);
+  const [isCleanersVisible, setIsCleanersVisible] = useState(true);
+  const [isSnacksVisible, setIsSnacksVisible] = useState(true);
+  const [isFrozenVisible, setIsFrozenVisible] = useState(true);
+  const [isGrainsVisible, setIsGrainsVisible] = useState(true);
+  const [isLeafyVisible, setIsLeafyVisible] = useState(true);
 
 
   const { user } = useContext(AuthContext);
@@ -33,22 +44,94 @@ const Shop = () => {
       .then((data) => {
         setProducts(data);
         setFilteredProducts(data);
-        setLoading(false); // Set loading to false after products are set
+        setLoading(false); 
       });
   }, []);
 
   useEffect(() => {
-    if (!loading) { // Ensure filter only applies after loading is complete
+    if (!loading) {
+      const filtered = products.filter(product =>
+        (isBeverageVisible || product.category !== 'Beverage') &&
+        (isDairyVisible || product.category !== 'Dairy') &&
+        (isFruitsVisible || product.category !== 'Fruits') &&
+        (isVegetablesVisible || product.category !== 'Vegetables') &&
+        (isMeatVisible || product.category !== 'Meat') &&
+        (isCannedVisible || product.category !== 'Canned') &&
+        (isCleanersVisible || product.category !== 'Cleaners') &&
+        (isSnacksVisible || product.category !== 'Snacks') &&
+        (isFrozenVisible || product.category !== 'Frozen') &&
+        (isGrainsVisible || product.category !== 'Grains') &&
+        (isLeafyVisible || product.category !== 'Leafy')
+      );
+
       if (searchQuery) {
-        const filtered = products.filter(product =>
+        const searchFiltered = filtered.filter(product =>
           product.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        setFilteredProducts(filtered);
+        setFilteredProducts(searchFiltered);
       } else {
-        setFilteredProducts(products);
+        setFilteredProducts(filtered);
       }
     }
-  }, [searchQuery, products, loading]);
+  }, [searchQuery, products, loading, isBeverageVisible, isDairyVisible, isFruitsVisible, isVegetablesVisible, isMeatVisible, isCannedVisible, isCleanersVisible, isSnacksVisible, isFrozenVisible, isGrainsVisible, isLeafyVisible]);
+
+
+  const toggleBeverageVisibility = () => setIsBeverageVisible(prev => !prev);
+  const toggleDairyVisibility = () => setIsDairyVisible(prev => !prev);
+  const toggleFruitsVisibility = () => setIsFruitsVisible(prev => !prev);
+  const toggleVegetablesVisibility = () => setIsVegetablesVisible(prev => !prev);
+  const toggleMeatVisibility = () => setIsMeatVisible(prev => !prev);
+  const toggleCannedVisibility = () => setIsCannedVisible(prev => !prev);
+  const toggleCleanersVisibility = () => setIsCleanersVisible(prev => !prev);
+  const toggleSnacksVisibility = () => setIsSnacksVisible(prev => !prev);
+  const toggleFrozenVisibility = () => setIsFrozenVisible(prev => !prev);
+  const toggleGrainsVisibility = () => setIsGrainsVisible(prev => !prev);
+  const toggleLeafyVisibility = () => setIsLeafyVisible(prev => !prev);
+
+  // Toggle hideBeverage state
+  const toggleHideBeverage = () => {
+    setHideBeverage(prevHide => !prevHide);
+  };
+  // Toggle hideDairy state
+  const toggleHideDairy = () => {
+    setHideDairy(prevHide => !prevHide);
+  };
+  // Toggle hideFruits state
+  const toggleHideFruits = () => {
+    setHideFruits(prevHide => !prevHide);
+  };
+  // Toggle hideVegetables state
+  const toggleHideVegetables = () => {
+    setHideVegetables(prevHide => !prevHide);
+  };
+  // Toggle hideMeat state
+  const toggleHideMeat = () => {
+    setHideMeat(prevHide => !prevHide);
+  };
+  // Toggle hideCanned state
+  const toggleHideCanned = () => {
+    setHideCanned(prevHide => !prevHide);
+  };
+  // Toggle hideCleaners state
+  const toggleHideCleaners = () => {
+    setHideCleaners(prevHide => !prevHide);
+  };
+  // Toggle hideSnacks state
+  const toggleHideSnacks = () => {
+    setHideSnacks(prevHide => !prevHide);
+  };
+  // Toggle hideFrozen state
+  const toggleHideFrozen = () => {
+    setHideFrozen(prevHide => !prevHide);
+  };
+  // Toggle hideGrains state
+  const toggleHideGrains = () => {
+    setHideGrains(prevHide => !prevHide);
+  };
+  // Toggle hideLeafy state
+  const toggleHideLeafy = () => {
+    setHideLeafy(prevHide => !prevHide);
+  };
 
 
   const handleAddToWishlist = async (product) => {
@@ -87,7 +170,7 @@ const Shop = () => {
       ...quantities,
       [productId]: quantityValue
     });
-};
+  };
 
 
   const handleAddToCart = async (product) => {
@@ -130,58 +213,135 @@ const Shop = () => {
 
   return (
     <div className='shop-page'>
-       <div className="shape shape-top-left">
-        </div>
-        <div className="shape shape-bottom-left">
-        </div>
+      <div className="shape shape-top-left">
+      </div>
+      <div className="shape shape-bottom-left">
+      </div>
       <div className='mt-28 px-4 lg:px-24'>
         <h2 className='text-5xl font-bold text-center font-serif mb-12'>All Products are here!</h2>
 
         {/* Category Icons at the Top */}
-        <div className="flex justify-center gap-6 my-8">
+        <div className="flex justify-center gap-8 my-8">
           <button onClick={() => scrollToCategory('Beverage')} className="category-icon">
             <FontAwesomeIcon icon={faWineBottle} className="text-4xl" />
             <p>Beverage</p>
+          </button>
+          <button
+            onClick={toggleBeverageVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '260px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isBeverageVisible ? faToggleOff : faToggleOn} />
           </button>
           <button onClick={() => scrollToCategory('Dairy')} className="category-icon">
             <FontAwesomeIcon icon={faCheese} className="text-4xl" />
             <p>Dairy</p>
           </button>
+          <button
+            onClick={toggleDairyVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '360px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isDairyVisible ? faToggleOff : faToggleOn} />
+          </button>
           <button onClick={() => scrollToCategory('Grains')} className="category-icon">
             <FontAwesomeIcon icon={faWheatAwn} className="text-4xl" />
             <p>Grains</p>
+          </button>
+          <button
+            onClick={toggleGrainsVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '450px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isGrainsVisible ? faToggleOff : faToggleOn} />
           </button>
           <button onClick={() => scrollToCategory('Vegetables')} className="category-icon">
             <FontAwesomeIcon icon={faCarrot} className="text-4xl" />
             <p>Vegetables</p>
           </button>
+          <button
+            onClick={toggleVegetablesVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '555px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isVegetablesVisible ? faToggleOff : faToggleOn} />
+          </button>
           <button onClick={() => scrollToCategory('Frozen')} className="category-icon">
             <FontAwesomeIcon icon={faSnowflake} className="text-4xl" />
             <p>Frozen</p>
+          </button>
+          <button
+            onClick={toggleFrozenVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '665px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isFrozenVisible ? faToggleOff : faToggleOn} />
           </button>
           <button onClick={() => scrollToCategory('Fruits')} className="category-icon">
             <FontAwesomeIcon icon={faAppleAlt} className="text-4xl" />
             <p>Fruits</p>
           </button>
-          <button onClick={() => scrollToCategory('Cleaning Supplies')} className="category-icon">
+          <button
+            onClick={toggleFruitsVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '756px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isFruitsVisible ? faToggleOff : faToggleOn} />
+          </button>
+          <button onClick={() => scrollToCategory('Cleaners')} className="category-icon">
             <FontAwesomeIcon icon={faBroom} className="text-4xl" />
             <p>Cleaners</p>
+          </button>
+          <button
+            onClick={toggleCleanersVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '855px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isCleanersVisible ? faToggleOff : faToggleOn} />
           </button>
           <button onClick={() => scrollToCategory('Meat')} className="category-icon">
             <FontAwesomeIcon icon={faFish} className="text-4xl" />
             <p>Meat</p>
           </button>
+          <button
+            onClick={toggleMeatVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '955px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isMeatVisible ? faToggleOff : faToggleOn} />
+          </button>
           <button onClick={() => scrollToCategory('Canned')} className="category-icon">
             <FontAwesomeIcon icon={faDrum} className="text-4xl" />
             <p>Canned</p>
           </button>
-          <button onClick={() => scrollToCategory('leafy greens')} className="category-icon">
+          <button
+            onClick={toggleCannedVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '1050px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isCannedVisible ? faToggleOff : faToggleOn} />
+          </button>
+          <button onClick={() => scrollToCategory('Leafy')} className="category-icon">
             <FontAwesomeIcon icon={faLeaf} className="text-4xl" />
-            <p>leafy greens</p>
+            <p>Leafy</p>
+          </button>
+          <button
+            onClick={toggleLeafyVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '1149px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isLeafyVisible ? faToggleOff : faToggleOn} />
           </button>
           <button onClick={() => scrollToCategory('Snacks')} className="category-icon">
             <FontAwesomeIcon icon={faPizzaSlice} className="text-4xl" />
             <p>Snacks</p>
+          </button>
+          <button
+            onClick={toggleSnacksVisibility}
+            className="toggle-switch"
+            style={{ position: 'absolute', left: '1240px', top: '320px', fontSize: '25px' }}
+          >
+            <FontAwesomeIcon icon={isSnacksVisible ? faToggleOff : faToggleOn} />
           </button>
         </div>
         {loading ? (
@@ -208,6 +368,7 @@ const Shop = () => {
 
         ) : (
           <>
+
             {/* Iterate over grouped products by category */}
             {Object.keys(groupedProducts).map((category) => (
               <div key={category} id={category} className="my-12">
