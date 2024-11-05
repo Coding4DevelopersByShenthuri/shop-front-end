@@ -13,23 +13,13 @@ import { useAppCountContext } from '../services/countService';
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [modalContent, setModalContent] = useState("");
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isBeverageVisible, setIsBeverageVisible] = useState(true);
-  const [isFruitsVisible, setIsFruitsVisible] = useState(true);
-  const [isDairyVisible, setIsDairyVisible] = useState(true);
-  const [isVegetablesVisible, setIsVegetablesVisible] = useState(true);
-  const [isMeatVisible, setIsMeatVisible] = useState(true);
-  const [isCannedVisible, setIsCannedVisible] = useState(true);
-  const [isCleanersVisible, setIsCleanersVisible] = useState(true);
-  const [isSnacksVisible, setIsSnacksVisible] = useState(true);
-  const [isFrozenVisible, setIsFrozenVisible] = useState(true);
-  const [isGrainsVisible, setIsGrainsVisible] = useState(true);
-  const [isLeafyVisible, setIsLeafyVisible] = useState(true);
+  const [activeCategories, setActiveCategories] = useState([]);
+
 
 
   const { user } = useContext(AuthContext);
@@ -44,39 +34,25 @@ const Shop = () => {
       .then((data) => {
         setProducts(data);
         setFilteredProducts(data);
-        setLoading(false); 
+        setLoading(false);
       });
   }, []);
 
   useEffect(() => {
-    if (!loading) {
-      const filtered = products.filter(product =>
-        (isBeverageVisible || product.category !== 'Beverage') &&
-        (isDairyVisible || product.category !== 'Dairy') &&
-        (isFruitsVisible || product.category !== 'Fruits') &&
-        (isVegetablesVisible || product.category !== 'Vegetables') &&
-        (isMeatVisible || product.category !== 'Meat') &&
-        (isCannedVisible || product.category !== 'Canned') &&
-        (isCleanersVisible || product.category !== 'Cleaners') &&
-        (isSnacksVisible || product.category !== 'Snacks') &&
-        (isFrozenVisible || product.category !== 'Frozen') &&
-        (isGrainsVisible || product.category !== 'Grains') &&
-        (isLeafyVisible || product.category !== 'Leafy')
-      );
-
+    if (!loading) { // Ensure filter only applies after loading is complete
       if (searchQuery) {
-        const searchFiltered = filtered.filter(product =>
+        const filtered = products.filter(product =>
           product.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        setFilteredProducts(searchFiltered);
-      } else {
         setFilteredProducts(filtered);
+      } else {
+        setFilteredProducts(products);
       }
     }
-  }, [searchQuery, products, loading, isBeverageVisible, isDairyVisible, isFruitsVisible, isVegetablesVisible, isMeatVisible, isCannedVisible, isCleanersVisible, isSnacksVisible, isFrozenVisible, isGrainsVisible, isLeafyVisible]);
+  }, [searchQuery, products, loading]);
 
 
-  const [activeCategories, setActiveCategories] = useState([]);
+
 
   const toggleFilterVisibility = (category) => {
     setActiveCategories((prevCategories) =>
@@ -85,7 +61,7 @@ const Shop = () => {
         : [...prevCategories, category]
     );
   };
- 
+
 
 
   const handleAddToWishlist = async (product) => {
@@ -173,118 +149,118 @@ const Shop = () => {
       </div>
       <div className='mt-28 px-4 lg:px-24'>
         <h2 className='text-5xl font-bold text-center font-serif mb-12'>All Products are here!</h2>
-      {/* Category Icons at the Top */}
-      <div className="flex justify-center gap-8 my-8">
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Beverage')} className="category-icon">
-      <FontAwesomeIcon icon={faWineBottle} className="text-4xl" />
-      <p>Beverage</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Beverage')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isBeverageVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+        {/* Category Icons at the Top */}
+        <div className="flex justify-center gap-8 my-8">
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Beverage')} className="category-icon">
+              <FontAwesomeIcon icon={faWineBottle} className="text-4xl" />
+              <p>Beverage</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Beverage')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Beverage') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Dairy')} className="category-icon">
-      <FontAwesomeIcon icon={faCheese} className="text-4xl" />
-      <p>Dairy</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Dairy')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={!activeCategories.includes('Dairy') ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Dairy')} className="category-icon">
+              <FontAwesomeIcon icon={faCheese} className="text-4xl" />
+              <p>Dairy</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Dairy')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Dairy') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Grains')} className="category-icon">
-      <FontAwesomeIcon icon={faWheatAwn} className="text-4xl" />
-      <p>Grains</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Grains')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isGrainsVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Grains')} className="category-icon">
+              <FontAwesomeIcon icon={faWheatAwn} className="text-4xl" />
+              <p>Grains</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Grains')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Grains') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Vegetables')} className="category-icon">
-      <FontAwesomeIcon icon={faCarrot} className="text-4xl" />
-      <p>Vegetables</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Vegetables')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isVegetablesVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Vegetables')} className="category-icon">
+              <FontAwesomeIcon icon={faCarrot} className="text-4xl" />
+              <p>Vegetables</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Vegetables')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Vegetables') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Frozen')} className="category-icon">
-      <FontAwesomeIcon icon={faSnowflake} className="text-4xl" />
-      <p>Frozen</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Frozen')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isFrozenVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Frozen')} className="category-icon">
+              <FontAwesomeIcon icon={faSnowflake} className="text-4xl" />
+              <p>Frozen</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Frozen')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Frozen') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Fruits')} className="category-icon">
-      <FontAwesomeIcon icon={faAppleAlt} className="text-4xl" />
-      <p>Fruits</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Fruits')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isFruitsVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Fruits')} className="category-icon">
+              <FontAwesomeIcon icon={faAppleAlt} className="text-4xl" />
+              <p>Fruits</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Fruits')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Fruits') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Cleaners')} className="category-icon">
-      <FontAwesomeIcon icon={faBroom} className="text-4xl" />
-      <p>Cleaners</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Cleaners')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isCleanersVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Cleaners')} className="category-icon">
+              <FontAwesomeIcon icon={faBroom} className="text-4xl" />
+              <p>Cleaners</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Cleaners')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Cleaners') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Meat')} className="category-icon">
-      <FontAwesomeIcon icon={faFish} className="text-4xl" />
-      <p>Meat</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Meat')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isMeatVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Meat')} className="category-icon">
+              <FontAwesomeIcon icon={faFish} className="text-4xl" />
+              <p>Meat</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Meat')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Meat') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Canned')} className="category-icon">
-      <FontAwesomeIcon icon={faDrum} className="text-4xl" />
-      <p>Canned</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Canned')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isCannedVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Canned')} className="category-icon">
+              <FontAwesomeIcon icon={faDrum} className="text-4xl" />
+              <p>Canned</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Canned')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Canned') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Leafy')} className="category-icon">
-      <FontAwesomeIcon icon={faLeaf} className="text-4xl" />
-      <p>Leafy</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Leafy')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isLeafyVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Leafy')} className="category-icon">
+              <FontAwesomeIcon icon={faLeaf} className="text-4xl" />
+              <p>Leafy</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Leafy')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Leafy') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
 
-  <div className="flex flex-col items-center">
-    <button onClick={() => scrollToCategory('Snacks')} className="category-icon">
-      <FontAwesomeIcon icon={faPizzaSlice} className="text-4xl" />
-      <p>Snacks</p>
-    </button>
-    <button onClick={() => toggleFilterVisibility('Snacks')} className="toggle-switch" style={{ fontSize: '25px' }}>
-      <FontAwesomeIcon icon={isSnacksVisible ? faToggleOff : faToggleOn} />
-    </button>
-  </div>
-</div>
+          <div className="flex flex-col items-center">
+            <button onClick={() => scrollToCategory('Snacks')} className="category-icon">
+              <FontAwesomeIcon icon={faPizzaSlice} className="text-4xl" />
+              <p>Snacks</p>
+            </button>
+            <button onClick={() => toggleFilterVisibility('Snacks')} className="toggle-switch" style={{ fontSize: '25px' }}>
+              <FontAwesomeIcon icon={!activeCategories.includes('Snacks') ? faToggleOff : faToggleOn} />
+            </button>
+          </div>
+        </div>
 
         {loading ? (
 
