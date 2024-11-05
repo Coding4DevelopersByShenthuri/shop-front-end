@@ -20,8 +20,6 @@ const Shop = () => {
   const [loading, setLoading] = useState(true);
   const [activeCategories, setActiveCategories] = useState([]);
 
-
-
   const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,9 +49,6 @@ const Shop = () => {
     }
   }, [searchQuery, products, loading]);
 
-
-
-
   const toggleFilterVisibility = (category) => {
     setActiveCategories((prevCategories) =>
       prevCategories.includes(category)
@@ -61,8 +56,6 @@ const Shop = () => {
         : [...prevCategories, category]
     );
   };
-
-
 
   const handleAddToWishlist = async (product) => {
     if (!user) {
@@ -101,7 +94,6 @@ const Shop = () => {
       [productId]: quantityValue
     });
   };
-
 
   const handleAddToCart = async (product) => {
     const quantity = quantities[product._id] || 1; // Default to 1 if no quantity set
@@ -148,9 +140,6 @@ const Shop = () => {
       <div className="shape shape-bottom-left">
       </div>
       <div className='mt-28 px-4 lg:px-24'>
-
-
-
         <div className="text-center">
           {activeCategories.length === 0 ? (
             <>
@@ -175,9 +164,6 @@ const Shop = () => {
             </>
           )}
         </div>
-
-
-
         {/* Category Icons at the Top */}
         <div className="flex justify-center gap-8 my-8">
           <div className="flex flex-col items-center">
@@ -367,8 +353,6 @@ const Shop = () => {
           </>
 
         )}
-
-
         {/* Modal for confirmation message */}
         {showModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
