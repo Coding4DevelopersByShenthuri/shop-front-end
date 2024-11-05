@@ -33,6 +33,11 @@ const Notifications = () => {
         (category) => productQuantities[category] < 1000
     );
 
+    // Filter out categories with excess stock
+    const excessStockCategories = Object.keys(productQuantities).filter(
+        (category) => productQuantities[category] > 1000
+    );
+
     if (loading) {
         return <div className="p-4 text-center">Loading...</div>;
     }
@@ -43,8 +48,10 @@ const Notifications = () => {
 
     return (
         <div className="p-8 rounded-lg shadow-lg flex-1 overflow-auto relative z-10 glass-container">
-            <h2 className="text-2xl font-bold mb-6 text-gray-900">Low Stock Alerts</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">Stock Alerts</h2>
 
+            {/* Low Stock Alerts */}
+            <h3 className="text-xl font-semibold mb-4 text-red-700">Low Stock Alerts</h3>
             {lowStockCategories.length > 0 ? (
                 <ul className="space-y-4">
                     {lowStockCategories.map((category) => (
@@ -54,8 +61,24 @@ const Notifications = () => {
                     ))}
                 </ul>
             ) : (
-                <div className="p-4 bg-green-100 border border-green-300 text-green-700 rounded-lg">
+                <div className="p-4 bg-green-100 border border-green-300 text-green-700 rounded-lg mb-6">
                     All categories are sufficiently stocked.
+                </div>
+            )}
+
+            {/* Excess Stock Alerts */}
+            <h3 className="text-xl font-semibold mt-6 mb-4 text-green-700">Excess Stock Alerts</h3>
+            {excessStockCategories.length > 0 ? (
+                <ul className="space-y-4">
+                    {excessStockCategories.map((category) => (
+                        <li key={category} className="p-4 bg-green-100 border border-green-300 text-green-700 rounded-lg">
+                            <strong>{category}</strong> has an excess of <strong>{productQuantities[category] - 1000}</strong> units.
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <div className="p-4 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg">
+                    No categories have excess stock.
                 </div>
             )}
         </div>
