@@ -126,7 +126,7 @@
   }
   .shape3-bottom-left {
     position: absolute;
-    top: 0.025%;
+    top: 3%;
     right: 75%;
     width: 350px;
     height: 350px;
@@ -138,7 +138,7 @@
   .shape3-bottom-right {
     position: absolute;
     right: -3%;
-    bottom: 42%;
+    bottom: 35%;
     width: 350px;
     height: 350px;
     background-image: url('../assets/Shapes/shape-11.png');
