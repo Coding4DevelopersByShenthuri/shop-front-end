@@ -155,9 +155,9 @@ const Shop = () => {
             <FontAwesomeIcon icon={faCarrot} className="text-4xl" />
             <p>Vegetables</p>
           </button>
-          <button onClick={() => scrollToCategory('Frozen Foods')} className="category-icon">
+          <button onClick={() => scrollToCategory('Frozen')} className="category-icon">
             <FontAwesomeIcon icon={faSnowflake} className="text-4xl" />
-            <p>Frozen Foods</p>
+            <p>Frozen</p>
           </button>
           <button onClick={() => scrollToCategory('Fruits')} className="category-icon">
             <FontAwesomeIcon icon={faAppleAlt} className="text-4xl" />
@@ -165,7 +165,7 @@ const Shop = () => {
           </button>
           <button onClick={() => scrollToCategory('Cleaning Supplies')} className="category-icon">
             <FontAwesomeIcon icon={faBroom} className="text-4xl" />
-            <p>Cleaning Supplies</p>
+            <p>Cleaners</p>
           </button>
           <button onClick={() => scrollToCategory('Meat')} className="category-icon">
             <FontAwesomeIcon icon={faFish} className="text-4xl" />
