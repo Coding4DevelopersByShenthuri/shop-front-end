@@ -1,7 +1,7 @@
 .shape4-bottom-left {
     position: absolute;
     top: 12%;
-    right: 3%;
+    right: 10%;
     width: 300px;
     height: 300px;
     background-image: url('../assets/Shapes/shape-5.png');
@@ -11,11 +11,11 @@
 
   .shape4-bottom-right {
     position: absolute;
-    bottom: -60%; /* Increase this value to move it down */
-    right: 77%;
+    bottom: 48%; /* Increase this value to move it down */
+    right: 72%;
     width: 300px;
     height: 300px;
     background-image: url('../assets/Shapes/shape-5.png');
     opacity: 0.4;
-    transform: rotate(-90deg);
+    transform: rotate(-360deg);
   }
