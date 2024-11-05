@@ -13,9 +13,9 @@ const TaskList = ({ tasks,updateTaskStatus }) => {
           <div
             key={task._id || task.id}
             className={`border p-4 mb-4 rounded shadow mr-7
-              ${task.status === 'Completed' ? 'bg-green-100' 
-              : task.status === 'In Progress' ? 'bg-yellow-100' 
-              : 'bg-red-100'}`}
+              ${task.status === 'Completed' ? 'bg-green-300' 
+              : task.status === 'In Progress' ? 'bg-yellow-200' 
+              : 'bg-red-200'}`}
           >
             <h3 className="text-xl font-bold">{task.title || 'Untitled Task'}</h3>
             <p>{task.description || 'No description available'}</p>
