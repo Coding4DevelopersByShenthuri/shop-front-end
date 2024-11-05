@@ -148,7 +148,36 @@ const Shop = () => {
       <div className="shape shape-bottom-left">
       </div>
       <div className='mt-28 px-4 lg:px-24'>
-        <h2 className='text-5xl font-bold text-center font-serif mb-12'>All Products are here!</h2>
+
+
+
+        <div className="text-center">
+          {activeCategories.length === 0 ? (
+            <>
+              <h2 className="text-5xl font-bold font-serif">
+                All Products are here!
+              </h2>
+              <div className="min-h-[50px]"> {/* Use Tailwind utility for min-height */}
+                <p className="text-lg">
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-5xl font-bold font-serif">
+                Below Products are here!
+              </h2>
+              <div className="min-h-[50px]"> {/* Use Tailwind utility for min-height */}
+                <p className="text-lg">
+                  {activeCategories.join(', ')}
+                </p>
+              </div>
+            </>
+          )}
+        </div>
+
+
+
         {/* Category Icons at the Top */}
         <div className="flex justify-center gap-8 my-8">
           <div className="flex flex-col items-center">
