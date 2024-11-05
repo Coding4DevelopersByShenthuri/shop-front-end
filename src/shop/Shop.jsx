@@ -286,51 +286,54 @@ const Shop = () => {
 
         ) : (
           <>
-
             {/* Iterate over grouped products by category */}
             {Object.keys(groupedProducts).map((category) => (
-              <div key={category} id={category} className="my-12">
-                <h3 className='text-4xl font-semibold mb-6'>{category}</h3>
-                <div className='grid gap-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
-                  {groupedProducts[category].map((product) => (
-                    <Card key={product._id} className="w-full">
-                      <img
-                        src={product.imageURL}
-                        alt={`${product.name} cover`}
-                        className='h-80 w-full object-cover'
-                        style={{ maxHeight: '400px', objectFit: 'cover' }}
-                      />
-                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-4">
-                        {product.name}
-                      </h5>
-                      <p className="font-normal text-gray-700 dark:text-gray-400 mt-2">
-                        {product.description || "Grab Now!. Just Have a Look People"}
-                      </p>
-                      <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                        Rs {product.price}
-                      </p>
-                      <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                        Per: {product.unit}
-                      </p>
-                      <div className='flex justify-between mt-4'>
-                        <input
-                          type="number"
-                          min="1"
-                          value={quantities[product._id] || 1} // Default value
-                          onChange={(e) => handleQuantityChange(product._id, e.target.value)}
-                          className="border rounded px-2 py-1 w-16 text-center"
-                        />
-                        <button onClick={() => handleAddToCart(product)} className='bg-blue-700 font-semibold text-white py-3 px-8 rounded'>
-                          Buy Now
-                        </button>
-                        <button onClick={() => handleAddToWishlist(product)} className='text-red-500'>
-                          <FontAwesomeIcon icon={faHeart} className="text-3xl" />
-                        </button>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              </div>
+              <>
+                {activeCategories.includes(category) &&
+                  <div key={category} id={category} className="my-12">
+                    <h3 className='text-4xl font-semibold mb-6'>{category}</h3>
+                    <div className='grid gap-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
+                      {groupedProducts[category].map((product) => (
+                        <Card key={product._id} className="w-full">
+                          <img
+                            src={product.imageURL}
+                            alt={`${product.name} cover`}
+                            className='h-80 w-full object-cover'
+                            style={{ maxHeight: '400px', objectFit: 'cover' }}
+                          />
+                          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-4">
+                            {product.name}
+                          </h5>
+                          <p className="font-normal text-gray-700 dark:text-gray-400 mt-2">
+                            {product.description || "Grab Now!. Just Have a Look People"}
+                          </p>
+                          <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
+                            Rs {product.price}
+                          </p>
+                          <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
+                            Per: {product.unit}
+                          </p>
+                          <div className='flex justify-between mt-4'>
+                            <input
+                              type="number"
+                              min="1"
+                              value={quantities[product._id] || 1} // Default value
+                              onChange={(e) => handleQuantityChange(product._id, e.target.value)}
+                              className="border rounded px-2 py-1 w-16 text-center"
+                            />
+                            <button onClick={() => handleAddToCart(product)} className='bg-blue-700 font-semibold text-white py-3 px-8 rounded'>
+                              Buy Now
+                            </button>
+                            <button onClick={() => handleAddToWishlist(product)} className='text-red-500'>
+                              <FontAwesomeIcon icon={faHeart} className="text-3xl" />
+                            </button>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                }
+              </>
             ))}
           </>
         )}
