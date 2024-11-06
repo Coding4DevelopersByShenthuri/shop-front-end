@@ -97,7 +97,7 @@ const BirthdayReminders = () => {
                 {new Date(user.birthday).toLocaleDateString()} {/* Formatting date */}
               </div>
               <div className="birthday-card-message">
-              🎉 Happy Birthday! 🎂 Enjoy a 10% discount on your purchase!
+              🎉 Happy Birthday! 🎂 
               </div>
               <button
                 className="send-wish-button"
