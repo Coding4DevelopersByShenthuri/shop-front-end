@@ -16,7 +16,7 @@ const BirthdayReminders = () => {
     const fetchBirthdays = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/birthday/upcoming-birthdays`);
-        setBirthdays(response.data); // Assuming response.data contains an array of birthday customers
+        setBirthdays(response.data); 
         setLoading(false);
 
         // Set alert symbol if there are upcoming birthdays
@@ -97,7 +97,7 @@ const BirthdayReminders = () => {
                 {new Date(user.birthday).toLocaleDateString()} {/* Formatting date */}
               </div>
               <div className="birthday-card-message">
-                🎉 Happy Birthday! 🎂
+              🎉 Happy Birthday! 🎂 Enjoy a 10% discount on your purchase!
               </div>
               <button
                 className="send-wish-button"
