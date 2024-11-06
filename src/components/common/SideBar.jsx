@@ -16,6 +16,7 @@ import {
   HiOutlineCreditCard,
   HiFire,
   HiOutlineDocumentText,
+  HiUpload,
 } from "react-icons/hi";
 import {
   BarChart2,
@@ -29,7 +30,7 @@ import {
 import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, color, motion } from "framer-motion";
 import { FaBell } from 'react-icons/fa'; // Import bell icon for birthday reminders
 
 // Simulate product and birthday data (replace with API calls if needed)
@@ -67,6 +68,7 @@ const SIDEBAR_ITEMS = [
   { name: "QR Attendance", icon: HiCheckCircle, color: "#F59E0B", href: "/admin/dashboard/qrcode" },
   { name: "Manage Recipes", icon: HiFire, color: "#3B82F6", href: "/admin/dashboard/recipes"},
   { name: "Manage Blogs", icon: HiOutlineDocumentText, color: "#10B981", href: "/admin/dashboard/blogs"},
+  { name: "Uploads", icon: HiUpload, color: "#6366f1", href: "/admin/dashboard/uploads" },
   {
     name: "Birthday Reminders",
     icon: HiOutlineCake,

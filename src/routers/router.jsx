@@ -46,6 +46,7 @@ import Wishlist from '../components/Wishlist';
 import Cart from '../components/Cart';
 import ManageBlogs from "../dashboard/ManageBlogs";
 import SingleRecipe from "../recipes/SingleRecipe";
+import Uploads from "../dashboard/Uploads";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -174,6 +175,10 @@ const router = createBrowserRouter([
       {
         path: "upload",
         element: <UploadProduct />,
+      },
+      {
+       path: "uploads",
+       element: <Uploads />,
       },
       {
         path: "billing",
