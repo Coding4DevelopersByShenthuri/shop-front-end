@@ -58,10 +58,10 @@ const Uploads = () => {
   };
 
   const confirmDelete = async () => {
-    const filePath = `/delete-file/${recentFiles[fileIndexToDelete].name}`; 
+    const filePath = `{recentFiles[fileIndexToDelete].name}`; 
 
     try {
-      const response = await fetch('/delete-file', {
+      const response = await fetch('${import.meta.env.VITE_API_BASE_URL}/files/delete-file', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
