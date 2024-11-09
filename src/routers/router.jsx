@@ -47,6 +47,7 @@ import Cart from '../components/Cart';
 import ManageBlogs from "../dashboard/ManageBlogs";
 import SingleRecipe from "../recipes/SingleRecipe";
 import Uploads from "../dashboard/Uploads";
+import FaceRecognition from "../dashboard/FaceRecognition";
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -177,8 +178,12 @@ const router = createBrowserRouter([
         element: <UploadProduct />,
       },
       {
-       path: "uploads",
-       element: <Uploads />,
+        path: "uploads",
+        element: <Uploads />,
+      },
+      {
+        path: "face",
+        element: <FaceRecognition />,
       },
       {
         path: "billing",

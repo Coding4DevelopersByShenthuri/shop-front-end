@@ -34,6 +34,7 @@
     "bootstrap": "^5.3.3",
     "echarts": "^5.5.1",
     "echarts-for-react": "^3.0.2",
+    "face-api.js": "^0.20.0",
     "firebase": "^10.13.2",
     "flowbite": "^2.5.1",
     "flowbite-react": "^0.10.1",
