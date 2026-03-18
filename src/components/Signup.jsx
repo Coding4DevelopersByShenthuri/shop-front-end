@@ -1,3 +1,7 @@
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthProvider';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import googleLogo from "../assets/google-logo.svg"; 
 import { Button, Card, Label, TextInput, Badge } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faUser, faCalendar, faUserPlus } from '@fortawesome/free-solid-svg-icons';
