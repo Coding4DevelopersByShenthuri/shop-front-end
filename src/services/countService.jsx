@@ -14,7 +14,7 @@ export const AppCountProvider = ({ children }) => {
         try {
             const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/wishlists/wish-count/${userId}`);
             const data = await response.json();
-            console.log('Wishlist Count:', data);
+
             setWishlistCount(data.data.count || 0);
         } catch (error) {
             console.error("Failed to fetch wishlist count", error);
