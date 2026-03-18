@@ -13,12 +13,19 @@ import { Pagination } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 
 import { FaCartShopping } from 'react-icons/fa6';
+import { HiArrowSmRight } from 'react-icons/hi';
 
 const ProductCards = ({ headline, products }) => {
     
     return (
-    <div className='my-16 px-4 lg:px-24'>
-            <h2 className='text-5xl text-center font-bold text-black my-5'>{headline}</h2>
+    <div className='my-16 px-4 md:px-12 lg:px-24'>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+            <h2 className='text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans'>{headline}</h2>
+            <Link to="/shop" className="text-indigo-600 font-bold hover:underline flex items-center gap-2">
+                View All Products
+                <HiArrowSmRight />
+            </Link>
+        </div>
 
         {/* cards */}
         <div className='mt-12'>
@@ -48,18 +55,26 @@ const ProductCards = ({ headline, products }) => {
         {
             products.map(product => (
             <SwiperSlide key={product._id}>
-                <Link to={`/product/${product._id}`}>
-                    <div className='relative'>
-                       <img src={product.imageURL} alt="" />
-                        <div className='absolute top-3 right-3 bg-blue-600 hover:bg-black p-2 rounded'>
-                        <FaCartShopping className='w-4 h-4 text-white'/>
+                <Link to={`/product/${product._id}`} className="group block h-full">
+                    <div className='relative overflow-hidden rounded-2xl bg-slate-100 shadow-sm transition-all duration-500 group-hover:shadow-xl group-hover:shadow-indigo-100/50'>
+                        <img 
+                            src={product.imageURL} 
+                            alt={product.name} 
+                            className="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className='absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-indigo-600 p-3 rounded-xl shadow-lg transform translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
+                            <FaCartShopping className='w-5 h-5'/>
                         </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
-                    <div>
-                        <div>
-                          <h3>{product.name}</h3>
-                          <p>{product.category}</p>
-                          <p>Rs {product.price}</p>
+                    <div className='mt-5 space-y-2 px-1'>
+                        <p className='text-xs font-bold text-indigo-600 uppercase tracking-widest'>{product.category}</p>
+                        <h3 className='text-lg font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1'>{product.name}</h3>
+                        <div className="flex items-center justify-between">
+                            <p className='text-xl font-black text-slate-900'>Rs {product.price}</p>
+                            <div className="flex items-center gap-1 text-sm font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                                In Stock
+                            </div>
                         </div>
                     </div>
                 </Link>

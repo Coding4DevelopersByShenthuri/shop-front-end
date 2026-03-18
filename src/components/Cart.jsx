@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useAppCountContext } from '../services/countService';
+import { Table, Modal, Button, Badge } from 'flowbite-react';
 import './Cart.css';
 
 const Cart = () => {
@@ -105,112 +107,202 @@ const Cart = () => {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-600"></div>
+            </div>
+        );
     }
 
     return (
-        <div className="page-container">
-            <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24'>
-                <h2 className="text-4xl font-bold mb-6 mt-32 text-black font-serif">My Cart</h2>
-                {error && <p className="text-red-500 mb-4">{error}</p>}
+        <div className="min-h-screen bg-slate-50 py-20 lg:py-32">
+            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                <div className="flex items-center justify-between mb-10">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans">My Shopping Cart</h2>
+                    <Link to="/shop" className="text-indigo-600 font-bold hover:underline flex items-center gap-2">
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                        Continue Shopping
+                    </Link>
+                </div>
+
+                {error && (
+                    <div className="bg-rose-50 border-l-4 border-rose-500 p-4 mb-8 rounded-r-lg shadow-sm">
+                        <p className="text-rose-700 font-bold">{error}</p>
+                    </div>
+                )}
 
                 {cartItems.length > 0 ? (
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full border border-gray-400">
-                            <thead className="bg-teal-500">
-                                <tr>
-                                    <th className="border px-4 py-2">Image</th>
-                                    <th className="border px-4 py-2">Name</th>
-                                    <th className="border px-4 py-2">Count</th>
-                                    <th className="border px-4 py-2">Price per Unit</th>
-                                    <th className="border px-4 py-2">Total Price</th>
-                                    <th className="border px-4 py-2">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {cartItems.map((item) => (
-                                    <tr key={item._id}>
-                                        <td className="border px-4 py-2">
-                                            <img src={item.productId.imageURL} alt={item.productId.name} className="w-16 h-16 object-cover" />
-                                        </td>
-                                        <td className="border px-4 py-2">{item.productId.name}</td>
-                                        <td className="border px-4 py-2">{item.quantity || 1}</td>
-                                        <td className="border px-4 py-2">Rs {item.productId.price}</td>
-                                        <td className="border px-4 py-2">Rs {item.productId.price * (item.quantity || 1)}</td>
-                                        <td className="border px-4 py-2">
-                                            <Link
-                                                to={`/product/${item.productId._id}`}
-                                                className="inline-block text-blue-500 hover:underline">
-                                                View Details
-                                            </Link>
-                                            <button
-                                                onClick={() => confirmRemoveItem(item._id)}
-                                                className="ml-2 text-red-500 hover:underline flex items-center"
-                                                style={{ marginLeft: 'auto', marginTop: '-20px' }}> {/* Adjust the negative margin to move it further up */}
-                                                <FontAwesomeIcon icon={faTrash} className="mr-0.25" /> {/* Reduce right margin if needed */}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        {/* Display Total Price */}
-                        <div className="mt-6 text-right">
-                            <p className="text-xl font-bold">Total: Rs {calculateTotalPrice()}</p>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                        {/* Cart Items List */}
+                        <div className="lg:col-span-2 space-y-6">
+                            <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                                <div className="hidden md:block">
+                                    <Table hoverable className="min-w-full">
+                                        <Table.Head className="bg-slate-50 border-b border-slate-100">
+                                            <Table.HeadCell className="py-5 px-6">Product</Table.HeadCell>
+                                            <Table.HeadCell className="py-5 text-center">Qty</Table.HeadCell>
+                                            <Table.HeadCell className="py-5">Price</Table.HeadCell>
+                                            <Table.HeadCell className="py-5">Total</Table.HeadCell>
+                                            <Table.HeadCell className="py-5 text-center">Remove</Table.HeadCell>
+                                        </Table.Head>
+                                        <Table.Body className="divide-y divide-slate-100">
+                                            {cartItems.map((item) => (
+                                                <Table.Row key={item._id} className="bg-white hover:bg-slate-50/50 transition-colors">
+                                                    <Table.Cell className="py-6 px-6">
+                                                        <div className="flex items-center gap-6">
+                                                            <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shrink-0">
+                                                                <img src={item.productId.imageURL} alt={item.productId.name} className="w-full h-full object-cover" />
+                                                            </div>
+                                                            <div>
+                                                                <Link to={`/product/${item.productId._id}`} className="text-lg font-extrabold text-slate-900 hover:text-indigo-600 transition-colors">
+                                                                    {item.productId.name}
+                                                                </Link>
+                                                                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">{item.productId.category}</p>
+                                                            </div>
+                                                        </div>
+                                                    </Table.Cell>
+                                                    <Table.Cell className="text-center font-bold text-slate-700">
+                                                        {item.quantity || 1}
+                                                    </Table.Cell>
+                                                    <Table.Cell className="font-semibold text-slate-600">
+                                                        Rs {item.productId.price}
+                                                    </Table.Cell>
+                                                    <Table.Cell className="font-black text-slate-900 text-lg">
+                                                        Rs {item.productId.price * (item.quantity || 1)}
+                                                    </Table.Cell>
+                                                    <Table.Cell className="text-center">
+                                                        <button
+                                                            onClick={() => confirmRemoveItem(item._id)}
+                                                            className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-3 rounded-2xl transition-all active:scale-90"
+                                                        >
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        </button>
+                                                    </Table.Cell>
+                                                </Table.Row>
+                                            ))}
+                                        </Table.Body>
+                                    </Table>
+                                </div>
+
+                                {/* Mobile List Layout */}
+                                <div className="md:hidden divide-y divide-slate-100">
+                                    {cartItems.map((item) => (
+                                        <div key={item._id} className="p-6 flex gap-4">
+                                            <div className="w-24 h-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0">
+                                                <img src={item.productId.imageURL} alt={item.productId.name} className="w-full h-full object-cover" />
+                                            </div>
+                                            <div className="flex-1 space-y-2">
+                                                <Link to={`/product/${item.productId._id}`} className="text-lg font-extrabold text-slate-900">
+                                                    {item.productId.name}
+                                                </Link>
+                                                <div className="flex justify-between items-center">
+                                                    <p className="font-bold text-slate-500">{item.quantity || 1} x Rs {item.productId.price}</p>
+                                                    <p className="font-black text-indigo-600">Rs {item.productId.price * (item.quantity || 1)}</p>
+                                                </div>
+                                                <button
+                                                    onClick={() => confirmRemoveItem(item._id)}
+                                                    className="w-full py-2 bg-rose-50 text-rose-600 rounded-xl font-bold flex items-center justify-center gap-2"
+                                                >
+                                                    <FontAwesomeIcon icon={faTrash} />
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={confirmClearCart}
+                                className="px-8 py-3 bg-white text-rose-600 border-2 border-rose-50 rounded-2xl font-bold hover:bg-rose-50 transition-all active:scale-95 shadow-lg shadow-rose-100/20"
+                            >
+                                Clear All Items
+                            </button>
                         </div>
-                        <button
-                            onClick={confirmClearCart}
-                            className="mt-2 px-5 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                            style={{ marginTop: '-10px', marginLeft: '100px' }} 
-                        >
-                            Clear Cart
-                        </button>
+
+                        {/* Order Summary Checkout */}
+                        <div className="lg:col-span-1">
+                            <div className="bg-white p-8 rounded-[2rem] shadow-2xl shadow-indigo-100/50 border border-indigo-50 sticky top-32">
+                                <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight">Order Summary</h3>
+                                <div className="space-y-4 mb-8">
+                                    <div className="flex justify-between text-slate-500 font-medium">
+                                        <span>Subtotal ({cartItems.length} items)</span>
+                                        <span className="text-slate-900">Rs {calculateTotalPrice()}</span>
+                                    </div>
+                                    <div className="flex justify-between text-slate-500 font-medium">
+                                        <span>Shipping</span>
+                                        <span className="text-emerald-500 font-bold">FREE</span>
+                                    </div>
+                                    <div className="h-px bg-slate-100 my-4"></div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-xl font-bold text-slate-900">Total Amount</span>
+                                        <span className="text-3xl font-black text-indigo-600">Rs {calculateTotalPrice()}</span>
+                                    </div>
+                                </div>
+                                <button className="w-full bg-indigo-600 text-white py-5 rounded-[1.25rem] text-lg font-black hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200 active:scale-95">
+                                    Proceed to Checkout
+                                </button>
+                                <p className="text-center text-xs text-slate-400 mt-6 font-bold tracking-widest uppercase">
+                                    Secure SSL Checkout
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 ) : (
-                    <p className="text-gray-600">Your cart is currently empty.</p>
+                    <div className="bg-white p-20 rounded-[3rem] shadow-xl shadow-slate-100 border border-slate-50 text-center">
+                        <div className="w-32 h-32 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8">
+                            <FontAwesomeIcon icon={faTrash} className="text-slat-200 text-4xl" />
+                        </div>
+                        <h3 className="text-3xl font-extrabold text-slate-900 mb-4">Your cart is empty</h3>
+                        <p className="text-slate-500 text-lg mb-10 max-w-sm mx-auto">Looks like you haven't added anything to your cart yet.</p>
+                        <Link to="/shop">
+                            <Button size="xl" pill className="bg-indigo-600 hover:bg-indigo-700 shadow-indigo-200 shadow-lg px-8 py-2 mx-auto">
+                                Start Shopping
+                            </Button>
+                        </Link>
+                    </div>
                 )}
 
-                {/* Modal for Confirm Item Removal */}
-                {showRemoveModal && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-6 rounded shadow-lg text-center max-w-sm mx-auto">
-                            <p className="text-lg font-semibold mb-4">Are you sure you want to remove this item?</p>
-                            <div className="flex justify-center space-x-4">
-                                <button
-                                    onClick={handleRemoveItem}
-                                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                {/* Modals using Flowbite React */}
+                <Modal show={showRemoveModal} onClose={() => setShowRemoveModal(false)} size="md" popup>
+                    <Modal.Header />
+                    <Modal.Body>
+                        <div className="text-center">
+                            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-rose-500" />
+                            <h3 className="mb-5 text-lg font-bold text-slate-900">
+                                Are you sure you want to remove this item?
+                            </h3>
+                            <div className="flex justify-center gap-4">
+                                <Button color="failure" onClick={handleRemoveItem} className="font-bold">
                                     Yes, Remove
-                                </button>
-                                <button
-                                    onClick={() => setShowRemoveModal(false)}
-                                    className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-                                    Cancel
-                                </button>
+                                </Button>
+                                <Button color="gray" onClick={() => setShowRemoveModal(false)} className="font-bold">
+                                    No, cancel
+                                </Button>
                             </div>
                         </div>
-                    </div>
-                )}
+                    </Modal.Body>
+                </Modal>
 
-                {/* Modal for Confirm Clear Cart */}
-                {showClearModal && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-6 rounded shadow-lg text-center max-w-sm mx-auto">
-                            <p className="text-lg font-semibold mb-4">Are you sure you want to clear your cart?</p>
-                            <div className="flex justify-center space-x-4">
-                                <button
-                                    onClick={handleClearCart}
-                                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-                                    Yes, Clear Cart
-                                </button>
-                                <button
-                                    onClick={() => setShowClearModal(false)}
-                                    className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-                                    Cancel
-                                </button>
+                <Modal show={showClearModal} onClose={() => setShowClearModal(false)} size="md" popup>
+                    <Modal.Header />
+                    <Modal.Body>
+                        <div className="text-center">
+                            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-rose-500" />
+                            <h3 className="mb-5 text-lg font-bold text-slate-900">
+                                Are you sure you want to clear your entire cart?
+                            </h3>
+                            <div className="flex justify-center gap-4">
+                                <Button color="failure" onClick={handleClearCart} className="font-bold">
+                                    Yes, Clear Everything
+                                </Button>
+                                <Button color="gray" onClick={() => setShowClearModal(false)} className="font-bold">
+                                    No, cancel
+                                </Button>
                             </div>
                         </div>
-                    </div>
-                )}
+                    </Modal.Body>
+                </Modal>
             </div>
         </div>
     );

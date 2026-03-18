@@ -172,19 +172,42 @@ const Navbar = () => {
                 </div>
 
                 {/* Nav items for small devices */}
-                <div className={`space-y-4 px-4 mt-16 py-7 bg-blue-700 ${isMenuOpen ? 'block fixed top-0 right-0 left-0' : 'hidden'}`}>
+                <div className={`space-y-4 px-8 mt-20 py-10 bg-slate-900/95 backdrop-blur-xl border-l border-white/10 ${isMenuOpen ? 'fixed top-0 right-0 bottom-0 w-80 shadow-2xl transition-all duration-500 transform translate-x-0' : 'fixed top-0 right-0 bottom-0 w-80 transition-all duration-500 transform translate-x-full'}`}>
+                    <div className="flex justify-end mb-8">
+                         <button onClick={() => setIsMenuOpen(false)} className="text-white/50 hover:text-white transition-colors">
+                            <FaXmark className="h-8 w-8" />
+                         </button>
+                    </div>
                     {navItems.map(({ link, path }) => (
-                        <Link key={path} to={path} onClick={() => setIsMenuOpen(false)} className='block text-base text-white uppercase font-bold cursor-pointer'>
+                        <Link key={path} to={path} onClick={() => setIsMenuOpen(false)} className='block text-lg text-white/70 hover:text-white uppercase font-black tracking-widest cursor-pointer transition-all hover:translate-x-2'>
                             {link}
                         </Link>
                     ))}
 
-                    {/* Sign Up button for mobile devices */}
-                    <Link
-                        to='/sign-up'
-                        className='block text-base text-white uppercase font-bold cursor-pointer bg-blue-600 px-4 py-2 rounded'>
-                        Sign Up
-                    </Link>
+                    <div className="pt-8 border-t border-white/10 mt-8 space-y-4">
+                        {!user ? (
+                            <>
+                                <Link
+                                    to='/sign-up'
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className='block text-center py-4 text-white bg-indigo-600 rounded-2xl font-black uppercase tracking-widest'>
+                                    Sign Up
+                                </Link>
+                                <Link
+                                    to='/login'
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className='block text-center py-4 text-white border-2 border-white/10 rounded-2xl font-black uppercase tracking-widest hover:bg-white/5'>
+                                    Login
+                                </Link>
+                            </>
+                        ) : (
+                            <button
+                                onClick={() => { logOut(); setIsMenuOpen(false); }}
+                                className='w-full text-center py-4 text-white bg-rose-600 rounded-2xl font-black uppercase tracking-widest'>
+                                Logout
+                            </button>
+                        )}
+                    </div>
                 </div>
             </nav>
         </header>

@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Card, Modal } from 'flowbite-react';
+import { Card, Modal, Button, Badge, Spinner } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faLeaf, faPizzaSlice, faDrum,
-  faCheese, faCarrot, faHeart, faToggleOff, faToggleOn
+  faCheese, faCarrot, faHeart, faCartPlus, faEye, faFilter, faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import './Shop.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
 import { useAppCountContext } from '../services/countService';
+import { HiOutlineExclamationCircle, HiOutlineShoppingBag } from 'react-icons/hi';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
-  const [modalContent, setModalContent] = useState("");
-  const [message, setMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeCategories, setActiveCategories] = useState([]);
@@ -25,6 +26,20 @@ const Shop = () => {
   const navigate = useNavigate();
   const { updateWishlistCount, updateCartCount } = useAppCountContext();
   const searchQuery = new URLSearchParams(location.search).get('search') || '';
+
+  const categories = [
+    { name: 'Beverage', icon: faWineBottle, color: 'text-amber-600', bg: 'bg-amber-50' },
+    { name: 'Dairy', icon: faCheese, color: 'text-yellow-600', bg: 'bg-yellow-50' },
+    { name: 'Grains', icon: faWheatAwn, color: 'text-orange-600', bg: 'bg-orange-50' },
+    { name: 'Vegetables', icon: faCarrot, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    { name: 'Frozen', icon: faSnowflake, color: 'text-cyan-600', bg: 'bg-cyan-50' },
+    { name: 'Fruits', icon: faAppleAlt, color: 'text-rose-600', bg: 'bg-rose-50' },
+    { name: 'Cleaners', icon: faBroom, color: 'text-slate-600', bg: 'bg-slate-50' },
+    { name: 'Meat', icon: faFish, color: 'text-red-600', bg: 'bg-red-50' },
+    { name: 'Canned', icon: faDrum, color: 'text-brown-600', bg: 'bg-stone-50' },
+    { name: 'Leafy', icon: faLeaf, color: 'text-green-600', bg: 'bg-green-50' },
+    { name: 'Snacks', icon: faPizzaSlice, color: 'text-orange-500', bg: 'bg-orange-50' },
+  ];
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`)
@@ -37,25 +52,29 @@ const Shop = () => {
   }, []);
 
   useEffect(() => {
-    if (!loading) { // Ensure filter only applies after loading is complete
+    if (!loading) {
+      let filtered = products;
       if (searchQuery) {
-        const filtered = products.filter(product =>
+        filtered = filtered.filter(product =>
           product.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        setFilteredProducts(filtered);
-      } else {
-        setFilteredProducts(products);
       }
+      if (activeCategories.length > 0) {
+        filtered = filtered.filter(product => activeCategories.includes(product.category));
+      }
+      setFilteredProducts(filtered);
     }
-  }, [searchQuery, products, loading]);
+  }, [searchQuery, products, loading, activeCategories]);
 
-  const toggleFilterVisibility = (category) => {
-    setActiveCategories((prevCategories) =>
-      prevCategories.includes(category)
-        ? prevCategories.filter((cat) => cat !== category)
-        : [...prevCategories, category]
+  const toggleCategory = (categoryName) => {
+    setActiveCategories(prev =>
+      prev.includes(categoryName)
+        ? prev.filter(c => c !== categoryName)
+        : [...prev, categoryName]
     );
   };
+
+  const clearFilters = () => setActiveCategories([]);
 
   const handleAddToWishlist = async (product) => {
     if (!user) {
@@ -72,31 +91,32 @@ const Shop = () => {
       });
       if (response.ok) {
         updateWishlistCount(user.userDetails[0]?._id);
-        setModalContent(`Added ${product.name} to your wishlist!`);
+        setModalTitle("Success!");
+        setModalMessage(`Added "${product.name}" to your wishlist.`);
         setShowModal(true);
-        setTimeout(() => setShowModal(false), 2000);
       } else {
-        setMessage('Failed to add product to wishlist.');
+        setModalTitle("Oops!");
+        setModalMessage('Failed to add product to wishlist. Please try again.');
         setShowModal(true);
-        setTimeout(() => setShowModal(false), 2000);
       }
     } catch (error) {
-      setMessage('An error occurred while adding to wishlist.');
+      setModalTitle("Error");
+      setModalMessage('Something went wrong. Please check your connection.');
       setShowModal(true);
-      setTimeout(() => setShowModal(false), 2000);
     }
   };
 
   const handleQuantityChange = (productId, value) => {
-    const quantityValue = Math.max(1, value); // Ensure minimum quantity is 1
-    setQuantities({
-      ...quantities,
-      [productId]: quantityValue
-    });
+    const quantityValue = Math.max(1, parseInt(value) || 1);
+    setQuantities({ ...quantities, [productId]: quantityValue });
   };
 
   const handleAddToCart = async (product) => {
-    const quantity = quantities[product._id] || 1; // Default to 1 if no quantity set
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    const quantity = quantities[product._id] || 1;
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/carts/add-cart`, {
         method: 'POST',
@@ -107,257 +127,203 @@ const Shop = () => {
       });
       if (response.ok) {
         updateCartCount(user.userDetails[0]?._id);
-        setModalContent(`${product.name} x ${quantity} added to cart.`);
+        setModalTitle("Cart Updated");
+        setModalMessage(`${quantity} x "${product.name}" added to your shopping bag.`);
         setShowModal(true);
-        setTimeout(() => setShowModal(false), 2000); // Hide modal after 2 seconds
       } else {
-        setMessage('Failed to add product to cart.');
+        setModalTitle("Failed");
+        setModalMessage('Could not add item to cart. Try again later.');
+        setShowModal(true);
       }
     } catch (error) {
-      setMessage('An error occurred while adding to cart.');
+      setModalTitle("Error");
+      setModalMessage('A network error occurred while adding to cart.');
+      setShowModal(true);
     }
   };
 
-  // Group products by category
   const groupedProducts = filteredProducts.reduce((acc, product) => {
     const category = product.category || "Uncategorized";
-    if (!acc[category]) {
-      acc[category] = [];
-    }
+    if (!acc[category]) acc[category] = [];
     acc[category].push(product);
     return acc;
   }, {});
 
-  // Scroll to the category section
-  const scrollToCategory = (category) => {
-    document.getElementById(category)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+        <Spinner size="xl" className="mb-4" />
+        <p className="text-slate-500 font-medium animate-pulse">Curating premium products for you...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className='shop-page'>
-      <div className='mt-28 px-4 lg:px-24'>
-        <div className="text-center">
-          {activeCategories.length === 0 ? (
-            <>
-              <h2 className="text-5xl font-bold font-serif">
-                All Products are here!
-              </h2>
-              <div className="min-h-[50px]"> {/* Use Tailwind utility for min-height */}
-                <p className="text-lg">
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <h2 className="text-5xl font-bold font-serif">
-                Below Products are here!
-              </h2>
-              <div className="min-h-[50px]"> {/* Use Tailwind utility for min-height */}
-                <p className="text-lg">
-                  {activeCategories.join(', ')}
-                </p>
-              </div>
-            </>
+    <div className='min-h-screen bg-slate-50'>
+      {/* Header Section */}
+      <div className="bg-white pt-28 pb-12 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4">
+            <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter font-sans">
+              Modern <span className="text-indigo-600">Grocery</span> Shopping
+            </h1>
+            <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">
+              Discover the freshest ingredients and daily essentials curated for your world-class lifestyle.
+            </p>
+          </div>
+
+          {/* Search Summary if any */}
+          {searchQuery && (
+            <div className="mt-8 text-center">
+              <Badge color="info" size="xl" className="px-6 py-2 rounded-full inline-flex items-center gap-2">
+                <FontAwesomeIcon icon={faSearch} />
+                Showing results for: "{searchQuery}"
+              </Badge>
+            </div>
           )}
         </div>
-        {/* Category Icons at the Top */}
-        <div className="flex justify-center gap-8 my-8">
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Beverage')} className="category-icon">
-              <FontAwesomeIcon icon={faWineBottle} className="text-4xl" />
-              <p>Beverage</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Beverage')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Beverage') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
+      </div>
 
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Dairy')} className="category-icon">
-              <FontAwesomeIcon icon={faCheese} className="text-4xl" />
-              <p>Dairy</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Dairy')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Dairy') ? faToggleOff : faToggleOn} />
-            </button>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Category Filter Desktop/Mobile */}
+        <div className="mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-black text-slate-900 flex items-center gap-3">
+              <FontAwesomeIcon icon={faFilter} className="text-indigo-600" />
+              Browse by Category
+            </h2>
+            {activeCategories.length > 0 && (
+              <button onClick={clearFilters} className="text-indigo-600 font-bold hover:underline transition-all">
+                Clear All Filters
+              </button>
+            )}
           </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Grains')} className="category-icon">
-              <FontAwesomeIcon icon={faWheatAwn} className="text-4xl" />
-              <p>Grains</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Grains')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Grains') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Vegetables')} className="category-icon">
-              <FontAwesomeIcon icon={faCarrot} className="text-4xl" />
-              <p>Vegetables</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Vegetables')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Vegetables') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Frozen')} className="category-icon">
-              <FontAwesomeIcon icon={faSnowflake} className="text-4xl" />
-              <p>Frozen</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Frozen')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Frozen') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Fruits')} className="category-icon">
-              <FontAwesomeIcon icon={faAppleAlt} className="text-4xl" />
-              <p>Fruits</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Fruits')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Fruits') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Cleaners')} className="category-icon">
-              <FontAwesomeIcon icon={faBroom} className="text-4xl" />
-              <p>Cleaners</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Cleaners')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Cleaners') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Meat')} className="category-icon">
-              <FontAwesomeIcon icon={faFish} className="text-4xl" />
-              <p>Meat</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Meat')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Meat') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Canned')} className="category-icon">
-              <FontAwesomeIcon icon={faDrum} className="text-4xl" />
-              <p>Canned</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Canned')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Canned') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Leafy')} className="category-icon">
-              <FontAwesomeIcon icon={faLeaf} className="text-4xl" />
-              <p>Leafy</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Leafy')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Leafy') ? faToggleOff : faToggleOn} />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <button onClick={() => scrollToCategory('Snacks')} className="category-icon">
-              <FontAwesomeIcon icon={faPizzaSlice} className="text-4xl" />
-              <p>Snacks</p>
-            </button>
-            <button onClick={() => toggleFilterVisibility('Snacks')} className="toggle-switch" style={{ fontSize: '25px' }}>
-              <FontAwesomeIcon icon={!activeCategories.includes('Snacks') ? faToggleOff : faToggleOn} />
-            </button>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-4">
+            {categories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => toggleCategory(cat.name)}
+                className={`flex flex-col items-center p-4 rounded-3xl transition-all duration-300 border-2 ${
+                  activeCategories.includes(cat.name) 
+                    ? 'border-indigo-600 bg-indigo-50 shadow-lg shadow-indigo-100 -translate-y-1' 
+                    : 'border-transparent bg-white hover:border-indigo-200 hover:shadow-md'
+                }`}
+              >
+                <div className={`w-12 h-12 flex items-center justify-center rounded-2xl mb-3 ${cat.bg} ${cat.color}`}>
+                  <FontAwesomeIcon icon={cat.icon} className="text-2xl" />
+                </div>
+                <span className={`text-xs font-black uppercase tracking-widest ${activeCategories.includes(cat.name) ? 'text-indigo-600' : 'text-slate-600'}`}>
+                  {cat.name}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
 
-        {loading ? (
+        {/* Product Grid */}
+        <div className="space-y-20">
+          {Object.keys(groupedProducts).length > 0 ? (
+            Object.keys(groupedProducts).map((category) => (
+              <div key={category} id={category} className="space-y-8 animate-fade-in">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-3xl font-black text-slate-900 font-sans tracking-tight">{category}</h3>
+                  <div className="h-1 flex-1 bg-slate-200 rounded-full"></div>
+                  <Badge color="gray" size="sm" className="px-3 py-1 font-bold">{groupedProducts[category].length} Items</Badge>
+                </div>
 
-          <div className="flex items-center justify-center h-screen" role="status">
-            <svg
-              aria-hidden="true"
-              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-              viewBox="0 0 100 101"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="currentColor"
-              />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentFill"
-              />
-            </svg>
-            <span className="sr-only">Loading...</span>
-          </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                  {groupedProducts[category].map((product) => (
+                    <div key={product._id} className="group bg-white rounded-[2.5rem] p-4 border border-slate-100 shadow-xl shadow-slate-200/40 transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-100 hover:-translate-y-2">
+                       <div className="relative aspect-square rounded-[2rem] overflow-hidden mb-6">
+                        <img 
+                          src={product.imageURL} 
+                          alt={product.name} 
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+                        />
+                        <button 
+                          onClick={() => handleAddToWishlist(product)}
+                          className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-2xl text-slate-400 hover:text-rose-500 hover:scale-110 transition-all shadow-lg"
+                        >
+                          <FontAwesomeIcon icon={faHeart} className={activeCategories.includes(category) ? 'text-rose-500' : ''} />
+                        </button>
+                        <Link 
+                          to={`/product/${product._id}`}
+                          className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-2xl text-slate-900 font-black text-sm text-center transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
+                        >
+                          View Details
+                        </Link>
+                      </div>
 
-        ) : (
-          <>
-            {/* Iterate over grouped products by category */}
-            {Object.keys(groupedProducts).map((category) => (
-              <>
-                {(activeCategories.length === 0 || activeCategories.includes(category)) && (
-                  <div key={category} id={category} className="my-12">
-                    <h3 className='text-4xl font-semibold mb-6'>{category}</h3>
-                    <div className='grid gap-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
-                      {groupedProducts[category].map((product) => (
-                        <Card key={product._id} className="w-full">
-                          <img
-                            src={product.imageURL}
-                            alt={`${product.name} cover`}
-                            className='h-80 w-full object-cover'
-                            style={{ maxHeight: '400px', objectFit: 'cover' }}
-                          />
-                          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-4">
-                            {product.name}
-                          </h5>
-                          <p className="font-normal text-gray-700 dark:text-gray-400 mt-2">
-                            {product.description || "Grab Now!. Just Have a Look People"}
+                      <div className="px-2 space-y-4">
+                        <div>
+                          <Badge color="indigo" size="xs" className="mb-2 w-fit px-2 py-0.5 rounded-lg opacity-80">{product.unit || 'Each'}</Badge>
+                          <h4 className="text-xl font-extrabold text-slate-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">{product.name}</h4>
+                          <p className="text-slate-400 text-sm font-medium mt-1 line-clamp-1 italic">
+                            {product.description || "Premium quality guaranteed."}
                           </p>
-                          <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                            Rs {product.price}
-                          </p>
-                          <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                            Per: {product.unit}
-                          </p>
-                          <div className='flex justify-between mt-4'>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2">
+                          <span className="text-2xl font-black text-slate-900">Rs {product.price}</span>
+                          <div className="flex items-center gap-3">
                             <input
                               type="number"
                               min="1"
-                              value={quantities[product._id] || 1} // Default value
+                              value={quantities[product._id] || 1}
                               onChange={(e) => handleQuantityChange(product._id, e.target.value)}
-                              className="border rounded px-2 py-1 w-16 text-center"
+                              className="w-14 h-12 border-none bg-slate-50 rounded-2xl text-center font-bold text-slate-900 focus:ring-2 focus:ring-indigo-600 transition-all"
                             />
-                            <button onClick={() => handleAddToCart(product)} className='bg-blue-700 font-semibold text-white py-3 px-8 rounded'>
-                              Buy Now
-                            </button>
-                            <button onClick={() => handleAddToWishlist(product)} className='text-red-500'>
-                              <FontAwesomeIcon icon={faHeart} className="text-3xl" />
+                            <button 
+                              onClick={() => handleAddToCart(product)}
+                              className="bg-indigo-600 text-white p-3.5 rounded-2xl hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95"
+                            >
+                              <FontAwesomeIcon icon={faCartPlus} className="text-lg" />
                             </button>
                           </div>
-                        </Card>
-                      ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </>
-            ))}
-          </>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="py-32 text-center bg-white rounded-[4rem] shadow-xl border border-slate-50">
+              <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FontAwesomeIcon icon={faSearch} className="text-slate-300 text-4xl" />
+              </div>
+              <h3 className="text-3xl font-black text-slate-900 mb-2">No products found</h3>
+              <p className="text-slate-500 font-medium mb-8">We couldn't find anything matching your search or filters.</p>
+              <Button onClick={clearFilters} color="indigo" pill size="xl" className="px-8 font-black mx-auto">
+                Explore All Products
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
 
-        )}
-        {/* Modal for confirmation message */}
-        {showModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
-              <p className="text-lg font-semibold text-gray-800">{modalContent}</p>
+      {/* Success Modal */}
+      <Modal show={showModal} onClose={() => setShowModal(false)} size="md" popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center p-6">
+            <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <HiOutlineShoppingBag className="w-10 h-10" />
+            </div>
+            <h3 className="text-2xl font-black text-slate-900 mb-2">{modalTitle}</h3>
+            <p className="text-slate-500 font-medium mb-10">{modalMessage}</p>
+            <div className="grid grid-cols-2 gap-4">
+              <Button color="indigo" onClick={() => setShowModal(false)} className="rounded-2xl font-bold">
+                Continue
+              </Button>
+              <Button color="gray" onClick={() => navigate('/cart')} className="rounded-2xl font-bold">
+                View Cart
+              </Button>
             </div>
           </div>
-        )}
-      </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

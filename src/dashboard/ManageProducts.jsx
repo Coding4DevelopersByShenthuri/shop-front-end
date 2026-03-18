@@ -59,64 +59,94 @@ const ManageProducts = () => {
   };
 
   if (loading) {
-    return <p>Loading products...</p>;
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+      </div>
+    );
   }
 
   return (
-    <div className='px-4 my-12'>
-      <h2 className='mb-8 text-3xl font-bold'>Manage Your Products</h2>
+    <div className='py-8'>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <h2 className='text-3xl font-extrabold text-slate-900 tracking-tight font-sans'>Manage Products</h2>
+        <Link 
+          to="/admin/dashboard/upload" 
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-md active:scale-95"
+        >
+          Add New Product
+        </Link>
+      </div>
+
       {allProducts.length === 0 ? (
-        <p>No products available.</p>
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+          <p className="text-gray-500 text-lg">No products available in the inventory.</p>
+        </div>
       ) : (
-        <Table className='lg:w-[1180px]'>
-          <Table.Head>
-            <Table.HeadCell>No.</Table.HeadCell>
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Category</Table.HeadCell>
-            <Table.HeadCell>Quantity</Table.HeadCell>
-            <Table.HeadCell>Unit</Table.HeadCell>
-            <Table.HeadCell>Price</Table.HeadCell>
-            <Table.HeadCell>Actions</Table.HeadCell>
-            <Table.HeadCell>QR Code</Table.HeadCell>
-          </Table.Head>
-          {allProducts.map((product, index) => (
-            <Table.Body className='divide-y' key={product._id}>
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-                  {index + 1}
-                </Table.Cell>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-                  {product.name}
-                </Table.Cell>
-                <Table.Cell>{product.category}</Table.Cell>
-                <Table.Cell>{product.stock_quantity}</Table.Cell>
-                <Table.Cell>{product.unit}</Table.Cell>
-                <Table.Cell>{product.price}</Table.Cell>
-                <Table.Cell>
-                  <Link
-                    className="font-medium text-cyan-600 dark:text-cyan-500 hover:underline mr-5"
-                    to={`/admin/dashboard/edit-products/${product._id}`}>
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(product._id)}
-                    className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600'>
-                    Delete
-                  </button>
-                </Table.Cell>
-                <Table.Cell>
-                  {/* Merged button with text and icon */}
-                  <button
-                    onClick={() => downloadQrCode(product._id)}
-                    className="flex items-center bg-blue-500 text-white px-3 py-1 rounded-sm hover:bg-blue-700">
-                    Get QR
-                    <FiDownload className='ml-2' />
-                  </button>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          ))}
-        </Table>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <Table hoverable className='min-w-full'>
+              <Table.Head className="bg-gray-50 border-b border-gray-100">
+                <Table.HeadCell className="py-4">No.</Table.HeadCell>
+                <Table.HeadCell className="py-4">Name</Table.HeadCell>
+                <Table.HeadCell className="py-4">Category</Table.HeadCell>
+                <Table.HeadCell className="py-4">Stock</Table.HeadCell>
+                <Table.HeadCell className="py-4">Price</Table.HeadCell>
+                <Table.HeadCell className="py-4 text-center">Actions</Table.HeadCell>
+                <Table.HeadCell className="py-4 text-center">QR Code</Table.HeadCell>
+              </Table.Head>
+              <Table.Body className='divide-y divide-gray-100'>
+                {allProducts.map((product, index) => (
+                  <Table.Row className="bg-white hover:bg-gray-50/50 transition-colors" key={product._id}>
+                    <Table.Cell className='font-medium text-gray-900'>
+                      {index + 1}
+                    </Table.Cell>
+                    <Table.Cell className='font-semibold text-gray-900'>
+                      {product.name}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-bold uppercase">
+                        {product.category}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span className={`font-medium ${product.stock_quantity < 10 ? 'text-red-600' : 'text-gray-700'}`}>
+                        {product.stock_quantity} {product.unit}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell className="font-bold text-slate-900">
+                      Rs {product.price}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex justify-center items-center gap-3">
+                        <Link
+                          className="px-3 py-1.5 text-sm font-semibold text-indigo-600 bg-indigo-50 rounded-md hover:bg-indigo-100 transition-colors"
+                          to={`/admin/dashboard/edit-products/${product._id}`}>
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(product._id)}
+                          className='px-3 py-1.5 text-sm font-semibold text-rose-600 bg-rose-50 rounded-md hover:bg-rose-100 transition-colors'>
+                          Delete
+                        </button>
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => downloadQrCode(product._id)}
+                          className="flex items-center gap-2 bg-slate-800 text-white px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-slate-900 transition-all active:scale-95 shadow-sm">
+                          QR
+                          <FiDownload className='w-4 h-4' />
+                        </button>
+                      </div>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
+        </div>
       )}
     </div>
   );

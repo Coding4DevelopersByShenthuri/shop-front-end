@@ -83,7 +83,7 @@ const SIDEBAR_ITEMS = [
   { name: "Notifications", icon: HiBell, color: "#F59E0B", href: "/admin/dashboard/notifications", hasAlert: checkLowStock() > 0 },
 ];
 
-const SideBar = () => {
+const SideBar = ({ isMobile, closeSidebar }) => {
   const { user, logOut } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -154,7 +154,10 @@ const SideBar = () => {
                 </div>
               ) : (
                 <Link key={item.name} to={item.href}>
-                  <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors mb-2">
+                  <motion.div 
+                    onClick={isMobile ? closeSidebar : undefined}
+                    className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors mb-2"
+                  >
                     <item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
                     <AnimatePresence>
                       {isSidebarOpen && (

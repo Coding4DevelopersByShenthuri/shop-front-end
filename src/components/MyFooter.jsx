@@ -1,64 +1,89 @@
 import { Footer } from 'flowbite-react';
+import { Link } from 'react-router-dom';
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
+import { FaBlog } from 'react-icons/fa6';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 function MyFooter() {
   return (
-    <Footer bgDark>
-      <div className="w-11/12 mx-auto"> {/* Reduce width and center */}
-        <div className="grid w-full grid-cols-2 gap-8 px-6 py-8 md:grid-cols-4">
-          <div>
-            <Footer.Title title="Company" />
-            <Footer.LinkGroup col>
-              <Footer.Link href="/about" style={{ color: "#D3D3D3" }}>About</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Careers</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Brand Center</Footer.Link>
-              <Footer.Link href="/blog" style={{ color: "#D3D3D3" }}>Blog</Footer.Link>
+    <Footer className="bg-slate-900 rounded-none border-t border-white/5 py-12 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+          {/* Brand Column */}
+          <div className="space-y-6">
+            <Link to='/' className='text-3xl font-black text-white flex items-center gap-2 tracking-tighter'>
+                <FaBlog className='text-indigo-500' /> <span>Shenthu MART</span>
+            </Link>
+            <p className="text-slate-400 font-medium leading-relaxed max-w-xs">
+                Your premier destination for world-class shopping. We deliver excellence in every product, choice, and interaction.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-6">
+            <h3 className="text-xs font-black text-white uppercase tracking-[0.2em]">Curation</h3>
+            <Footer.LinkGroup col className="text-slate-400 space-y-3 font-bold">
+              <Footer.Link href="/shop" className="hover:text-white transition-colors">Premium Shop</Footer.Link>
+              <Footer.Link href="/about" className="hover:text-white transition-colors">Our Story</Footer.Link>
+              <Footer.Link href="/blog" className="hover:text-white transition-colors">Editorial Blog</Footer.Link>
+              <Footer.Link href="/recipe" className="hover:text-white transition-colors">Culinary Lab</Footer.Link>
             </Footer.LinkGroup>
           </div>
-          <div>
-            <Footer.Title title="Help Center" />
-            <Footer.LinkGroup col>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Discord Server</Footer.Link>
-              <Footer.Link href="https://x.com/ShenthuriM47295?t=bAh1Ip8sFiopySnrN7Ge_w&s=09" style={{ color: "#D3D3D3" }}>Twitter</Footer.Link>
-              <Footer.Link href="https://www.facebook.com/profile.php?id=100085593338393&mibextid=ZbWKwL" style={{ color: "#D3D3D3" }}>Facebook</Footer.Link>
-              <Footer.Link href="/contact" style={{ color: "#D3D3D3" }}>Contact Us</Footer.Link>
+
+          {/* Support */}
+          <div className="space-y-6">
+            <h3 className="text-xs font-black text-white uppercase tracking-[0.2em]">Assistance</h3>
+            <Footer.LinkGroup col className="text-slate-400 space-y-3 font-bold">
+              <Footer.Link href="/help" className="hover:text-white transition-colors">Help Center</Footer.Link>
+              <Footer.Link href="/contact" className="hover:text-white transition-colors">Get In Touch</Footer.Link>
+              <Footer.Link href="#" className="hover:text-white transition-colors">Privacy Ethics</Footer.Link>
+              <Footer.Link href="#" className="hover:text-white transition-colors">Terms of Service</Footer.Link>
             </Footer.LinkGroup>
           </div>
-          <div>
-            <Footer.Title title="Legal" />
-            <Footer.LinkGroup col>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Privacy Policy</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Licensing</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Terms &amp; Conditions</Footer.Link>
-            </Footer.LinkGroup>
-          </div>
-          <div>
-            <Footer.Title title="Download" />
-            <Footer.LinkGroup col>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>iOS</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Android</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>Windows</Footer.Link>
-              <Footer.Link href="#" style={{ color: "#D3D3D3" }}>MacOS</Footer.Link>
-            </Footer.LinkGroup>
+
+          {/* Contact Details */}
+          <div className="space-y-6">
+            <h3 className="text-xs font-black text-white uppercase tracking-[0.2em]">Flagship Presence</h3>
+            <div className="text-slate-400 space-y-4 font-medium">
+                <div className="flex items-start gap-4 group">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500 group-hover:text-white transition-colors duration-300">
+                        <FontAwesomeIcon icon={faPhone} className="text-xs" />
+                    </div>
+                    <span>+94 743 899 907</span>
+                </div>
+                <div className="flex items-start gap-4 group">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500 group-hover:text-white transition-colors duration-300">
+                        <FontAwesomeIcon icon={faEnvelope} className="text-xs" />
+                    </div>
+                    <span className="break-all">support@shenthurimart.com</span>
+                </div>
+                <div className="flex items-start gap-4 group">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500 group-hover:text-white transition-colors duration-300">
+                        <FontAwesomeIcon icon={faMapMarkerAlt} className="text-xs" />
+                    </div>
+                    <span>123 Elite Plaza, Colombo 07, SL</span>
+                </div>
+            </div>
           </div>
         </div>
-        <div className="w-full bg-gray-700 px-4 py-6 sm:flex sm:items-center sm:justify-between">
-        <Footer.Copyright href="#" by={<span style={{ color: "#D3D3D3" }}>Shenthu MART. All Rights Reserved</span>} year={2024} />
-          <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-            <Footer.Icon href="https://www.facebook.com/profile.php?id=100085593338393&mibextid=ZbWKwL" icon={BsFacebook} />
-            <Footer.Icon href="https://www.instagram.com/shenthuri_maran?igsh=aTJmdXlpbHV0cWN5" icon={BsInstagram} />
-            <Footer.Icon href="https://x.com/ShenthuriM47295?t=bAh1Ip8sFiopySnrN7Ge_w&s=09" icon={BsTwitter} />
-            <Footer.Icon href="https://github.com/Coding4DevelopersByShenthuri" icon={BsGithub} />
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-slate-500 text-sm font-bold">
+             &copy; {new Date().getFullYear()} Shenthu MART. Crafted with Excellence.
+          </p>
+          
+          <div className="flex items-center gap-6">
+            <Footer.Icon href="https://www.facebook.com/" icon={BsFacebook} className="text-slate-500 hover:text-white transition-colors" />
+            <Footer.Icon href="https://www.instagram.com/" icon={BsInstagram} className="text-slate-500 hover:text-white transition-colors" />
+            <Footer.Icon href="https://x.com/" icon={BsTwitter} className="text-slate-500 hover:text-white transition-colors" />
+            <Footer.Icon href="https://github.com/" icon={BsGithub} className="text-slate-500 hover:text-white transition-colors" />
           </div>
         </div>
-        {/* Added Contact Details */}
-        <div className="text-center text-white mt-4">
-          <p>Phone: +94 743899907</p>
-          <p>Email: shenthurimaran@gmail.com</p>
-        </div>
-        {/* Custom Message */}
-        <div className="text-center text-white mt-4">
-          Made BY Shenthuri Maran with ❤️
+        
+        <div className="mt-12 text-center text-[10px] font-black uppercase tracking-[0.3em] text-white/10">
+            Made BY Shenthuri Maran with Excellence
         </div>
       </div>
     </Footer>

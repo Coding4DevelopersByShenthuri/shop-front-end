@@ -130,194 +130,157 @@ function UploadProduct() {
   }
 
   return (
-    <div className='px-4 my-12'>
-      <h2 className='mb-8 text-3xl font-bold'>Upload A Product</h2>
+    <div className='py-8'>
+      <div className="mb-8">
+        <h2 className='text-3xl font-extrabold text-slate-900 tracking-tight font-sans'>Upload Product</h2>
+        <p className="text-slate-500 mt-2">Add a new item to your shop inventory with details and image.</p>
+      </div>
 
-      <form onSubmit={handleProductSubmit} className="flex lg:w-[1180px] flex-col flex-wrap gap-4">
-        {/* first row */}
-        <div className='flex gap-8'>
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="name"
-                value="Product Name"
-              />
-            </div>
+      <form onSubmit={handleProductSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 lg:p-8 rounded-2xl shadow-sm border border-gray-100">
+          {/* first row */}
+          <div className="space-y-2">
+            <Label htmlFor="name" value="Product Name" className="text-sm font-semibold text-slate-700" />
             <TextInput
               id="name"
               name="name"
-              placeholder="Product name"
+              placeholder="e.g. Fresh Organic Milk"
               required
               type="text"
               value={productName}
-              onChange={(e) => setProductName(e.target.value)} // Update product name state
+              onChange={(e) => setProductName(e.target.value)}
+              className="focus:ring-indigo-500 transition-all"
             />
           </div>
 
-          {/* stock_quantity */}
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="stock_quantity"
-                value="Product Stock Quantity"
-              />
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="stock_quantity" value="Stock Quantity" className="text-sm font-semibold text-slate-700" />
             <TextInput
               id="stock_quantity"
               name="stock_quantity"
-              placeholder="Stock Quantity"
+              placeholder="0"
               required
               type="number"
+              className="focus:ring-indigo-500 transition-all"
             />
           </div>
-        </div>
 
-        {/* second row */}
-        <div className='flex gap-8'>
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="imageURL"
-                value="Product Image URL (Optional)"
-              />
-            </div>
+          {/* second row */}
+          <div className="space-y-2">
+            <Label htmlFor="imageURL" value="Product Image URL (Optional)" className="text-sm font-semibold text-slate-700" />
             <TextInput
               id="imageURL"
               name="imageURL"
-              placeholder="Product image URL"
+              placeholder="https://example.com/image.jpg"
               type="text"
               value={productImageUrl}
-              onChange={handleImageUrlChange} // Handle image URL change
+              onChange={handleImageUrlChange}
+              className="focus:ring-indigo-500 transition-all"
             />
           </div>
 
-          {/* category */}
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="category"
-                value="Product Category"
-              />
-            </div>
-
-            <select id='category' name='categoryname' className="w-full rounded" value={selectedProductCategory}
-              onChange={(e) => setSelectedProductCategory(e.target.value)}>
-              {
-                productCategories.map((option) => (
-                  <option key={option} value={option} disabled={option === "Select Category"}>
-                    {option}
-                  </option>
-                ))
-              }
-            </select>
-          </div>
-        </div>
-
-        {/* third row */}
-        <div className='flex gap-8'>
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="unit"
-                value="Product Unit"
-              />
-            </div>
-
-            <select id='unit' name='unitname' className="w-full rounded" value={selectedProductUnit}
-              onChange={(e) => setSelectedProductUnit(e.target.value)}>
-              {
-                productUnits.map((option) => (
-                  <option key={option} value={option} disabled={option === "Select Unit"}>
-                    {option}
-                  </option>
-                ))
-              }
+          <div className="space-y-2">
+            <Label htmlFor="category" value="Category" className="text-sm font-semibold text-slate-700" />
+            <select 
+              id='category' 
+              name='categoryname' 
+              className="w-full rounded-lg border-gray-300 bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 transition-all text-sm h-[42px]" 
+              value={selectedProductCategory}
+              onChange={(e) => setSelectedProductCategory(e.target.value)}
+            >
+              {productCategories.map((option) => (
+                <option key={option} value={option} disabled={option === "Select Category"}>
+                  {option}
+                </option>
+              ))}
             </select>
           </div>
 
-          {/* id of product in db */}
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="id"
-                value="Product ID"
-              />
-            </div>
+          {/* third row */}
+          <div className="space-y-2">
+            <Label htmlFor="unit" value="Unit" className="text-sm font-semibold text-slate-700" />
+            <select 
+              id='unit' 
+              name='unitname' 
+              className="w-full rounded-lg border-gray-300 bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 transition-all text-sm h-[42px]" 
+              value={selectedProductUnit}
+              onChange={(e) => setSelectedProductUnit(e.target.value)}
+            >
+              {productUnits.map((option) => (
+                <option key={option} value={option} disabled={option === "Select Unit"}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="id" value="Internal Product ID" className="text-sm font-semibold text-slate-700" />
             <TextInput
-                id="id"
-                name="id"
-                placeholder="Product ID"
-                required
-                type="text"
-              />
+              id="id"
+              name="id"
+              placeholder="e.g. SKU-001"
+              required
+              type="text"
+              className="focus:ring-indigo-500 transition-all"
+            />
           </div>
-        </div>
 
-        {/* fourth row */}
-        <div className='flex gap-8'>
-          {/* price */}
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="price"
-                value="Product Price"
-              />
-            </div>
+          {/* fourth row */}
+          <div className="space-y-2">
+            <Label htmlFor="price" value="Price (Rs)" className="text-sm font-semibold text-slate-700" />
             <TextInput
               id="price"
               name="price"
-              placeholder="Price per Unit"
+              placeholder="0.00"
               required
               type="number"
               value={price}
-              onChange={(e) => setPrice(e.target.value)} // Update price state
+              onChange={(e) => setPrice(e.target.value)}
+              className="focus:ring-indigo-500 transition-all"
             />
           </div>
 
-          {/* origin */}
-          <div className='lg:w-1/3'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="origin"
-                value="Product Origin"
-              />
-            </div>
-
-            <select id='origin' name='origin' className="w-full rounded" value={selectedProductOrigin}
-              onChange={(e) => setSelectedProductOrigin(e.target.value)}>
-              {
-                productOrigins.map((option) => (
-                  <option key={option} value={option} disabled={option === "Select Origin"}>
-                    {option}
-                  </option>
-                ))
-              }
+          <div className="space-y-2">
+            <Label htmlFor="origin" value="Origin" className="text-sm font-semibold text-slate-700" />
+            <select 
+              id='origin' 
+              name='origin' 
+              className="w-full rounded-lg border-gray-300 bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 transition-all text-sm h-[42px]" 
+              value={selectedProductOrigin}
+              onChange={(e) => setSelectedProductOrigin(e.target.value)}
+            >
+              {productOrigins.map((option) => (
+                <option key={option} value={option} disabled={option === "Select Origin"}>
+                  {option}
+                </option>
+              ))}
             </select>
           </div>
-        </div>
 
-        {/* file input for image upload */}
-        <div className='lg:w-1/3'>
-          <div className="mb-2 block">
-            <Label
-              htmlFor="image"
-              value="Product Image File (Optional)"
-            />
+          {/* file input */}
+          <div className="md:col-span-2 space-y-2 pt-2">
+            <Label htmlFor="image" value="Upload Product Image (Optional)" className="text-sm font-semibold text-slate-700" />
+            <div className="flex items-center justify-center w-full">
+              <label htmlFor="image" className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                  <p className="text-xs text-gray-500">PNG, JPG or WEBP (MAX. 800x400px)</p>
+                </div>
+                <input id="image" name="image" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+              </label>
+            </div>
+            {imageFile && <p className="text-sm text-indigo-600 font-medium mt-1">Selected: {imageFile.name}</p>}
           </div>
-          <input
-            id="image"
-            name="image"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange} // Handle file input change
-          />
         </div>
 
-        {/* submit button */}
-        <div>
-        <Button type="submit" className="mt-5 w-80 bg-blue-700 text-white hover:bg-blue-600">
+        <div className="flex justify-end pt-4">
+          <Button type="submit" className="w-full md:w-64 bg-indigo-600 text-white hover:bg-indigo-700 py-2.5 rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all active:scale-95">
             Upload Product
-        </Button>
+          </Button>
         </div>
       </form>
     </div>

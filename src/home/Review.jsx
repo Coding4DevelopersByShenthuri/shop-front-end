@@ -18,8 +18,11 @@ import { Pagination } from 'swiper/modules';
 
 const Review = () => {
   return (
-    <div className='my-12 px-4 lg:px-24'>
-        <h2 className='text-5xl font-bold text-center mb-10 leading-snug'>Our Customers</h2>
+    <div className='my-16 px-4 md:px-12 lg:px-24'>
+        <div className="text-center mb-16">
+            <h2 className='text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans mb-4'>What Our Clients Say</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto font-medium">Join thousands of satisfied shop owners who have transformed their business with our management system.</p>
+        </div>
 
         <div>
     <Swiper
@@ -45,164 +48,54 @@ const Review = () => {
         modules={[Pagination]} 
         className="mySwiper"
       >
-        <SwiperSlide className='shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border'>
+        <SwiperSlide className='bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 m-2'>
             <div className='space-y-6'>
-                <div className='text-amber-500 flex gap-2'>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
+                <div className='text-amber-400 flex gap-1'>
+                    {[...Array(5)].map((_, i) => <FaStar key={i} />)}
                 </div>
-
-                {/* text */}
-                <div className='mt-7'>
-                    <p className='mb-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugit rerum doloribus minima officiis reiciendis perspiciatis cum quia aspernatur! Molestiae, aliquam suscipit. Culpa, est minima? Dolores quod libero cumque! Quibusdam?</p>
-                    <Avatar
-                        alt="avatar of Jese"
-                        img={proPic}
-                        rounded
-                        className='w-10 mb-4'
-                    />
-                    <h5 className='text-lg font-medium'>John Lee</h5>
-                    <p  className='text-base'>Software Engineer</p>
+                <div className='mt-4 italic text-slate-600 leading-relaxed font-medium'>
+                    "The inventory management is seamless. We've reduced waste by 30% since we started using this system. Highly recommended for any retail business!"
+                </div>
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-50">
+                    <Avatar img={proPic} rounded className='w-12 h-12 border-2 border-indigo-100' />
+                    <div>
+                        <h5 className='text-lg font-bold text-slate-900'>John Lee</h5>
+                        <p className='text-sm font-bold text-indigo-600 uppercase tracking-wider'>Retail Manager</p>
+                    </div>
                 </div>
             </div>
         </SwiperSlide>
-        <SwiperSlide className='shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border'>
+        <SwiperSlide className='bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 m-2'>
             <div className='space-y-6'>
-                <div className='text-amber-500 flex gap-2'>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
+                <div className='text-amber-400 flex gap-1'>
+                    {[...Array(5)].map((_, i) => <FaStar key={i} />)}
                 </div>
-
-                {/* text */}
-                <div className='mt-7'>
-                    <p className='mb-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugit rerum doloribus minima officiis reiciendis perspiciatis cum quia aspernatur! Molestiae, aliquam suscipit. Culpa, est minima? Dolores quod libero cumque! Quibusdam?</p>
-                    <Avatar
-                        alt="avatar of Jese"
-                        img={proPic}
-                        rounded
-                        className='w-10 mb-4'
-                    />
-                    <h5 className='text-lg font-medium'>Liza</h5>
-                    <p  className='text-base'>Designer</p>
+                <div className='mt-4 italic text-slate-600 leading-relaxed font-medium'>
+                    "The analytics dashboard gives us real-time insights into our sales performance. It's the most professional tool we've ever used."
+                </div>
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-50">
+                    <Avatar img={proPic} rounded className='w-12 h-12 border-2 border-indigo-100' />
+                    <div>
+                        <h5 className='text-lg font-bold text-slate-900'>Sarah Jenkins</h5>
+                        <p className='text-sm font-bold text-indigo-600 uppercase tracking-wider'>Operations Head</p>
+                    </div>
                 </div>
             </div>
         </SwiperSlide>
-        <SwiperSlide className='shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border'>
+        <SwiperSlide className='bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 m-2'>
             <div className='space-y-6'>
-                <div className='text-amber-500 flex gap-2'>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
+                <div className='text-amber-400 flex gap-1'>
+                    {[...Array(5)].map((_, i) => <FaStar key={i} />)}
                 </div>
-
-                {/* text */}
-                <div className='mt-7'>
-                    <p className='mb-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugit rerum doloribus minima officiis reiciendis perspiciatis cum quia aspernatur! Molestiae, aliquam suscipit. Culpa, est minima? Dolores quod libero cumque! Quibusdam?</p>
-                    <Avatar
-                        alt="avatar of Jese"
-                        img={proPic}
-                        rounded
-                        className='w-10 mb-4'
-                    />
-                    <h5 className='text-lg font-medium'>Rex</h5>
-                    <p  className='text-base'>Doctor</p>
+                <div className='mt-4 italic text-slate-600 leading-relaxed font-medium'>
+                    "Face recognition attendance has made our staff management so much easier and more secure. Absolutely brilliant feature!"
                 </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide className='shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border'>
-            <div className='space-y-6'>
-                <div className='text-amber-500 flex gap-2'>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                </div>
-
-                {/* text */}
-                <div className='mt-7'>
-                    <p className='mb-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugit rerum doloribus minima officiis reiciendis perspiciatis cum quia aspernatur! Molestiae, aliquam suscipit. Culpa, est minima? Dolores quod libero cumque! Quibusdam?</p>
-                    <Avatar
-                        alt="avatar of Jese"
-                        img={proPic}
-                        rounded
-                        className='w-10 mb-4'
-                    />
-                    <h5 className='text-lg font-medium'>Jese</h5>
-                    <p  className='text-base'>Engineer</p>
-                </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide className='shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border'>
-            <div className='space-y-6'>
-                <div className='text-amber-500 flex gap-2'>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                </div>
-
-                {/* text */}
-                <div className='mt-7'>
-                    <p className='mb-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugit rerum doloribus minima officiis reiciendis perspiciatis cum quia aspernatur! Molestiae, aliquam suscipit. Culpa, est minima? Dolores quod libero cumque! Quibusdam?</p>
-                    <Avatar
-                        alt="avatar of Jese"
-                        img={proPic}
-                        rounded
-                        className='w-10 mb-4'
-                    />
-                    <h5 className='text-lg font-medium'>Jesica</h5>
-                    <p  className='text-base'>Teacher</p>
-                </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide className='shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border'>
-            <div className='space-y-6'>
-                <div className='text-amber-500 flex gap-2'>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                </div>
-
-                {/* text */}
-                <div className='mt-7'>
-                    <p className='mb-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugit rerum doloribus minima officiis reiciendis perspiciatis cum quia aspernatur! Molestiae, aliquam suscipit. Culpa, est minima? Dolores quod libero cumque! Quibusdam?</p>
-                    <Avatar
-                        alt="avatar of Jese"
-                        img={proPic}
-                        rounded
-                        className='w-10 mb-4'
-                    />
-                    <h5 className='text-lg font-medium'>Lyca</h5>
-                    <p  className='text-base'>Banker</p>
-                </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide className='shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border'>
-            <div className='space-y-6'>
-                <div className='text-amber-500 flex gap-2'>
-                    <FaStar/>
-                    <FaStar/>
-                    <FaStar/>
-                </div>
-
-                {/* text */}
-                <div className='mt-7'>
-                    <p className='mb-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugit rerum doloribus minima officiis reiciendis perspiciatis cum quia aspernatur! Molestiae, aliquam suscipit. Culpa, est minima? Dolores quod libero cumque! Quibusdam?</p>
-                    <Avatar
-                        alt="avatar of Jese"
-                        img={proPic}
-                        rounded
-                        className='w-10 mb-4'
-                    />
-                    <h5 className='text-lg font-medium'>Linga</h5>
-                    <p  className='text-base'>Manager</p>
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-50">
+                    <Avatar img={proPic} rounded className='w-12 h-12 border-2 border-indigo-100' />
+                    <div>
+                        <h5 className='text-lg font-bold text-slate-900'>Michael Chen</h5>
+                        <p className='text-sm font-bold text-indigo-600 uppercase tracking-wider'>Store Owner</p>
+                    </div>
                 </div>
             </div>
         </SwiperSlide>
