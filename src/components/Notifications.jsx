@@ -17,7 +17,7 @@ const Notifications = () => {
                     throw new Error('Failed to fetch product quantities');
                 }
                 const data = await response.json();
-                setProductQuantities(data);
+                setProductQuantities(data.data || {});
             } catch (err) {
                 setError(err.message);
             } finally {

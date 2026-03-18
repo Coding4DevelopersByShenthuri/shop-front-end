@@ -94,20 +94,29 @@ const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <SingleProduct />,
-        loader: async ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`),
+        loader: async ({ params }) => {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`);
+          const result = await res.json();
+          return result.data;
+        },
       },
       {
         path: "/blogs/:id",
         element: <SingleBlog />,
-        loader: async ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/blogs/blog/${params.id}`),
+        loader: async ({ params }) => {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/blogs/blog/${params.id}`);
+          const result = await res.json();
+          return result.data;
+        },
       },
       {
         path: "/recipes/:id",
         element: <SingleRecipe />,
-        loader: async ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/recipes/recipes/${params.id}`),
+        loader: async ({ params }) => {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recipes/recipes/${params.id}`);
+          const result = await res.json();
+          return result.data;
+        },
       },
       {
         path: "/sign-up",
@@ -232,14 +241,20 @@ const router = createBrowserRouter([
       {
         path: "edit-products/:id",
         element: <EditProducts />,
-        loader: async ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`),
+        loader: async ({ params }) => {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/product/product/${params.id}`);
+          const result = await res.json();
+          return result.data;
+        },
       },
       {
         path: "edit-staffs/:id",
         element: <EditStaffs />,
-        loader: async ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/staff/${params.id}`),
+        loader: async ({ params }) => {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/staff/${params.id}`);
+          const result = await res.json();
+          return result.data;
+        },
       },
       {
         path: "*", // Catch-all for undefined admin routes

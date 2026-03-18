@@ -16,7 +16,7 @@ const Blog = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/blogs`);
-        setBlogs(response.data);
+        setBlogs(response.data.data || []);
       } catch (err) {
         setError('We encountered an issue fetching our latest stories. Please try again later.');
       } finally {

@@ -12,7 +12,7 @@ const ManageProducts = () => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`)
       .then(res => res.json())
       .then(data => {
-        setAllProducts(data);
+        setAllProducts(data.data || []);
         setLoading(false);
       })
       .catch(err => {

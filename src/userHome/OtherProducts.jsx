@@ -7,7 +7,7 @@ const OtherProducts = () => {
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`)
           .then(res => res.json())
-          .then(data => setProducts(data.slice(0, 8))); // Updated to setProducts
+          .then(data => setProducts((data.data || []).slice(0, 8))); // Robust fallback
     }, []);
 
     return (

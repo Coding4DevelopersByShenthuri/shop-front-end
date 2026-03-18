@@ -22,7 +22,7 @@ function ManageBlogs() {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/blogs`);
-      setBlogs(response.data);
+      setBlogs(response.data.data || []);
     } catch (error) {
       console.error('Error fetching blogs:', error);
       setError('Error fetching blogs. Please try again later.');
@@ -35,10 +35,10 @@ function ManageBlogs() {
       const blogData = { ...formValues };
       if (currentBlog) {
         const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/blogs/${currentBlog._id}`, blogData);
-        setBlogs(blogs.map(blog => (blog._id === currentBlog._id ? response.data : blog)));
+        setBlogs(blogs.map(blog => (blog._id === currentBlog._id ? response.data.data : blog)));
       } else {
         const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/blogs`, blogData);
-        setBlogs([...blogs, response.data]);
+        setBlogs([...blogs, response.data.data]);
       }
       resetForm();
       alert(currentBlog ? 'Blog updated successfully!' : 'Blog added successfully!');
@@ -179,7 +179,7 @@ function ManageBlogs() {
             <h3 className="text-lg font-semibold mb-1">{blog.title}</h3>
             <p className="text-gray-700 mb-2">{typeof blog.content === 'string' ? blog.content.substring(0, 100) + '...' : 'Content not available'}</p>
             <p className="text-gray-600 mb-2"><strong>Category:</strong> {blog.category}</p>
-            <p className="text-gray-600 mb-2"><strong>Tags:</strong> {blog.tags.join(', ')}</p>
+            <p className="text-gray-600 mb-2"><strong>Tags:</strong> {Array.isArray(blog.tags) ? blog.tags.join(', ') : ''}</p>
             <div className="flex justify-between">
               <button onClick={() => handleEdit(blog)} className="text-blue-500 hover:text-blue-700 flex items-center space-x-1">
                 <EyeIcon className="h-5 w-5" />

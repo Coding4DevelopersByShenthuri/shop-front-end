@@ -1,20 +1,20 @@
 // src/components/MarkAttendance.jsx
 import React, { useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MarkAttendance = ({ staffId, token }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const markAttendance = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/mark-attendance?staffId=${staffId}&token=${token}`);
-        if (response.status === 200) {
+        if (response.data.success) {
           // Successfully marked attendance, redirect to another page
-          history.push("/attendance"); // Adjust this route as needed
+          navigate("/attendance"); // Adjust this route as needed
         } else {
-          console.error("Error marking attendance:", response.data);
+          console.error("Error marking attendance:", response.data.message);
         }
       } catch (error) {
         console.error("Error marking attendance:", error);
@@ -22,7 +22,7 @@ const MarkAttendance = ({ staffId, token }) => {
     };
 
     markAttendance();
-  }, [staffId, token, history]);
+  }, [staffId, token, navigate]);
 
   return (
     <div>

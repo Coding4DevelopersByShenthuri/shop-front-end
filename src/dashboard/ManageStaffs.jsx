@@ -13,7 +13,7 @@ const ManageStaffs = () => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staffs`) // API endpoint for fetching staff members
       .then(res => res.json())
       .then(data => {
-        setAllStaffs(data);
+        setAllStaffs(data.data || []);
         setLoading(false);
       })
       .catch(err => {

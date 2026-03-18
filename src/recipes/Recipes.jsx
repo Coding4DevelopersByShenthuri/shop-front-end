@@ -16,7 +16,7 @@ const Recipes = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/recipes`);
-        setRecipes(response.data);
+        setRecipes(response.data.data || []);
       } catch (err) {
         setError('Error fetching gourmet recipes. Please try again later.');
       } finally {

@@ -45,8 +45,9 @@ const Shop = () => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`)
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data);
-        setFilteredProducts(data);
+        const productsData = data.data || [];
+        setProducts(productsData);
+        setFilteredProducts(productsData);
         setLoading(false);
       });
   }, []);
@@ -317,7 +318,7 @@ const Shop = () => {
               <Button color="indigo" onClick={() => setShowModal(false)} className="rounded-2xl font-bold">
                 Continue
               </Button>
-              <Button color="gray" onClick={() => navigate('/cart')} className="rounded-2xl font-bold">
+              <Button color="gray" onClick={() => navigate('/carts')} className="rounded-2xl font-bold">
                 View Cart
               </Button>
             </div>

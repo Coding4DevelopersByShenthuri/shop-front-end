@@ -15,7 +15,7 @@ const StaffAttendance = () => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setStaffList(data); // Set the staff list in state
+        setStaffList(data.data || []); // Set the staff list in state
       } catch (error) {
         console.error("Error fetching staff data:", error);
       }

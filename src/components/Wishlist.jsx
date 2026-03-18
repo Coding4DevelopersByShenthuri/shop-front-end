@@ -31,7 +31,7 @@ const Wishlist = () => {
             }
 
             const data = await response.json();
-            setWishlistItems(data[0].items || []); // Adjust depending on your response structure
+            setWishlistItems(data.data && data.data[0] ? data.data[0].items : []);
         } catch (error) {
             setError(error.message);
         } finally {

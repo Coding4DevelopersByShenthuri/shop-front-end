@@ -15,7 +15,7 @@ const UploadStaff = () => {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staffs`) // Ensure this route is correct
       .then(res => res.json())
-      .then(data => setStaffData(data))
+      .then(data => setStaffData(data.data || []))
       .catch(err => console.error("Error fetching staff:", err));
   }, []);
 
@@ -73,7 +73,7 @@ const UploadStaff = () => {
         // Update the staffData to include the new image URL
         setStaffData(prevData => 
           prevData.map(staff => 
-            staff._id === selectedStaffId ? { ...staff, imageUrl: data.imageUrl } : staff
+            staff._id === selectedStaffId ? { ...staff, imageUrl: data.data.imageUrl } : staff
           )
         );
         setStaffImage(null); // Reset image after submission

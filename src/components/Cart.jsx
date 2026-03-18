@@ -29,7 +29,7 @@ const Cart = () => {
 
 
             const data = await response.json();
-            setCartItems(data || []);
+            setCartItems(data.data || []);
         } catch (error) {
             setError(error.message);
         } finally {

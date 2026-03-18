@@ -33,7 +33,7 @@ const TaskForm = () => {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/staff/all-staff-with-task`);
       if (!response.ok) throw new Error('Failed to fetch staff members.');
       const data = await response.json();
-      setStaffMembers(data);
+      setStaffMembers(data.data || []);
     } catch (error) {
       console.error('Error fetching staff members:', error);
       setError('Failed to fetch staff members. Please try again later.');

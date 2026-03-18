@@ -72,9 +72,9 @@ const AuthProvider = ({ children }) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          const userData = await response.json();
+          const result = await response.json();
           // Merge user data with current user
-          const mergedData = { ...currentUser, ...userData };
+          const mergedData = { ...currentUser, userDetails: [result.data] };
           setUser(mergedData);
         } catch (error) {
           console.error('Error fetching user data:', error);
