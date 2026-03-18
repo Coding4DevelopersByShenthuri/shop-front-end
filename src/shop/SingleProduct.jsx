@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useLoaderData, useNavigate, Link } from 'react-router-dom';
-import { Button, Badge } from "flowbite-react";
+import { Button, Badge, Modal } from "flowbite-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faLeaf, faTruckMoving, faArrowLeft, faShoppingCart, faHeart, faCartPlus, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import productPlaceholder from '../assets/product-placeholder.png';

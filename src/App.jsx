@@ -2,7 +2,6 @@ import './App.css';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import MyFooter from './components/MyFooter';
-import 'flowbite';
 import { AppCountProvider } from './services/countService';
 
 function App() {
