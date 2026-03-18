@@ -41,10 +41,6 @@ const About = () => {
           About Us
         </h1>
 
-        <div className="shape shape-top-left">
-        </div>
-        <div className="shape shape-bottom-left">
-        </div>
 
         {/* Slider Component */}
         <div style={{ marginBottom: '40px' }}>

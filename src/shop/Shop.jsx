@@ -135,10 +135,6 @@ const Shop = () => {
 
   return (
     <div className='shop-page'>
-      <div className="shape shape-top-left">
-      </div>
-      <div className="shape shape-bottom-left">
-      </div>
       <div className='mt-28 px-4 lg:px-24'>
         <div className="text-center">
           {activeCategories.length === 0 ? (

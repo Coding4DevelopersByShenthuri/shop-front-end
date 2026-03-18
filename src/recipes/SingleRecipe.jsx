@@ -15,14 +15,6 @@ const SingleRecipe = () => {
 
   return (
     <div className="single-recipe-page page-container">
-      <div className="shape shape2-top-left">
-      </div>
-      <div className="shape shape2-bottom-left">
-      </div>
-      <div className="shape shape2-top-right">
-      </div>
-      <div className="shape shape2-bottom-right">
-      </div>
       <div className='w-full max-w-[1200px] mx-auto px-4 lg:px-24 mt-16'>
         <h2 className="recipe-title text-2xl font-bold">{recipe.title}</h2>
         {recipe.imageUrl && (

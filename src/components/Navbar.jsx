@@ -17,7 +17,6 @@ const Navbar = () => {
 
     // Toggle menu
     const toggleMenu = () => {
-        console.log('fuck')
         setIsMenuOpen(prevState => !prevState);
     };
 
@@ -79,18 +78,18 @@ const Navbar = () => {
 
     return (
         <header className='font-sans w-full bg-transparent fixed top-0 right-0 left-0 transition-all ease-in duration-300'>
-            <nav className={`py-4 px-9 ${isSticky ? 'sticky top-0 left-0 right-0 bg-blue-300' : ''}`}>
+            <nav className={`py-4 px-9 ${isSticky ? 'sticky top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100' : ''}`}>
                 <div className='flex justify-between items-center text-base gap-9'>
                     {/* Logo */}
-                    <Link to='/' className='text-3xl font-bold text-blue-700 flex items-center gap-5 font-sans'>
-                        <FaBlog className='inline-block' />Shenthu MART
+                    <Link to='/' className='text-3xl font-bold text-indigo-700 flex items-center gap-2 font-sans'>
+                        <FaBlog className='inline-block' /> <span className="tracking-tight">Shenthu MART</span>
                     </Link>
 
                     {/* Nav items for large devices */}
                     <ul className='md:flex space-x-12 hidden pl-8'>
                         {navItems.map(({ link, path }) => (
                             <li key={path}>
-                                <Link to={path} className='block text-base text-black uppercase font-bold cursor-pointer hover:text-blue-700'>
+                                <Link to={path} className='block text-sm text-gray-700 uppercase font-bold cursor-pointer hover:text-indigo-700 transition-colors'>
                                     {link}
                                 </Link>
                             </li>
@@ -117,15 +116,15 @@ const Navbar = () => {
 
                     {/* Sign Up and Login for large devices */}
                     {!user && (
-                        <div className='hidden lg:flex items-center'>
+                        <div className='hidden lg:flex items-center gap-4'>
                             <Link
                                 to='/sign-up'
-                                className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition font-bold'>
+                                className='px-5 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 shadow-sm transition-all font-bold'>
                                 Signup
                             </Link>
                             <Link
                                 to='/login'
-                                className='px-4 py-2 text-white bg-green-600 rounded hover:bg-blue-700 transition ml-4 mr-4 font-bold'>
+                                className='px-5 py-2 text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 shadow-sm transition-all font-bold'>
                                 Login
                             </Link>
                         </div>
