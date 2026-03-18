@@ -4,7 +4,8 @@ import { AuthContext } from '../contexts/AuthProvider';
 import './Wishlist.css';
 import { useAppCountContext } from '../services/countService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faTrash, faArrowLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faHeart, faEye, faShoppingCart, faStar, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import productPlaceholder from '../assets/product-placeholder.png';
 import { Modal, Button } from 'flowbite-react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
@@ -104,7 +105,14 @@ const Wishlist = () => {
                         {wishlistItems.map((item) => (
                             <div key={item._id} className="group bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-100 hover:-translate-y-2">
                                 <div className="relative h-64 overflow-hidden">
-                                    <img src={item.imageURL} alt={item.name} className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" />
+                                    <img 
+                                        src={item.imageURL} 
+                                        alt={item.name} 
+                                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
+                                        onError={(e) => {
+                                            e.target.src = productPlaceholder;
+                                        }}
+                                    />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                     <div className="absolute top-4 right-4 bg-rose-500 text-white p-2.5 rounded-xl shadow-lg transform translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                                         <FontAwesomeIcon icon={faHeart} />

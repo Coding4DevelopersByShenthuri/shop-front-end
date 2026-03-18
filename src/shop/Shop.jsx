@@ -1,4 +1,3 @@
-```javascript
 import React, { useContext, useEffect, useState } from 'react';
 import { Card, Modal, Button, Badge, Spinner } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

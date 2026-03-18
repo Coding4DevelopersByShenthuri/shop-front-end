@@ -34,7 +34,7 @@ const TaskList = ({ tasks,updateTaskStatus }) => {
 
                 try {
                   await updateTaskStatus(task._id || task.id, newStatus);
-                  console.log(`Status of task "${task.title}" updated to: ${newStatus}`);
+
                 } catch (error) {
                   console.error('Failed to update the task status:', error);
                   alert('Failed to update the task status. Please try again.');

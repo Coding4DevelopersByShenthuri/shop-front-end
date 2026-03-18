@@ -151,7 +151,14 @@ const Cart = () => {
                                                     <Table.Cell className="py-6 px-6">
                                                         <div className="flex items-center gap-6">
                                                             <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shrink-0">
-                                                                <img src={item.productId.imageURL} alt={item.productId.name} className="w-full h-full object-cover" />
+                                                                <img 
+                                                                    src={item.productId.imageURL} 
+                                                                    alt={item.productId.name} 
+                                                                    className="w-full h-full object-cover" 
+                                                                    onError={(e) => {
+                                                                        e.target.src = productPlaceholder;
+                                                                    }}
+                                                                />
                                                             </div>
                                                             <div>
                                                                 <Link to={`/product/${item.productId._id}`} className="text-lg font-extrabold text-slate-900 hover:text-indigo-600 transition-colors">
@@ -189,7 +196,14 @@ const Cart = () => {
                                     {cartItems.map((item) => (
                                         <div key={item._id} className="p-6 flex gap-4">
                                             <div className="w-24 h-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0">
-                                                <img src={item.productId.imageURL} alt={item.productId.name} className="w-full h-full object-cover" />
+                                                <img 
+                                                    src={item.productId.imageURL} 
+                                                    alt={item.productId.name} 
+                                                    className="w-full h-full object-cover" 
+                                                    onError={(e) => {
+                                                        e.target.src = productPlaceholder;
+                                                    }}
+                                                />
                                             </div>
                                             <div className="flex-1 space-y-2">
                                                 <Link to={`/product/${item.productId._id}`} className="text-lg font-extrabold text-slate-900">

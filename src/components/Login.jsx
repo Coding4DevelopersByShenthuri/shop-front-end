@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthProvider';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import googleLogo from "../assets/google-logo.svg";
+import { Button, Card, Label, TextInput, Badge } from 'flowbite-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
     const { login, loginWithGoogle, setUserDetails } = useContext(AuthContext);
     const [error, setError] = useState(""); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -57,12 +57,10 @@ const Login = () => {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log('User created on server:', data);
                     setUserDetails();
                     navigate(from, { replace: true });
                 })
                 .catch((error) => {
-                    console.error('Error calling API:', error);
                     setError(error.message);
                 });
             })
@@ -72,57 +70,83 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-teal-100 py-6 flex flex-col justify-center sm:py-12">
-            <div className="relative py-5 sm:max-w-md sm:mx-auto mt-12 w-[350px]">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-                <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-10">
-                    <div className="max-w-md mx-auto">
-                        <h1 className="text-2xl font-semibold font-serif text-center">Login Form</h1>
-                        <div className="divide-y divide-gray-200">
-                            <form onSubmit={handleLogin} className="py-8 mt-6 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                                <div className="relative"> 
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" 
-                                        placeholder="Email address"
-                                        required
-                                    />
-                                </div>
-                                <div className="relative">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600 rounded-md" 
-                                        placeholder="Password"
-                                        required
-                                    />
-                                </div>
-                                {error && (
-                                    <p className="text-red-600 text-base">{error}</p>
-                                )}
-                                <p>If you don't have an account, please <Link to="/sign-up" className="text-blue-600 underline">Sign up</Link> here!</p>
-                                <div className="relative flex justify-center">
-                                    <button type="submit" className="bg-blue-500 text-white rounded-lg px-7 py-2 mt-6">Login</button> {/* Adjusted padding */}
-                                </div>
-                            </form>
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center py-20 px-4">
+            <div className="max-w-md w-full">
+                <Card className="rounded-[3rem] shadow-2xl shadow-slate-200/60 border-none p-4">
+                    <div className="text-center space-y-4 mb-8">
+                        <Badge color="indigo" size="lg" className="w-fit mx-auto px-4 py-1 uppercase tracking-widest font-bold">Welcome Back</Badge>
+                        <h1 className="text-3xl font-black text-slate-900 tracking-tighter">Login to <span className="text-indigo-600">Account</span></h1>
+                        <p className="text-slate-500 font-medium">Please enter your credentials to continue.</p>
+                    </div>
+
+                    <form onSubmit={handleLogin} className="space-y-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="email" className="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Email Address</Label>
+                            <TextInput
+                                id="email"
+                                type="email"
+                                icon={() => <FontAwesomeIcon icon={faEnvelope} className="text-slate-400" />}
+                                placeholder="name@example.com"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="premium-input"
+                            />
                         </div>
 
-                        <hr />
-                        <div className="flex w-full items-center flex-col mt-5 gap-3">
-                            <button onClick={handleRegister} className="flex items-center gap-2">
-                                <img src={googleLogo} alt="Google Logo" className="w-8 h-8" />
-                                <span>Login With Google</span>
-                            </button>
+                        <div className="space-y-2">
+                            <Label htmlFor="password" className="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Password</Label>
+                            <TextInput
+                                id="password"
+                                type="password"
+                                icon={() => <FontAwesomeIcon icon={faLock} className="text-slate-400" />}
+                                placeholder="••••••••"
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="premium-input"
+                            />
                         </div>
+
+                        {error && (
+                            <div className="p-4 bg-rose-50 border border-rose-100 rounded-2xl">
+                                <p className="text-rose-600 text-sm font-bold text-center">{error}</p>
+                            </div>
+                        )}
+
+                        <Button 
+                            type="submit" 
+                            size="xl" 
+                            className="w-full bg-indigo-600 hover:bg-indigo-700 rounded-2xl font-black py-4 shadow-lg shadow-indigo-100 transition-all active:scale-95"
+                            disabled={loading}
+                        >
+                            {loading ? 'Authenticating...' : (
+                                <span className="flex items-center gap-2">
+                                    Sign In Securely <FontAwesomeIcon icon={faSignInAlt} />
+                                </span>
+                            )}
+                        </Button>
+                    </form>
+
+                    <div className="mt-8 text-center space-y-6">
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-100"></div></div>
+                            <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-4 text-slate-400 font-black tracking-widest">Or Continue With</span></div>
+                        </div>
+
+                        <button 
+                            onClick={handleRegister}
+                            className="w-full flex items-center justify-center gap-3 bg-white border-2 border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 p-4 rounded-2xl transition-all font-bold text-slate-600 group"
+                        >
+                            <img src={googleLogo} alt="Google" className="w-6 h-6" />
+                            <span>Continue with Google</span>
+                        </button>
+
+                        <p className="text-sm font-medium text-slate-500">
+                            Don't have an account? <Link to="/sign-up" className="text-indigo-600 font-black hover:underline">Create one now</Link>
+                        </p>
                     </div>
-                </div>
+                </Card>
             </div>
         </div>
     );
