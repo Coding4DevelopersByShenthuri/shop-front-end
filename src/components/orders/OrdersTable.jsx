@@ -1,30 +1,35 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Eye, Trash } from "lucide-react";
 
-const orderData = [
-	{ id: "ORD001", customer: "John Doe", total: 2500, status: "Delivered", date: "2023-07-01" },
-	{ id: "ORD002", customer: "Vinusayan", total: 4100, status: "Processing", date: "2023-07-02" },
-	{ id: "ORD003", customer: "Yaazhan", total: 1600, status: "Shipped", date: "2023-07-03" },
-	{ id: "ORD004", customer: "Keerthi", total: 7250, status: "Pending", date: "2023-07-04" },
-	{ id: "ORD005", customer: "Dhanush", total: 1500, status: "Delivered", date: "2023-07-05" },
-	{ id: "ORD006", customer: "Charlie", total: 2000, status: "Processing", date: "2023-07-06" },
-	{ id: "ORD007", customer: "David", total: 5200, status: "Shipped", date: "2023-07-07" },
-	{ id: "ORD008", customer: "Shajee", total: 1890, status: "Delivered", date: "2023-07-08" },
-];
-
 const OrdersTable = () => {
 	const [searchTerm, setSearchTerm] = useState("");
-	const [filteredOrders, setFilteredOrders] = useState(orderData);
+    const [allOrders, setAllOrders] = useState([]);
+	const [filteredOrders, setFilteredOrders] = useState([]);
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/stats/recent-orders`)
+            .then(res => res.json())
+            .then(data => {
+                const orders = data.data || [];
+                setAllOrders(orders);
+                setFilteredOrders(orders);
+            })
+            .catch(err => console.error("Error fetching orders:", err));
+    }, []);
 
 	const handleSearch = (e) => {
 		const term = e.target.value.toLowerCase();
 		setSearchTerm(term);
-		const filtered = orderData.filter(
-			(order) => order.id.toLowerCase().includes(term) || order.customer.toLowerCase().includes(term)
+		const filtered = allOrders.filter(
+			(order) => order.orderNumber.toString().includes(term) || (order.userId && order.userId.toLowerCase().includes(term))
 		);
 		setFilteredOrders(filtered);
 	};
+
+    const calculateTotal = (detail) => {
+        return detail.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    };
 
 	return (
 		<motion.div
@@ -52,16 +57,13 @@ const OrdersTable = () => {
 					<thead>
 						<tr>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Order ID
+								Order No.
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Customer
+								Items
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 								Total
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Status
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 								Date
@@ -75,41 +77,28 @@ const OrdersTable = () => {
 					<tbody className='divide divide-gray-700'>
 						{filteredOrders.map((order) => (
 							<motion.tr
-								key={order.id}
+								key={order._id}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ duration: 0.3 }}
 							>
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200'>
-									{order.id}
+									#{order.orderNumber}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200'>
-									{order.customer}
+									{order.orderDetail.length} items
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200'>
-									Rs {order.total.toFixed(2)}
+									Rs {calculateTotal(order.orderDetail).toFixed(2)}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									<span
-										className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-											order.status === "Delivered"
-												? "bg-green-300 text-green-800"
-												: order.status === "Processing"
-												? "bg-yellow-100 text-yellow-800"
-												: order.status === "Shipped"
-												? "bg-blue-500 text-blue-800"
-												: "bg-red-400 text-red-800"
-										}`}
-									>
-										{order.status}
-									</span>
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{order.date}</td>
+                                    {new Date(order.createdAt).toLocaleDateString()}
+                                </td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									<button className='text-indigo-700 hover:text-indigo-300 mr-2'>
+									<button className='text-indigo-400 hover:text-indigo-300 mr-2'>
 										<Eye size={18} />
 									</button>
-									<button className='text-red-700 hover:text-red-300 mr-2'>
+									<button className='text-red-400 hover:text-red-300 mr-2'>
 										<Trash size={18} />
 									</button>
 								</td>
@@ -121,4 +110,4 @@ const OrdersTable = () => {
 		</motion.div>
 	);
 };
-export default OrdersTable;
+export default OrdersTable;

@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { CheckCircle, Clock, DollarSign, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -7,14 +8,31 @@ import DailyOrders from "../components/orders/DailyOrders";
 import OrderDistribution from "../components/orders/OrderDistribution";
 import OrdersTable from "../components/orders/OrdersTable";
 
-const orderStats = {
-	totalOrders: "1,234",
-	pendingOrders: "56",
-	completedOrders: "1,178",
-	totalRevenue: "$98,765",
-};
-
 const OrdersPage = () => {
+    const [orderStats, setOrderStats] = useState({
+        totalOrders: "0",
+        pendingOrders: "0",
+        completedOrders: "0",
+        totalRevenue: "Rs 0",
+    });
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/stats/dashboard-stats`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setOrderStats(prev => ({
+                        ...prev,
+                        totalOrders: data.data.orderCount.toLocaleString(),
+                        totalRevenue: `Rs ${data.data.totalSales.toLocaleString()}`,
+                        // Since we don't have status in Order model yet, let's keep others or mock
+                        completedOrders: data.data.orderCount.toLocaleString(),
+                    }));
+                }
+            })
+            .catch(err => console.error("Error fetching order stats:", err));
+    }, []);
+
 	return (
 		<div className='flex-1 overflow-auto relative z-10 bg-gray-900'>
 			<Header title={"Orders"} />

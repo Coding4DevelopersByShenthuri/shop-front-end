@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { UserCheck, UserPlus, UsersIcon, UserX } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "../components/common/Header";
@@ -7,14 +8,28 @@ import UserGrowthChart from "../components/users/UserGrowthChart";
 import UserActivityHeatmap from "../components/users/UserActivityHeatmap";
 import UserDemographicsChart from "../components/users/UserDemographicsChart";
 
-const userStats = {
-	totalUsers: 152845,
-	newUsersToday: 243,
-	activeUsers: 98520,
-	churnRate: "2.4%",
-};
-
 const UsersPage = () => {
+    const [userStats, setUserStats] = useState({
+        totalUsers: 0,
+        newUsersToday: 243, // Keep mock or update if backend provides
+        activeUsers: 98520,  // Keep mock or update if backend provides
+        churnRate: "2.4%",
+    });
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/stats/dashboard-stats`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setUserStats(prev => ({
+                        ...prev,
+                        totalUsers: data.data.totalUsers,
+                    }));
+                }
+            })
+            .catch(err => console.error("Error fetching user stats:", err));
+    }, []);
+
 	return (
 		<div className='flex-1 overflow-auto relative z-10 bg-gray-900'>
 			<Header title='Users' />

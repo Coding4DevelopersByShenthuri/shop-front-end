@@ -1,24 +1,32 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 
-const userData = [
-	{ id: 1, name: "John Doe", email: "john@example.com", role: "Customer", status: "Active" },
-	{ id: 2, name: "Vinusayan", email: "vinu@example.com", role: "Admin", status: "Active" },
-	{ id: 3, name: "Yaazhan", email: "yaazhan@example.com", role: "Customer", status: "Inactive" },
-	{ id: 4, name: "Keerthi", email: "keerthi@example.com", role: "Customer", status: "Active" },
-	{ id: 5, name: "Dhanush", email: "dhanush@example.com", role: "Moderator", status: "Active" },
-];
-
 const UsersTable = () => {
 	const [searchTerm, setSearchTerm] = useState("");
-	const [filteredUsers, setFilteredUsers] = useState(userData);
+    const [allUsers, setAllUsers] = useState([]);
+	const [filteredUsers, setFilteredUsers] = useState([]);
+
+    useEffect(() => {
+        // There isn't a direct "all-users" endpoint in userRoutes.js based on my previous check.
+        // Let's check if we should add one or if it exists elsewhere.
+        // Wait, I didn't see an all-users route in userRoutes.js.
+        // I should probably add one to the backend.
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/user/all-users`)
+            .then(res => res.json())
+            .then(data => {
+                const users = data.data || [];
+                setAllUsers(users);
+                setFilteredUsers(users);
+            })
+            .catch(err => console.error("Error fetching users:", err));
+    }, []);
 
 	const handleSearch = (e) => {
 		const term = e.target.value.toLowerCase();
 		setSearchTerm(term);
-		const filtered = userData.filter(
-			(user) => user.name.toLowerCase().includes(term) || user.email.toLowerCase().includes(term)
+		const filtered = allUsers.filter(
+			(user) => (user.name && user.name.toLowerCase().includes(term)) || (user.email && user.email.toLowerCase().includes(term))
 		);
 		setFilteredUsers(filtered);
 	};
@@ -58,9 +66,6 @@ const UsersTable = () => {
 								Role
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Status
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 								Actions
 							</th>
 						</tr>
@@ -69,7 +74,7 @@ const UsersTable = () => {
 					<tbody className='divide-y divide-gray-700'>
 						{filteredUsers.map((user) => (
 							<motion.tr
-								key={user.id}
+								key={user._id || user.uid}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ duration: 0.3 }}
@@ -78,11 +83,11 @@ const UsersTable = () => {
 									<div className='flex items-center'>
 										<div className='flex-shrink-0 h-10 w-10'>
 											<div className='h-10 w-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold'>
-												{user.name.charAt(0)}
+												{user.name ? user.name.charAt(0) : '?'}
 											</div>
 										</div>
 										<div className='ml-4'>
-											<div className='text-sm font-medium text-gray-200'>{user.name}</div>
+											<div className='text-sm font-medium text-gray-200'>{user.name || 'N/A'}</div>
 										</div>
 									</div>
 								</td>
@@ -92,25 +97,13 @@ const UsersTable = () => {
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap'>
 									<span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-800 text-blue-100'>
-										{user.role}
-									</span>
-								</td>
-
-								<td className='px-6 py-4 whitespace-nowrap'>
-									<span
-										className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-											user.status === "Active"
-												? "bg-green-800 text-green-100"
-												: "bg-red-800 text-red-100"
-										}`}
-									>
-										{user.status}
+										{user.role || 'user'}
 									</span>
 								</td>
 
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									<button className='text-indigo-700 hover:text-indigo-500 mr-2'>Edit</button>
-									<button className='text-red-600 hover:text-red-400'>Delete</button>
+									<button className='text-indigo-400 hover:text-indigo-300 mr-2'>Edit</button>
+									<button className='text-red-400 hover:text-red-300'>Delete</button>
 								</td>
 							</motion.tr>
 						))}
@@ -120,4 +113,4 @@ const UsersTable = () => {
 		</motion.div>
 	);
 };
-export default UsersTable;
+export default UsersTable;

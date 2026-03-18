@@ -1,17 +1,23 @@
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
-const categoryData = [
-	{ name: "Cleaning Supplies", value: 4500 },
-	{ name: "Beverages", value: 3200 },
-	{ name: "Fruits", value: 2800 },
-	{ name: "Vegetables", value: 2100 },
-	{ name: "Meats", value: 1900 },
-];
-
-const COLORS = ["#4B4E9D", "#6E4DC5", "#C93C7E", "#10B981", "#F59E0B"];
+const COLORS = ["#6366F1", "#8B5CF6", "#EC4899", "#10B981", "#F59E0B", "#3B82F6", "#EF4444"];
 
 const CategoryDistributionChart = () => {
+    const [categoryData, setCategoryData] = useState([]);
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/stats/category-distribution`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setCategoryData(data.data);
+                }
+            })
+            .catch(err => console.error("Error fetching category distribution:", err));
+    }, []);
+
 	return (
 		<motion.div
 			className='bg-gray-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-900'

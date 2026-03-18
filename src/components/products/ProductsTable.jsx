@@ -1,28 +1,32 @@
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
-import { useState } from "react";
-
-const PRODUCT_DATA = [
-	{ id: 1, name: "Pine Apple", category: "Fruits", price: 200.00, stock: 143, sales: 1200 },
-	{ id: 2, name: "Carrots", category: "Vegetables", price: 150.00, stock: 89, sales: 800 },
-	{ id: 3, name: "Milk", category: "Dairy", price: 350.00, stock: 56, sales: 650 },
-	{ id: 4, name: "Soda", category: "Beverages", price: 500.00, stock: 210, sales: 950 },
-	{ id: 5, name: "Oats", category: "Grains", price: 210.00, stock: 78, sales: 720 },
-];
 
 const ProductsTable = () => {
-	const [searchTerm, setSearchTerm] = useState("");
-	const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [allProducts, setAllProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
-	const handleSearch = (e) => {
-		const term = e.target.value.toLowerCase();
-		setSearchTerm(term);
-		const filtered = PRODUCT_DATA.filter(
-			(product) => product.name.toLowerCase().includes(term) || product.category.toLowerCase().includes(term)
-		);
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/product/all-products`)
+            .then(res => res.json())
+            .then(data => {
+                const products = data.data || [];
+                setAllProducts(products);
+                setFilteredProducts(products);
+            })
+            .catch(err => console.error("Error fetching products:", err));
+    }, []);
 
-		setFilteredProducts(filtered);
-	};
+    const handleSearch = (e) => {
+        const term = e.target.value.toLowerCase();
+        setSearchTerm(term);
+        const filtered = allProducts.filter(
+            (product) => product.name.toLowerCase().includes(term) || product.category.toLowerCase().includes(term)
+        );
+
+        setFilteredProducts(filtered);
+    };
 
 	return (
 		<motion.div
@@ -62,9 +66,6 @@ const ProductsTable = () => {
 								Stock
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'>
-								Sales
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'>
 								Actions
 							</th>
 						</tr>
@@ -73,14 +74,14 @@ const ProductsTable = () => {
 					<tbody className='divide-y divide-gray-700'>
 						{filteredProducts.map((product) => (
 							<motion.tr
-								key={product.id}
+								key={product._id || product.id}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ duration: 0.3 }}
 							>
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center'>
 									<img
-										src='https://images.unsplash.com/photo-1627989580309-bfaf3e58af6f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww'
+										src={product.imageURL || 'https://images.unsplash.com/photo-1627989580309-bfaf3e58af6f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww'}
 										alt='Product img'
 										className='size-10 rounded-full'
 									/>
@@ -92,15 +93,14 @@ const ProductsTable = () => {
 								</td>
 
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									Rs {product.price.toFixed(2)}
+									Rs {product.price?.toFixed(2)}
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{product.stock}</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{product.sales}</td>
+								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{product.stock_quantity || product.stock}</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									<button className='text-indigo-700 hover:text-indigo-300 mr-2'>
+									<button className='text-indigo-400 hover:text-indigo-300 mr-2'>
 										<Edit size={18} />
 									</button>
-									<button className='text-red-700 hover:text-red-300'>
+									<button className='text-red-400 hover:text-red-300'>
 										<Trash2 size={18} />
 									</button>
 								</td>
@@ -112,4 +112,4 @@ const ProductsTable = () => {
 		</motion.div>
 	);
 };
-export default ProductsTable;
+export default ProductsTable;

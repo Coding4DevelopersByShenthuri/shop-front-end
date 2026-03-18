@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import Header from "../components/common/Header";
@@ -7,14 +8,31 @@ import SalesOverviewChart from "../components/sales/SalesOverviewChart";
 import SalesByCategoryChart from "../components/sales/SalesByCategoryChart";
 import DailySalesTrend from "../components/sales/DailySalesTrend";
 
-const salesStats = {
-	totalRevenue: "$1,234,567",
-	averageOrderValue: "$78.90",
-	conversionRate: "3.45%",
-	salesGrowth: "12.3%",
-};
-
 const SalesPage = () => {
+    const [salesStats, setSalesStats] = useState({
+        totalRevenue: "Rs 0",
+        averageOrderValue: "Rs 0",
+        conversionRate: "0%",
+        salesGrowth: "0%",
+    });
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/stats/dashboard-stats`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const avgOrder = data.data.orderCount > 0 ? (data.data.totalSales / data.data.orderCount).toFixed(2) : 0;
+                    setSalesStats(prev => ({
+                        ...prev,
+                        totalRevenue: `Rs ${data.data.totalSales.toLocaleString()}`,
+                        averageOrderValue: `Rs ${avgOrder}`,
+                        conversionRate: data.data.conversionRate,
+                    }));
+                }
+            })
+            .catch(err => console.error("Error fetching sales stats:", err));
+    }, []);
+
 	return (
 		<div className='flex-1 overflow-auto relative z-10 bg-gray-900'>
 			<Header title='Sales Dashboard' />
