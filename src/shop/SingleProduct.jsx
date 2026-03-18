@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useLoaderData, useNavigate, Link } from 'react-router-dom';
-import { Badge, Button, Modal } from 'flowbite-react';
+import { Button, Badge } from "flowbite-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faArrowLeft, faCartPlus, faStar, faShieldAlt, faTruckMoving, faLeaf } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faLeaf, faTruckMoving, faArrowLeft, faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
+import productPlaceholder from '../assets/product-placeholder.png';
 import { AuthContext } from '../contexts/AuthProvider';
 import { useAppCountContext } from '../services/countService';
 import { HiOutlineShoppingBag, HiOutlineHeart } from 'react-icons/hi';
@@ -96,6 +97,9 @@ const SingleProduct = () => {
                                     src={imageURL} 
                                     alt={name} 
                                     className="w-full h-full object-cover rounded-[3rem] shadow-2xl transform transition-transform duration-700 group-hover:scale-105" 
+                                    onError={(e) => {
+                                        e.target.src = productPlaceholder;
+                                    }}
                                 />
                                 <div className="absolute top-6 left-6">
                                     <Badge color="indigo" size="lg" className="px-4 py-1.5 font-black rounded-2xl shadow-lg border-2 border-white/50 backdrop-blur-sm">

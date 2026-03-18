@@ -3,6 +3,7 @@ import { useLoaderData, Link } from 'react-router-dom';
 import { Badge, Button } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faClock, faUser, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import blogPlaceholder from '../assets/product-placeholder.png'; // Using the same premium placeholder for consistency
 
 const SingleBlog = () => {
   const blog = useLoaderData();
@@ -34,6 +35,9 @@ const SingleBlog = () => {
           src={blog.imageUrl || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80'} 
           alt={blog.title} 
           className="w-full h-full object-cover filter brightness-[0.7]"
+          onError={(e) => {
+            e.target.src = blogPlaceholder;
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
         <div className="absolute bottom-10 left-0 right-0 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

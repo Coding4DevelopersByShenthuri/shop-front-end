@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 
 import { FaCartShopping } from 'react-icons/fa6';
 import { HiArrowSmRight } from 'react-icons/hi';
+import productPlaceholder from '../assets/product-placeholder.png';
 
 const ProductCards = ({ headline, products }) => {
     
@@ -61,6 +62,9 @@ const ProductCards = ({ headline, products }) => {
                             src={product.imageURL} 
                             alt={product.name} 
                             className="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-110"
+                            onError={(e) => {
+                                e.target.src = productPlaceholder;
+                            }}
                         />
                         <div className='absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-indigo-600 p-3 rounded-xl shadow-lg transform translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
                             <FaCartShopping className='w-5 h-5'/>

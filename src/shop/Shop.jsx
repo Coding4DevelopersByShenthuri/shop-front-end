@@ -1,10 +1,12 @@
+```javascript
 import React, { useContext, useEffect, useState } from 'react';
 import { Card, Modal, Button, Badge, Spinner } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBroom, faAppleAlt, faWineBottle, faFish, faSnowflake, faWheatAwn, faLeaf, faPizzaSlice, faDrum,
-  faCheese, faCarrot, faHeart, faCartPlus, faEye, faFilter, faSearch
+  faCheese, faCarrot, faHeart, faCartPlus, faEye, faFilter, faSearch, faBreadSlice, faUtensils, faConciergeBell, faLayerGroup, faTint, faWineGlass, faBoxOpen, faPepperHot, faCookie, faCandyCane
 } from '@fortawesome/free-solid-svg-icons';
+import productPlaceholder from '../assets/product-placeholder.png';
 import './Shop.css';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
@@ -241,6 +243,9 @@ const Shop = () => {
                           src={product.imageURL} 
                           alt={product.name} 
                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+                          onError={(e) => {
+                            e.target.src = productPlaceholder;
+                          }}
                         />
                         <button 
                           onClick={() => handleAddToWishlist(product)}
