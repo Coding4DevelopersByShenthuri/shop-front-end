@@ -166,7 +166,7 @@ const Shop = () => {
       <div className="bg-white pt-28 pb-12 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter font-sans">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 tracking-tighter font-sans leading-tight">
               Modern <span className="text-indigo-600">Grocery</span> Shopping
             </h1>
             <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">
@@ -254,7 +254,7 @@ const Shop = () => {
                         </button>
                         <Link 
                           to={`/product/${product._id}`}
-                          className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-2xl text-slate-900 font-black text-sm text-center transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
+                          className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-2xl text-slate-900 font-black text-sm text-center md:transform md:translate-y-12 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300 opacity-100 translate-y-0"
                         >
                           View Details
                         </Link>
@@ -281,7 +281,7 @@ const Shop = () => {
                             />
                             <button 
                               onClick={() => handleAddToCart(product)}
-                              className="bg-indigo-600 text-white p-3.5 rounded-2xl hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95"
+                              className="bg-indigo-600 text-white p-3.5 rounded-2xl hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95 shrink-0"
                             >
                               <FontAwesomeIcon icon={faCartPlus} className="text-lg" />
                             </button>

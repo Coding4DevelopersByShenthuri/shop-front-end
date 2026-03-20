@@ -78,11 +78,11 @@ const Navbar = () => {
 
     return (
         <header className='font-sans w-full bg-transparent fixed top-0 right-0 left-0 transition-all ease-in duration-300'>
-            <nav className={`py-4 px-9 ${isSticky ? 'sticky top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100' : ''}`}>
+            <nav className={`py-4 px-4 md:px-9 ${isSticky ? 'sticky top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100' : ''}`}>
                 <div className='flex justify-between items-center text-base gap-9'>
                     {/* Logo */}
-                    <Link to='/' className='text-3xl font-bold text-indigo-700 flex items-center gap-2 font-sans'>
-                        <FaBlog className='inline-block' /> <span className="tracking-tight">Shenthu MART</span>
+                    <Link to='/' className='text-2xl md:text-3xl font-bold text-indigo-700 flex items-center gap-2 font-sans shrink-0'>
+                        <FaBlog className='inline-block' /> <span className="tracking-tight whitespace-nowrap">Shenthu MART</span>
                     </Link>
 
                     {/* Nav items for large devices */}
@@ -96,23 +96,25 @@ const Navbar = () => {
                         ))}
                     </ul>
 
-                    {/* Wishlist icon with dynamic count */}
-                    <button onClick={handleClick} type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white text-red-500 hover:text-red-700 transition">
-                        <FaHeart className='w-6 h-6' />
+                    {/* Icons and Menu Button Wrapper for Mobile */}
+                    <div className='flex items-center gap-2 md:gap-4'>
+                        {/* Wishlist icon with dynamic count */}
+                        <button onClick={handleClick} type="button" className="relative inline-flex items-center p-2 md:p-3 text-sm font-medium text-center text-red-500 hover:text-red-700 transition">
+                            <FaHeart className='w-5 h-5 md:w-6 md:h-6' />
                         <span className="sr-only">Wishlist items</span>
                         <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -end-1 dark:border-gray-900">
                             {wishlistCount}
                         </div>
                     </button>
 
-                    {/* Cart icon with dynamic count */}
-                    <button onClick={handleCartClick} type="button" className="relative inline-flex items-center p-3 text-sm font-medium text-center text-blue-500 hover:text-blue-700 transition">
-                        <FaShoppingCart className='w-6 h-6' />
+                        {/* Cart icon with dynamic count */}
+                        <button onClick={handleCartClick} type="button" className="relative inline-flex items-center p-2 md:p-3 text-sm font-medium text-center text-blue-500 hover:text-blue-700 transition">
+                            <FaShoppingCart className='w-5 h-5 md:w-6 md:h-6' />
                         <span className="sr-only">Cart items</span>
-                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-blue-500 border-2 border-white rounded-full -top-1 -end-1">
-                            {cartCount}
-                        </div>
-                    </button>
+                            <div className="absolute inline-flex items-center justify-center w-5 h-5 md:w-6 md:h-6 text-[10px] md:text-xs font-bold text-white bg-blue-500 border-2 border-white rounded-full -top-1 -end-1">
+                                {cartCount}
+                            </div>
+                        </button>
 
                     {/* Sign Up and Login for large devices */}
                     {!user && (
@@ -159,15 +161,16 @@ const Navbar = () => {
                             </button>
                         </div>
                     )}
-                    {/* Menu button for mobile devices */}
-                    <div className='md:hidden'>
-                        <button
-                            onClick={toggleMenu}
-                            className='text-black focus:outline-none'
-                            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                        >
-                            {isMenuOpen ? <FaXmark className='h-5 w-5 text-black' /> : <FaBarsStaggered className='h-5 w-5 text-black' />}
-                        </button>
+                        {/* Menu button for mobile devices */}
+                        <div className='md:hidden ml-2'>
+                            <button
+                                onClick={toggleMenu}
+                                className='p-2 text-black focus:outline-none bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors'
+                                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                            >
+                                {isMenuOpen ? <FaXmark className='h-5 w-5' /> : <FaBarsStaggered className='h-5 w-5' />}
+                            </button>
+                        </div>
                     </div>
                 </div>
 

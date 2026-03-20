@@ -81,18 +81,18 @@ const SingleProduct = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 pt-32 pb-20">
+        <div className="min-h-screen bg-slate-50 pt-24 md:pt-32 pb-12 md:pb-20 text-sans">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Link to="/shop" className="inline-flex items-center gap-2 text-slate-500 hover:text-indigo-600 font-bold mb-8 transition-colors group">
                     <FontAwesomeIcon icon={faArrowLeft} className="group-hover:-translate-x-1 transition-transform" />
                     Back to Collection
                 </Link>
 
-                <div className="bg-white rounded-[4rem] shadow-2xl shadow-slate-200/50 border border-slate-50 overflow-hidden">
+                <div className="bg-white rounded-3xl md:rounded-[4rem] shadow-2xl shadow-slate-200/50 border border-slate-50 overflow-hidden">
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Image Side */}
-                        <div className="p-8 lg:p-16 flex items-center justify-center bg-slate-50/50">
-                            <div className="relative group w-full aspect-square max-w-md">
+                        <div className="p-6 md:p-8 lg:p-16 flex items-center justify-center bg-slate-50/50">
+                            <div className="relative group w-full aspect-square max-w-sm md:max-w-md">
                                 <img 
                                     src={imageURL} 
                                     alt={name} 
@@ -116,7 +116,7 @@ const SingleProduct = () => {
                                     {[...Array(5)].map((_, i) => <FontAwesomeIcon key={i} icon={faStar} className="text-sm" />)}
                                     <span className="text-slate-400 text-xs font-black uppercase tracking-widest ml-2">4.9 (120+ Reviews)</span>
                                 </div>
-                                <h1 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter leading-tight">{name}</h1>
+                                <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter leading-tight">{name}</h1>
                                 <p className="text-3xl font-black text-indigo-600">Rs {price} <span className="text-lg text-slate-400 font-bold ml-1">/ {unit || 'each'}</span></p>
                             </div>
 
@@ -140,7 +140,7 @@ const SingleProduct = () => {
                             </div>
 
                             <div className="space-y-6">
-                                <div className="flex items-center gap-4">
+                                <div className="flex flex-wrap items-center gap-4">
                                     <div className="flex items-center bg-slate-50 rounded-2xl p-1 border border-slate-100">
                                         <button onClick={() => handleQuantityChange(count - 1)} className="w-10 h-10 flex items-center justify-center text-slate-600 hover:text-indigo-600 font-black text-xl">-</button>
                                         <input 

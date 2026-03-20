@@ -9,10 +9,10 @@ function MyFooter() {
   return (
     <Footer className="bg-slate-900 rounded-none border-t border-white/5 py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
-            <Link to='/' className='text-3xl font-black text-white flex items-center gap-2 tracking-tighter'>
+            <Link to='/' className='text-2xl md:text-3xl font-black text-white flex items-center gap-2 tracking-tighter'>
                 <FaBlog className='text-indigo-500' /> <span>Shenthu MART</span>
             </Link>
             <p className="text-slate-400 font-medium leading-relaxed max-w-xs">

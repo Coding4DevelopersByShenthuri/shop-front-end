@@ -86,8 +86,8 @@ const Wishlist = () => {
     return (
         <div className="min-h-screen bg-slate-50 py-20 lg:py-32">
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                <div className="flex items-center justify-between mb-10">
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans">My Wishlist</h2>
+                <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans text-center sm:text-left">My Wishlist</h2>
                     <Link to="/shop" className="text-indigo-600 font-bold hover:underline flex items-center gap-2">
                         <FontAwesomeIcon icon={faArrowLeft} />
                         Continue Shopping

@@ -117,8 +117,8 @@ const Cart = () => {
     return (
         <div className="min-h-screen bg-slate-50 py-20 lg:py-32">
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                <div className="flex items-center justify-between mb-10">
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans">My Shopping Cart</h2>
+                <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans text-center sm:text-left">My Shopping Cart</h2>
                     <Link to="/shop" className="text-indigo-600 font-bold hover:underline flex items-center gap-2">
                         <FontAwesomeIcon icon={faArrowLeft} />
                         Continue Shopping
@@ -236,7 +236,7 @@ const Cart = () => {
 
                         {/* Order Summary Checkout */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white p-8 rounded-[2rem] shadow-2xl shadow-indigo-100/50 border border-indigo-50 sticky top-32">
+                            <div className="bg-white p-6 md:p-8 rounded-[2rem] shadow-2xl shadow-indigo-100/50 border border-indigo-50 lg:sticky lg:top-32 mt-10 lg:mt-0">
                                 <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight">Order Summary</h3>
                                 <div className="space-y-4 mb-8">
                                     <div className="flex justify-between text-slate-500 font-medium">

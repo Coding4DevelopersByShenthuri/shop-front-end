@@ -15,10 +15,10 @@ const Banner = () => {
 
   return (
     <div className="px-4 md:px-12 lg:px-24 bg-gradient-to-br from-slate-50 to-indigo-50/30 flex items-center overflow-hidden">
-      <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-12 py-20 md:py-32 lg:py-40">
+      <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-12 py-12 md:py-32 lg:py-40">
         {/* Left side */}
         <div className="lg:w-1/2 space-y-8 text-center lg:text-left">
-          <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] text-slate-900 tracking-tight">
+          <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] text-slate-900 tracking-tight">
             Buy Best Things From Here <span className="text-indigo-600 block sm:inline">for the Best Prices</span>
           </h2>
           <p className="mx-auto lg:mx-0 max-w-2xl text-base md:text-lg text-slate-600 leading-relaxed font-medium font-sans">

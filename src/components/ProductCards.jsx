@@ -19,9 +19,9 @@ import productPlaceholder from '../assets/product-placeholder.png';
 const ProductCards = ({ headline, products }) => {
     
     return (
-    <div className='my-16 px-4 md:px-12 lg:px-24'>
-        <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <h2 className='text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans'>{headline}</h2>
+    <div className='my-8 md:my-16 px-4 md:px-12 lg:px-24'>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-10 gap-4">
+            <h2 className='text-2xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight font-sans'>{headline}</h2>
             <Link to="/shop" className="text-indigo-600 font-bold hover:underline flex items-center gap-2">
                 View All Products
                 <HiArrowSmRight />
@@ -37,17 +37,25 @@ const ProductCards = ({ headline, products }) => {
           clickable: true,
         }}
         breakpoints={{
-          640: {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          480: {
             slidesPerView: 2,
-            spaceBetween: 20,
+            spaceBetween: 15,
           },
           768: {
-            slidesPerView: 4,
-            spaceBetween: 40,
+            slidesPerView: 3,
+            spaceBetween: 20,
           },
           1024: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          },
+          1280: {
             slidesPerView: 5,
-            spaceBetween: 50,
+            spaceBetween: 40,
           },
         }}
         modules={[Pagination]}
